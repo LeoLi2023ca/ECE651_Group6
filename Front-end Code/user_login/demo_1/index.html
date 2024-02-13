@@ -1,46 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset = "UFT-8">
-    <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+    <meta charset="UFT-8">
+    <meta name="viewport" content="width = device-width, initial-scale = 1.0">
     <title>Document</title>
-    <link rel = "stylesheet" href = "style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>Logo</h1>
+        <h1>Connecting Education, Shaping Futures</h1>
         <nav>
             <a href="#">Home</a>
             <a href="#">About</a>
             <a href="#">Contact</a>
             <a href="#">Services</a>
-            <a href="#">Login</a>
+            <a href="#" class="login-nav-btn">Login</a>
         </nav>
     </header>
-    <div class = "Form-box">
-        <form class = "Login-form">
+    <div class="form-box change-from">
+        <ion-icon name="close-outline" class="close-icon"></ion-icon>
+        <form class="login-form">
             <h1>Login</h1>
             <div class = "input-box">
-                <input type = "text" required>
+                <input type="text" required>
                 <label>Email</label>
                 <ion-icon name="mail-outline"></ion-icon>
             </div>
-            <div class = "input-box">
-                <input type = "password" required>
+            <div class="input-box">
+                <input type="password" required>
                 <label>Password</label>
                 <ion-icon name="lock-closed-outline"></ion-icon>
             </div>
-            <div class = "checkbox">
+            <div class="checkbox">
                 <span>
-                    <input type = "checkbox" id = "login-checkbox">
-                    <label for = "login-checkbox">Remember Me</label>
+                    <input type="checkbox" id = "login-checkbox">
+                    <label for="login-checkbox">Remember Me</label>
                 </span>
-                <h5>Forget password ?</h5>
+                <h5>Forget password?</h5>
             </div> 
-            <button type = "submit" class = "submit-btn">submit</button>
-            <h5 class = "Register-btn">Don't have an account ? Register</h5>
+            <button type="submit" class = "submit-btn">Submit</button>
+            <div class="login-register">
+                <p>Don't have an account? <a href="#" class="register-btn">Register</a></p>
+            </div>
         </form>
-        <form class = "Register-form">
+        <form class = "register-form">
             <h1>Register</h1>
             <div class = "input-box">
                 <input type = "text" required>
@@ -59,13 +62,14 @@
             </div> 
             <div class = "checkbox">
                 <input type = "checkbox" id = "register-checkbox">
-                <label for = "register-checkout">I agree with the terms and conditions</label>
+                <label for = "register-checkout">I agree to the terms & conditions</label>
             </div> 
             <button type = "submit" class = "submit-btn">submit</button>
-            <h5 class = "Login-btn">Register before ? Login</h5>
+            <div class="login-register">
+                <p>Already have an account? <a href="#" class="login-btn">Login</a></p>
+            </div>
         </form>
     </div>
-
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src = "script.js"></script>
