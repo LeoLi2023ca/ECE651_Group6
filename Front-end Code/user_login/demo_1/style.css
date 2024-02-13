@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Poppins&display=swap');
+*{
+    padding: 0;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+}
+body{
+    background-image: url(./background.jpg);
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    padding: 20px 60px;
+    color: black;
+}
+header nav {
+    width: 45%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+header nav a{
+    font-size: 22px;
+    color:black;
+    text-decoration: none;
+    position: relative;
+}
+header nav a::before{
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    background-color: black;
+    width: 0%;
+    height: 2.5px;
+    transition: .3s;
+}
+header nav a:hover::before{
+    width: 100%;
+}
+.form-box{
+    position: relative;
+    width: 400px;
+    height: 450px;
+    backdrop-filter: blur(40px);
+    color: black;
+    font-size: 20px;
+    border: 2px solid white;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform .5s ease, height .3s ease-in-out;
+}
+.form-box form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: transform .3s ease;
+}
+.form-box .register-form{
+    transform: translateX(-100%);
+    opacity: 0;
+}
+.close-icon{
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 35px;
+    cursor: pointer;
+    z-index: 2;
+    padding: 5px;
+    background-color: white;
+    border-bottom-left-radius: 16px;
+}
+.form-box form h1{
+    font-size: 35px;
+}
+.input-box{
+    width: 76%;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    border-bottom: 2px solid black;
+    margin: 25px 0px;
+    padding: 0px 4px 10px 4px;
+}
+.input-box:first-of-type{
+    margin-top: 32px;
+}
+.input-box input{
+    width: 85%;
+    position: absolute;
+    color: black;
+    font-size: 16px;
+    border: none;
+    background: none;
+    outline: none;
+}
+.input-box label{
+    transition: .4s;
+    font-size: 17px;
+}
+.input-box input:focus ~ label,
+.input-box input:valid ~ label{
+    transform: translateY(-27px);
+}
+.input-box ion-icon{
+    font-size: 25px;
+}
+.checkbox{
+    width: 76%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.checkbox h5{
+    font-size: 14px;
+    font-weight: 100;
+    cursor: pointer;
+    user-select: none;
+}
+.register-form .checkbox{
+    display: unset;
+}
+.checkbox label{
+    font-weight: 500;
+    font-size: 15px;
+    cursor: pointer;
+    user-select: none;
+}
+.checkbox input{
+    cursor: pointer;
+    margin-right: 3px;
+}
+.checkbox span{
+    display: flex;
+}
+.submit-btn{
+    width: 78%;
+    height: 38px;
+    cursor: pointer;
+    border-radius: 6px;
+    margin:15px 0px 22px 0px;
+    border: none;
+    font-size: 16px;
+}
+.login-register p{
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+}
+.login-register a{
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+    font-size: 16px;
+}
+.login-register a:hover{
+    text-decoration: underline;
+}
+.change-form{
+    height: 500px;
+}
+.change-form .login-form{
+    transform: translateX(100%);
+    opacity: 0;
+}
+.change-form .register-form{
+    transform: translateX(0%);
+    opacity: 1;
+}
