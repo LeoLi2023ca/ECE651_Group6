@@ -1,0 +1,54 @@
+.container {
+    overflow-x: auto;
+    width: 100%;
+}
+
+.postTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableHeader {
+    padding: 8px;
+    border: 1px solid #dddddd;
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+.tableHeader:nth-child(1) { width: 10%; } /* Username */
+.tableHeader:nth-child(2) { width: 5%; } /* Gender */
+.tableHeader:nth-child(3) { width: 10%; } /* School */
+.tableHeader:nth-child(4) { width: 5%; } /* Education */
+.tableHeader:nth-child(5) { width: 10%; } /* Subjects */
+.tableHeader:nth-child(6) { width: 5%; } /* Language */
+.tableHeader:nth-child(7) { width: 10%; } /* Schedule */
+.tableHeader:nth-child(8) { width: 5%; } /* Timezone */
+.tableHeader:nth-child(9) { width: 5%; }  /* Salary */
+.tableHeader:nth-child(10) { width: 5%; }  /* Date */
+.tableHeader:nth-child(11) { width: 5%; }  /* Profile */
+
+.tableCell {
+    padding: 8px;
+    border: 1px solid #dddddd;
+    text-align: left;
+}
+
+.tableCell:nth-child(1) { width: 10%; }
+.tableCell:nth-child(2) { width: 5%; }
+.tableCell:nth-child(3) { width: 10%; }
+.tableCell:nth-child(4) { width: 5%; }
+.tableCell:nth-child(5) { width: 10%; }
+.tableCell:nth-child(6) { width: 5%; }
+.tableCell:nth-child(7) { width: 10%; }
+.tableCell:nth-child(8) { width: 5%; }
+.tableCell:nth-child(9) { width: 5%; }
+.tableCell:nth-child(10) { width: 5%; }
+
+
+.tableCell:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.tableCell:hover {
+    background-color: #f2f2f2;
+}

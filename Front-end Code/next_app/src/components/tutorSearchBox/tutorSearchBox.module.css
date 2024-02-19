@@ -1,0 +1,40 @@
+.container {
+    padding: 10px 0px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.searchBox {
+    /* max-width: 600px; */
+    width: 100%;
+    margin: 0 auto;
+    padding: 10px 0px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.label {
+    padding: 10px 2px 10px 10px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.select {
+    width: 12%;
+    font-size: 16px;
+    padding: 0px 10px 0px 5px;
+    margin-right: 20px;
+}
+
+.input {
+    width: 10%;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+
+.input[type="range"] {
+    margin-right: 30px;
+}
