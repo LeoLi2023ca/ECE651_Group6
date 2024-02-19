@@ -7,16 +7,12 @@ import Image from "next/image";
 
 const links = [
   {
-    title: "Learn",
+    title: "Home",
     path: "/",
   },
   {
-    title: "Community",
-    path: "/community",
-  },
-  {
-    title: "Reviews",
-    path: "/reviews",
+    title: "Post",
+    path: "/post",
   },
 ];
 
@@ -39,14 +35,14 @@ const Links = () => {
               <>
                 {/* <NavLink item={{ title: "Schedule", path: "/schedule" }} /> */}
                 <NavLink item={{ title: "Find students", path: "/find-students" }} />
-                <NavLink item={{ title: "Match me with students", path: "/match-me-with-students" }} />
+                <NavLink item={{ title: "Match students", path: "/match-me-with-students" }} />
                 <NavLink item={{ title: "Profile", path: "/tutor-profile" }} />
               </>)
               : (
                 <>
                   {/* <NavLink item={{ title: "Schedule", path: "/schedule" }} /> */}
                   <NavLink item={{ title: "Find tutors", path: "/find-tutors" }} />
-                  <NavLink item={{ title: "Match me with tutors", path: "/match-me-with-tutors" }} />
+                  <NavLink item={{ title: "Match tutors", path: "/match-me-with-tutors" }} />
                   <NavLink item={{ title: "Profile", path: "/student-profile" }} />
                   
                 </>)}
