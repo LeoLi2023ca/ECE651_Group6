@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import styles from "./studentProfile.css";
+import styles from "./studentProfile.module.css";
 import StudentProfileHeader from "../../components/studentProfiles/StudentProfileHeader";
 import StudentEdit from "@/components/studentProfiles/StudentEdit";
 import StudentInfo from "@/components/studentProfiles/StudentInfo";
