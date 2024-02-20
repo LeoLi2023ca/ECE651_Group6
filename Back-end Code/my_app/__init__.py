@@ -17,9 +17,9 @@ def create_app():
     app.config['MAIL_PORT'] = 587  # The mail server port
     app.config['MAIL_USE_TLS'] = True  # Use TLS
     app.config['MAIL_USE_SSL'] = False  # Use SSL (alternative to TLS)
-    app.config['MAIL_USERNAME'] = 'choichonghou@gmail.com'  # Your email username
-    app.config['MAIL_PASSWORD'] = 'dtuzsadcpnotmmqy'  # Your email password
-    app.config['MAIL_DEFAULT_SENDER'] = 'choichonghou@gmail.com'  # Default sender email address
+    app.config['MAIL_USERNAME'] = 'username@gmail.com'  # Your email username
+    app.config['MAIL_PASSWORD'] = '########'  # Your email password
+    app.config['MAIL_DEFAULT_SENDER'] = 'username@gmail.com'  # Default sender email address
 
     mail.init_app(app)
     mysql.init_app(app)
