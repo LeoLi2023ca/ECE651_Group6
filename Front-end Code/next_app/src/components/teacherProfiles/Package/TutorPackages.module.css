@@ -1,0 +1,109 @@
+/* components/Package.module.css */
+.packageContainer {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px;
+    width: 300px; /* Adjust as needed */
+}
+
+.tutorHeader {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.trial {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #e6f9f6;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.trialDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.price {
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-bottom: 4px;
+}
+
+.trialLabel {
+    font-size: 1rem;
+}
+
+.rating {
+    font-family: Times, 'Times New Roman', serif; /* show half star */
+    font-size: 1.2rem;
+}
+
+.durationSwitch {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.durationButton {
+    padding: 10px;
+    border: 1px solid #ddd;
+    background: none;
+    cursor: pointer;
+}
+
+.durationButton.active {
+    background-color: #4CAF50;
+}
+
+.packagesList {
+    /* Style as needed */
+}
+
+.packageItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+.packagePriceDetails {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.packagePrice {
+    font-weight: bold;
+}
+
+.sessionDetails {
+    /* 如果需要，添加样式 */
+}
+
+.bookingSection {
+    display: flex;
+    align-items: center;
+}
+
+.discount {
+    background-color: #def2e0;
+    padding: 2px 5px;
+    border-radius: 4px;
+    margin-right: 10px; /* Add spacing between discount and reservation buttons */
+}
+
+.bookButton {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+

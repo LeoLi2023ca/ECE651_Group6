@@ -1,0 +1,59 @@
+/* components/Reviews.module.css */
+.container {
+    margin: 20px;
+}
+
+.reviewList {
+    list-style: none;
+    padding: 0;
+}
+
+.reviewItem {
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+}
+
+.reviewerInfo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    background-color: #f4f4f4;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.name {
+    font-weight: bold;
+}
+
+.content {
+    margin: 0;
+}
+
+.rating {
+    color: gold;
+    margin-bottom: 5px;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.pagination button {
+    padding: 5px 10px;
+}
+
+.pagination input {
+    width: 100px;
+    padding: 5px;
+    text-align: center;
+}

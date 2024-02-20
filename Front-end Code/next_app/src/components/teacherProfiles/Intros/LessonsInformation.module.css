@@ -1,0 +1,24 @@
+/* components/LessonsInformation.module.css */
+.container {
+    margin-bottom: 20px;
+}
+
+.collapsed {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 5; /* Lines to show */
+    -webkit-box-orient: vertical;
+}
+
+.expanded {
+}
+
+.button {
+    background: none;
+    border: none;
+    color: blue;
+    cursor: pointer;
+    padding: 5px;
+    display: block;
+    text-align: left;
+}
