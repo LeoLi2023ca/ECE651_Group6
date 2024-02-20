@@ -1,0 +1,34 @@
+<html>
+<head>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif; /* Choose a fancy font that's widely supported in email clients */
+        }
+        h1 {
+            font-size: 24px; /* Make the header larger */
+            color: #333; /* You can choose any color */
+        }
+        p, a {
+            font-size: 18px; /* Increase the font size for paragraph text and links */
+        }
+        a {
+            color: #1a0dab; /* Standard link color */
+            text-decoration: none; /* Remove underline from links if desired */
+            font-weight: bold; /* Make links bold */
+        }
+        .footer {
+            font-size: 16px; /* Slightly smaller font size for footer */
+        }
+    </style>
+</head>
+<body>
+    <p><img src="cid:OnlineTutorLogo" alt="OnlineTutor logo" /></p>
+    <h1>Welcome to OnlineTutor!</h1>
+    <p>Thank you for signing up. Please verify your email address by clicking the following link:</p>
+    <p><a href="{{ activation_url }}">Activate my account</a></p>
+    <p>If you are having any issues with your account, please don’t hesitate to contact us by replying to this mail.</p>
+    <p>Thanks!<br>OnlineTutor</p>
+    <hr>
+    <p>If you did not make this request, please contact us by replying to this mail.</p>
+</body>
+</html>
