@@ -1,100 +1,123 @@
 from . import login_register
 
-from flask import request, jsonify, render_template, current_app
+from flask import request, jsonify, render_template
 from werkzeug.security import generate_password_hash
 from flask_mail import Message, Mail
-from flask_mysqldb import MySQL
 import re
 import uuid
+from ..models import db, Student, Tutor
 # from my_app import mail, mysql
 
 email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
 # mail = current_app.extensions['mail']
 # mysql = current_app.extensions['mysql']
 mail = Mail()
-mysql = MySQL()
 
 @login_register.route('/')
 def home():
     return "This is the login/register page"
 
-# Route for adding a new student
 @login_register.route('/register', methods=['POST'])
-def add_account():
-    # Get data from request
+def register():
     username = request.json['username']
     password = request.json['password']
     email = request.json['email']
-    # Hash the password for security
+    id = request.json['id']  # 'Student' or 'Tutor'
     hashed_password = generate_password_hash(password)
-    token = activation_token()
-    # Create a cursor
-    cur = mysql.connection.cursor()
-    try:
-        # Check for duplicate username or email
-        if not re.match(email_regex, email):
-            return jsonify({'error': 'Invalid email format'}), 400
-        
-        cur.execute("SELECT * FROM Accounts WHERE username = %s OR email = %s", (username, email))
-        if cur.fetchone():
-            # Found a duplicate
-            return jsonify({'error': 'Username or email already exists.'}), 409
+    token = str(uuid.uuid4())  # Generate a unique activation token
+    if id == 'Student':
+        model = Student
+    elif id == 'Tutor':
+        model = Tutor
 
-        # No duplicates found, proceed to insert
-        cur.execute("INSERT INTO Accounts(username, password, email, activation_token) VALUES (%s, %s, %s, %s)", (username, password, email, token))
-        
-        # Commit to DB
+    # Validate email format
+    if not re.match(email_regex, email):
+        return jsonify({'error': 'Invalid email format'}), 400
+    
+    # Check for duplicate username or email
+    existing_student = Student.query.filter((Student.username == username) | (Student.email == email)).first()
+    existing_tutor = Tutor.query.filter((Tutor.username == username) | (Tutor.email == email)).first()
+    if existing_student or existing_tutor:
+        return jsonify({'error': 'Username or email already exists.'}), 409
+    
+    # Create new student instance
+    new_account = model(
+        username=username,
+        password=password,
+        email=email,
+        activation_token=token
+    )
+    
+    # Add new student to the session and commit
+    try:
+        db.session.add(new_account)
         send_welcome_mail(email, token)
-        mysql.connection.commit()
-        
+        db.session.commit()
         return jsonify({'message': 'Account added successfully!'}), 201
     except Exception as e:
-        # In case of any exception, rollback the transaction
-        mysql.connection.rollback()
+        db.session.rollback()
         return jsonify({'error': str(e)}), 500
-    finally:
-        # Close connection
-        cur.close()
 
 @login_register.route('/delete_account', methods=['POST'])
-def delete_account(id='Students'):
-    # Extracting username or email from request data
+def delete_account():
     account_identifier = request.json.get('identifier')  # Could be either username or email
+    id = request.json.get('id')  # 'Students' or 'Teachers'
 
-    cur = mysql.connection.cursor()
-
-    # Assuming 'username' and 'email' are in the same table and unique
-    sql = ""
-    if id == 'Students':
-        sql = "DELETE FROM Students WHERE username = %s OR email = %s"
-    elif id == 'Teachers':
-        sql = "DELETE FROM Teachers WHERE username = %s OR email = %s"
+    # Determine the model based on the 'id' provided
+    model = None
+    if id == 'Student':
+        model = Student
+    elif id == 'Tutor':
+        model = Tutor
     else:
         return jsonify({'error': 'Invalid account type'}), 400
-    # sql = "DELETE FROM Students WHERE username = %s OR email = %s"
-    affected_count = cur.execute(sql, (account_identifier, account_identifier))
-    mysql.connection.commit()
-    cur.close()
 
-    if affected_count:
-        return jsonify({'message': 'Account with username/email:{} deleted successfully'.format(account_identifier)}), 200
+    # Query the database for the user by username or email
+    user = model.query.filter((model.username == account_identifier) | (model.email == account_identifier)).first()
+    
+    if user:
+        try:
+            # Delete the user record
+            db.session.delete(user)
+            db.session.commit()
+            return jsonify({'message': f'Account with username/email: {account_identifier} deleted successfully'}), 200
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({'error': str(e)}), 500
     else:
         return jsonify({'error': 'Account not found'}), 404
 
+
 @login_register.route('/activate')
-def activate_account():
+def activate():
     token = request.args.get('token')
-    print(token)
-    cur = mysql.connection.cursor()
-    # Query the database for the token and check expiration
-    cur.execute("SELECT * FROM Accounts WHERE activation_token = %s", (token,))
-    user = cur.fetchone()
-    
-    if user:
+    if not token:
+        return "Activation token is missing", 400
+
+    # Query the database for the token
+    student_user = Student.query.filter_by(activation_token=token).first()
+    tutor_user = Tutor.query.filter_by(activation_token=token).first()
+
+    if student_user:
         # Token is valid, activate the account and remove the token
-        cur.execute("UPDATE Accounts SET registration_completed = TRUE, activation_token = NULL WHERE student_id = %s", (user[0],))
-        mysql.connection.commit()
-        return render_template('activation_success.html')
+        student_user.registration_completed = True
+        student_user.activation_token = None
+        try:
+            db.session.commit()
+            return render_template('activation_success.html')
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({'error': str(e)}), 500
+    elif tutor_user:
+        # Token is valid, activate the account and remove the token
+        tutor_user.registration_completed = True
+        tutor_user.activation_token = None
+        try:
+            db.session.commit()
+            return render_template('activation_success.html')
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({'error': str(e)}), 500
     else:
         return "Invalid or expired activation link."
     
@@ -102,14 +125,37 @@ def activate_account():
 def login():
     email = request.json['email']
     password = request.json['password']
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM Accounts WHERE email = %s", (email,))
-    user = cur.fetchone()
-    cur.close()
-    if user and user[2] == password and user[6] == True:
-        return jsonify({'message': 'Login successful!'})
+    existing_student = Student.query.filter((Student.email == email) | (Student.email == email)).first()
+    existing_tutor = Tutor.query.filter((Tutor.email == email) | (Tutor.email == email)).first()
+    user = existing_student if existing_student else existing_tutor
+
+    # Check if the user exists and the password is correct
+    if user and user.password == password:
+        if user.registration_completed:
+            return jsonify({'message': 'Login successful!'})
+        else:
+            return jsonify({'error': 'Account is not activated.'}), 401
     else:
         return jsonify({'error': 'Invalid email or password'}), 401
+
+@login_register.route('/update_password', methods=['POST'])
+def update_password():
+    email = request.json['email']
+    new_password = request.json['new_password']
+    existing_student = Student.query.filter((Student.email == email) | (Student.email == email)).first()
+    existing_tutor = Tutor.query.filter((Tutor.email == email) | (Tutor.email == email)).first()
+    user = existing_student if existing_student else existing_tutor
+
+    if user:
+        user.password = new_password
+        try:
+            db.session.commit()
+            return jsonify({'message': 'Password updated successfully!'})
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({'error': str(e)}), 500
+    else:
+        return jsonify({'error': 'User not found'}), 404
 
 def activation_token():
     return str(uuid.uuid4())
