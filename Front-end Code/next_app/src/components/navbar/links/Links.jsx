@@ -7,7 +7,7 @@ import Image from "next/image";
 
 const links = [
   {
-    title: "Home",
+    title: "Chat",
     path: "/",
   },
   {
@@ -21,7 +21,7 @@ const Links = () => {
 
   //TEMPORARY
   const session = true
-  const isTutor = false
+  const isTutor = true
 
   return (
     <div className={styles.container}>
