@@ -1,0 +1,35 @@
+
+.pageContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+.mainContent {
+    display: flex;
+    padding-top: 60px;
+    margin-right: 300px;
+}
+
+.leftColumn {
+    flex-grow: 1;
+    padding-right: 50px;
+}
+
+.rightColumn {
+
+    width: 400px;
+    position: fixed;
+    top: 160px;
+    right: 0;
+    z-index: 10;
+    padding-left: 0;
+    padding-right: 30px;
+}
+
