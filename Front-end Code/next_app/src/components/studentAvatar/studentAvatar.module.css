@@ -1,0 +1,29 @@
+.container {
+    position: relative;
+    cursor: pointer;
+}
+
+.avatar {
+    border-radius: 50%;
+}
+
+.dropdownMenu {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: 500;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    border: 1.5px solid #ddd;
+    border-radius: 5px;
+    width: 200px;
+    z-index: 1000;
+}
+
+.dropdownMenu a:hover {
+    background-color: #f2f2f2;
+}
+
