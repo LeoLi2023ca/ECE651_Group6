@@ -10,10 +10,7 @@ const links = [
     title: "Chat",
     path: "/",
   },
-  {
-    title: "Post",
-    path: "/post",
-  },
+  
 ];
 
 const Links = () => {
@@ -21,7 +18,7 @@ const Links = () => {
 
   //TEMPORARY
   const session = true
-  const isTutor = true
+  const isTutor = false
 
   return (
     <div className={styles.container}>
@@ -34,6 +31,7 @@ const Links = () => {
             {isTutor ? (
               <>
                 {/* <NavLink item={{ title: "Schedule", path: "/schedule" }} /> */}
+                <NavLink item={{ title: "Post", path: "/tutor-post" }} />
                 <NavLink item={{ title: "Find students", path: "/find-students" }} />
                 <NavLink item={{ title: "Match students", path: "/match-me-with-students" }} />
                 <NavLink item={{ title: "Profile", path: "/tutor-profile" }} />
@@ -41,6 +39,7 @@ const Links = () => {
               : (
                 <>
                   {/* <NavLink item={{ title: "Schedule", path: "/schedule" }} /> */}
+                  <NavLink item={{ title: "Post", path: "/student-post" }} />
                   <NavLink item={{ title: "Find tutors", path: "/find-tutors" }} />
                   <NavLink item={{ title: "Match tutors", path: "/match-me-with-tutors" }} />
                   <NavLink item={{ title: "Profile", path: "/student-profile" }} />
