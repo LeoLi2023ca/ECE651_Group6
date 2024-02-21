@@ -4,6 +4,8 @@ import { useState } from "react";
 import styles from "./links.module.css";
 import NavLink from "./navLink/navLink";
 import Image from "next/image";
+import TutorAvatar from "@/components/tutorAvatar/tutorAvatar";
+import StudentAvatar from "@/components/studentAvatar/studentAvatar";
 
 const links = [
   {
@@ -18,8 +20,7 @@ const Links = () => {
 
   //TEMPORARY
   const session = true
-  const isTutor = true
-
+  const isTutor = false
   return (
     <div className={styles.container}>
       <div className={styles.links}>
@@ -34,7 +35,8 @@ const Links = () => {
                 <NavLink item={{ title: "Post", path: "/tutor-post" }} />
                 <NavLink item={{ title: "Find students", path: "/find-students" }} />
                 <NavLink item={{ title: "Match students", path: "/match-me-with-students" }} />
-                <NavLink item={{ title: "Profile", path: "/tutor-profile" }} />
+                {/* <NavLink item={{ title: "Profile", path: "/tutor-profile" }} /> */}
+                <TutorAvatar />
               </>)
               : (
                 <>
@@ -42,10 +44,11 @@ const Links = () => {
                   <NavLink item={{ title: "Post", path: "/student-post" }} />
                   <NavLink item={{ title: "Find tutors", path: "/find-tutors" }} />
                   <NavLink item={{ title: "Match tutors", path: "/match-me-with-tutors" }} />
-                  <NavLink item={{ title: "Profile", path: "/student-profile" }} />
-                  
+                  {/* <NavLink item={{ title: "Profile", path: "/student-profile" }} /> */}
+                  <StudentAvatar />
                 </>)}
-            <button className={styles.logout}>Log out</button>
+            {/* <button className={styles.logout}>Log out</button> */}
+            
           </>
         ) : (
           <>
