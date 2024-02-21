@@ -7,9 +7,6 @@ const StudentPost = () => {
       <div>
         <StudentPostBtnPage />
       </div>
-      {/* <div className={styles.post}>
-        <StudentMyPostPage />
-      </div> */}
     </div>
   )
 };
