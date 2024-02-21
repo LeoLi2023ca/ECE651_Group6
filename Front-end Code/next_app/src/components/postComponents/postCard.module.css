@@ -1,0 +1,105 @@
+.card {
+    position: relative;
+    cursor: pointer;
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ddd;
+    margin: 10px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: transform 0.2s, background-color 0.2s;
+    width: 1000px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    overflow: hidden;
+}
+
+.postId .name .dateAndAvailableTime .subject .space{
+    font-size: 12px;
+}
+
+.salaryAmount {
+    font-size: 30px;
+}
+
+.salary {
+    font-size: 14px;
+}
+
+.title, .status{
+    font-size: 24px;
+}
+
+
+.msg{
+    font-size: 14px;
+}
+
+.title{
+    margin-top: 14px;
+}
+
+.subject{
+    position: absolute;
+    top: 5px;
+    left: 10px;
+}
+
+.postId {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
+.name {
+    position: absolute;
+    bottom: 5px;
+    left: 20px;
+}
+
+
+.salary {
+    position: absolute;
+    bottom: 5px;
+    right: 110px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.salaryAmount {
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100px;
+}
+
+
+
+
+.dateAndAvailableTime {
+    position: relative;
+    height: 20px;
+    margin-bottom: 10px;
+}
+
+.date, .availableTime {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: top;
+}
+
+.date {
+    width: 350px;
+}
+
+.availableTime {
+    position: absolute;
+    left: 400px;
+    width: 350px;
+}

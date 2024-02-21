@@ -1,0 +1,37 @@
+/* TitleBox.module.css */
+
+.titleBox {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    border: 1px solid #ccc;
+    padding: 10px; /* space to edge */
+    margin: 10px 0; /* space */
+    border-radius: 5px; /* Rounded corners */
+}
+
+.infoItem {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    margin-right: 50px;
+}
+
+.postId, .studentName, .studentID {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+}
+
+.postId {
+    width: 150px;
+}
+
+.studentName {
+    width: 150px;
+}
+
+.studentID {
+    width: 150px;
+}

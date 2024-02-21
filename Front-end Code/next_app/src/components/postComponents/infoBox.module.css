@@ -1,0 +1,34 @@
+.infoBox {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px 0;
+    color: black; /* Sets the font color to black */
+}
+
+.title, .date, .availableTime, .salary, .msg, .subject, .flexRow > div {
+    margin: 10px 0; /* Uniform margin for all elements */
+    padding: 10px; /* Padding inside the elements */
+    border: 1px solid #eee; /* Light gray border for each element */
+    border-radius: 4px; /* Rounded corners for a softer look */
+}
+
+.flexRow {
+    display: flex;
+    justify-content: space-between; /* Positions subject and salary in the same row but spaced apart */
+    margin: 10px 0px; /* Margin adjustments for the flexRow */
+}
+
+.subject, .salary {
+    flex-basis: calc(50% - 10px); /* Sets the base size for subject and salary, accounting for any gap */
+    margin: 0px 0px; /* Ensures subject and salary align with other elements */
+}
+
+.msg {
+    min-height: 300px; /* Minimum height to ensure enough space for content */
+    overflow: auto; /* Enables scrollbars if content overflows */
+    resize: both; /* Allows resizing both horizontally and vertically */
+    box-sizing: border-box; /* Includes borders and paddings in the element's total width and height */
+}

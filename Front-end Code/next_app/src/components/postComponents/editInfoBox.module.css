@@ -1,0 +1,54 @@
+.infoBox {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px 0;
+    color: black; /* Font color is black */
+}
+
+.label {
+    display: block; /* Make the label a block-level element */
+    margin: 10px 0; /* Consistent margin with other elements */
+    padding: 5px; /* Slightly smaller padding to distinguish between title and input box */
+    color: #000; /* Title color */
+}
+
+/* Styles for input and text areas */
+.title, .date, .availableTime, .salary, .msg, .subject {
+    width: 100%; /* Fill the container width */
+    margin: 5px 0 10px; /* Adjust margin to accommodate the title */
+    padding: 8px; /* Comfortable padding */
+    border: 1px solid #eee;
+    border-radius: 4px;
+}
+
+.flexRow {
+    display: flex;
+    justify-content: start; /* Adjust to start to avoid overstretched shorter input boxes */
+    gap: 10px; /* Add some gap between input boxes */
+    margin: -5px -5px; /* Adjust the top and bottom margin of flexRow */
+}
+
+.flexRow .label {
+    flex-basis: calc(50% - 10px); /* Adjust width to fit the container */
+    margin: 0; /* Reset margin */
+    padding: 0; /* Reset padding */
+}
+
+.subject, .salary {
+    flex-basis: calc(100%); /* Input fields fill their label container */
+    margin: 10px 10px; /* Uniform input field margin */
+}
+
+.salary {
+    width: 330px; /* Directly set the width of the salary input box */
+}
+
+.msg {
+    min-height: 400px; /* Adjust minimum height to accommodate content */
+    overflow: auto; /* Allow scrollbars to be displayed when content overflows */
+    resize: vertical; /* Only allow vertical resizing */
+    box-sizing: border-box; /* Borders and inner margins included in width and height */
+}
