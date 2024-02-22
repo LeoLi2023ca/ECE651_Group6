@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './titleBox.module.css'; // 确保路径正确
+import styles from './titleBox.module.css';
 
 const TitleBox = ({post}) => {
     return (

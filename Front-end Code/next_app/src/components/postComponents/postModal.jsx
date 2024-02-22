@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styles from './postModal.module.css';
-import InfoBox from "@/components/postComponents/InfoBox";
-import EditInfoBox from "@/components/postComponents/EditInfoBox";
-import TitleBox from "@/components/postComponents/TitleBox";
+import InfoBox from "@/components/postComponents/infoBox";
+import EditInfoBox from "@/components/postComponents/editInfoBox";
+import TitleBox from "@/components/postComponents/titleBox";
 
 const PostModal = ({ post, onClose }) => {
     const [isEditing, setIsEditing] = useState(false);

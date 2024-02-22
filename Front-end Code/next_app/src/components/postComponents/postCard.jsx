@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './PostCard.module.css'; // 确保路径正确
+import styles from './postCard.module.css';
 
 const PostCard = ({ post, onClick }) => {
     return (

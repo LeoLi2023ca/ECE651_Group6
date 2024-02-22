@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './InfoBox.module.css';
+import styles from './infoBox.module.css';
 
 const InfoBox = ({ post }) => {
     return (

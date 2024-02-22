@@ -1,7 +1,7 @@
 
 import styles from './StudentInfo.module.css';
 
-const StudentInfo = ({ education, school, grade, studyTime, email }) => (
+const StudentInfo = ({ education, school, grade, studyTime, email, time }) => (
     <div className={styles.container}>
         <div className={styles.info}>
             <strong>Current education:</strong> {education}
@@ -16,7 +16,10 @@ const StudentInfo = ({ education, school, grade, studyTime, email }) => (
             <strong>Except Study time:</strong> {studyTime} hours
         </div>
         <div className={styles.rating}>
-            <strong>Email:</strong> {email} / 5
+            <strong>Email:</strong> {email}
+        </div>
+        <div className={styles.rating}>
+            <strong>Time Zone:</strong> {time}
         </div>
     </div>
 );
