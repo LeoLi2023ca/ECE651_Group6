@@ -1,4 +1,4 @@
-name: Deploy to AWS
+name: Deploy to AWS EC2
 
 on:
   push:
@@ -6,31 +6,32 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: frontend/next_app
-        
+
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: '18'
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
-    - name: Install Dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    - name: Build
-      run: npm run build
-      
-    - name: Deploy to AWS
-      run: /bin/bash ./next_app/deploy-nextjs.sh
-      working-directory: frontend/
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_REGION: 'us-east-2'
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ec2-user@18.219.51.210
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            git pull origin main
+            cd /ECE651_Group6/frontend/next_app
+            npm install
+            npm run build
+            pm2 restart all
