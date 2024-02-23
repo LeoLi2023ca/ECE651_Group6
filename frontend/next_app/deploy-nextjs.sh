@@ -3,8 +3,8 @@
 # 定义变量
 EC2_HOST="ec2-user@18.219.51.210"
 APP_NAME="next_app"
-KEY_PATH="ECE651_Group6/frontend/next_app/front-end.pem"
-APP_DIR="ECE651_Group6/frontend/next_app"  # 指向 Git 仓库中的应用目录
+KEY_PATH="./next_app/front-end.pem"
+APP_DIR="./next_app"  # 指向 Git 仓库中的应用目录
 DIST_FOLDER="$APP_DIR/.next"  # 构建目录
 REMOTE_APP_PATH="/home/ec2-user/$APP_NAME"  # 远程EC2上的应用路径
 
