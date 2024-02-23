@@ -32,13 +32,12 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H 18.219.13.62 >> ~/.ssh/known_hosts
+          ssh-keyscan -H ec2-18-219-13-62.us-east-2.compute.amazonaws.com >> ~/.ssh/known_hosts
           
       - name: Deploy to EC2
         uses: appleboy/ssh-action@master
         with:
           host: ec2-18-219-13-62.us-east-2.compute.amazonaws.com
-          key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             git pull origin main
             cd /ECE651_Group6/frontend/next_app
