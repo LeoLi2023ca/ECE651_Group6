@@ -26,7 +26,14 @@ jobs:
 
       - name: Build
         run: npm run build
-
+        
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H 18.219.13.62 >> ~/.ssh/known_hosts
+          
       - name: Deploy to EC2
         uses: appleboy/ssh-action@master
         with:
