@@ -38,6 +38,7 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ec2-18-219-13-62.us-east-2.compute.amazonaws.com
+          key: "id_rsa"
           script: |
             git pull origin main
             cd /ECE651_Group6/frontend/next_app
