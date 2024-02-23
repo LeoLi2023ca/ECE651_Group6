@@ -20,11 +20,11 @@ jobs:
 
     - name: Install Dependencies
       run: npm install
-      working-directory: ECE651_Group6/Front-end Code/next_app
+      working-directory: ./ECE651_Group6/Front-end Code/next_app
       
     - name: Build
       run: npm run build
-      working-directory: ECE651_Group6/Front-end Code/next_app
+      working-directory: ./ECE651_Group6/Front-end Code/next_app
       
     - name: Deploy to AWS
       run: ./deploy-nextjs.sh
