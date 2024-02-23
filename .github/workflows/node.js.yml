@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: frontend/
+        working-directory: frontend/next_app
         
     steps:
     - name: Checkout Repository
@@ -28,7 +28,8 @@ jobs:
       run: npm run build
       
     - name: Deploy to AWS
-      run: /bin/bash ./deploy-nextjs.sh
+      run: /bin/bash ./next_app/deploy-nextjs.sh
+      working-directory: frontend/
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
