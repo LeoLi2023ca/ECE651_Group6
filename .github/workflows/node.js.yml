@@ -30,10 +30,10 @@ jobs:
       - name: Deploy code
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/front-end.pem
+          chmod 400 ~/.ssh/front-end.pem
           ssh-keyscan -H ec2-18-219-13-62.us-east-2.compute.amazonaws.com >> ~/.ssh/known_hosts
-          ssh -i ~/.ssh/id_rsa ec2-user@ec2-18-219-13-62.us-east-2.compute.amazonaws.com "git pull origin main &&
+          ssh -i ~/.ssh/front-end.pem ec2-user@ec2-18-219-13-62.us-east-2.compute.amazonaws.com "git pull origin main &&
             cd /ECE651_Group6/frontend/next_app &&
             npm install &&
             npm run build &&
