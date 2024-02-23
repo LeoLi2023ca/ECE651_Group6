@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: Front-end Code/next_app
+        working-directory: frontend/next_app
         
     steps:
     - name: Checkout Repository
