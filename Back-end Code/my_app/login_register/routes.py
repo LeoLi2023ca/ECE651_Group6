@@ -123,10 +123,10 @@ def activate():
     
 @login_register.route('/login', methods=['POST'])
 def login():
-    email = request.json['email']
+    login_identifier = request.json['login_identifier']
     password = request.json['password']
-    existing_student = Student.query.filter((Student.email == email) | (Student.email == email)).first()
-    existing_tutor = Tutor.query.filter((Tutor.email == email) | (Tutor.email == email)).first()
+    existing_student = Student.query.filter((Student.username == login_identifier) | (Student.email == login_identifier)).first()
+    existing_tutor = Tutor.query.filter((Tutor.username == login_identifier) | (Tutor.email == login_identifier)).first()
     user = existing_student if existing_student else existing_tutor
 
     # Check if the user exists and the password is correct
@@ -138,12 +138,12 @@ def login():
     else:
         return jsonify({'error': 'Invalid email or password'}), 401
 
-@login_register.route('/update_password', methods=['POST'])
+@login_register.route('/updatePwd', methods=['POST'])
 def update_password():
-    email = request.json['email']
+    username = request.json['username']
     new_password = request.json['new_password']
-    existing_student = Student.query.filter((Student.email == email) | (Student.email == email)).first()
-    existing_tutor = Tutor.query.filter((Tutor.email == email) | (Tutor.email == email)).first()
+    existing_student = Student.query.filter((Student.username == username)).first()
+    existing_tutor = Tutor.query.filter((Tutor.username == username)).first()
     user = existing_student if existing_student else existing_tutor
 
     if user:
@@ -156,6 +156,31 @@ def update_password():
             return jsonify({'error': str(e)}), 500
     else:
         return jsonify({'error': 'User not found'}), 404
+
+@login_register.route('/updateStudentInfo', methods=['POST'])
+def update_student_info():
+    username = request.json['username']
+    new_info = request.json['info']
+    existing_student = Student.query.filter((Student.username == username)).first()
+    if existing_student:
+        existing_student.msg = new_info
+        try:
+            db.session.commit()
+            return jsonify({'message': 'Email updated successfully!'})
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({'error': str(e)}), 500
+    else:
+        return jsonify({'error': 'Student not found'}), 404
+    
+@login_register.route('/getStudentInfoByID', methods=['GET'])
+def get_student_info_by_id():
+    student_id = request.args.get('id')
+    student = Student.query.filter_by(id=student_id).first()
+    if student:
+        return jsonify({'username': student.username, 'email': student.email, 'grade': student.grade, 'timezone': student.timezone, 'msg': student.msg})
+    else:
+        return jsonify({'error': 'Student not found'}), 404
 
 def activation_token():
     return str(uuid.uuid4())

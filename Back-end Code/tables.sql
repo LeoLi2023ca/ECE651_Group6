@@ -16,7 +16,7 @@ CREATE TABLE Tutor (
     username VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
-    eduBackground ENUM('highschool', 'bachelor', 'master', 'phd') NOT NULL DEFAULT 'tbd',
+    eduBackground ENUM('highschool', 'bachelor', 'master', 'phd', 'tbd') NOT NULL DEFAULT 'tbd',
     timezone VARCHAR(50) DEFAULT 'UTC +0',
     availableTime VARCHAR(100) DEFAULT '',
     msg VARCHAR(255) DEFAULT 'Hello, I am a tutor',
@@ -28,7 +28,7 @@ CREATE TABLE Subject (
     subjectName VARCHAR(50) NOT NULL UNIQUE
 );
 CREATE TABLE Student_post (
-    post_id INT AUTO_INCREMENT PRIMARY KEY,
+    postId INT AUTO_INCREMENT PRIMARY KEY,
     student_id INT NOT NULL,
     student_name VARCHAR(255) NOT NULL,
     subject_id INT NOT NULL,
@@ -36,10 +36,9 @@ CREATE TABLE Student_post (
     date DATE NOT NULL,
     title VARCHAR(50) NOT NULL,
     msg VARCHAR(255) NOT NULL,
-    salary DECIMAL(10, 2), -- Assuming salary is a decimal with 2 decimal places
-    available_time VARCHAR(255), -- Assuming this is a text field to describe availability
-    status VARCHAR(50) -- Assuming status is a short text field, e.g. 'active', 'inactive'
+    salary DECIMAL(10, 2),
+    available_time VARCHAR(255),
+    status VARCHAR(50)
 );
-
 -- ALTER TABLE Students ADD COLUMN registration_complete BOOLEAN DEFAULT FALSE; 
 -- ALTER TABLE Teachers ADD COLUMN registration_complete BOOLEAN DEFAULT FALSE;
