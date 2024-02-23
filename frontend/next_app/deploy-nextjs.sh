@@ -3,9 +3,9 @@
 # 定义变量
 EC2_HOST="ec2-user@18.219.51.210"
 APP_NAME="next_app"
-KEY_PATH="./next_app/front-end.pem"
+KEY_PATH="./front-end.pem"
 APP_DIR="./next_app"  # 指向 Git 仓库中的应用目录
-DIST_FOLDER="$APP_DIR/.next"  # 构建目录
+DIST_FOLDER="./.next"  # 构建目录
 REMOTE_APP_PATH="/home/ec2-user/$APP_NAME"  # 远程EC2上的应用路径
 
 # 进入应用目录
@@ -15,9 +15,6 @@ cd $APP_DIR
 # 打包应用
 echo "Packing the application..."
 zip -r $APP_NAME.zip $DIST_FOLDER package.json yarn.lock
-
-# 返回到原始目录 (可选)
-cd -
 
 # 上传到 EC2
 echo "Uploading to EC2 instance..."
