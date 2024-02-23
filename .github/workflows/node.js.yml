@@ -30,7 +30,7 @@ jobs:
       - name: Deploy to EC2
         uses: appleboy/ssh-action@master
         with:
-          host: ec2-user@ec2-18-219-51-210.us-east-2.compute.amazonaws.com
+          host: ec2-user@ec2-3-18-225-120.us-east-2.compute.amazonaws.com
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             git pull origin main
