@@ -30,7 +30,7 @@ jobs:
       - name: Deploy code
         run: |
           mkdir -p ~/.ssh
-          "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/front-end.pem
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/front-end.pem
           tail ~/.ssh/front-end.pem
           chmod 400 ~/.ssh/front-end.pem
           ssh-keyscan -H ec2-18-219-13-62.us-east-2.compute.amazonaws.com >> ~/.ssh/known_hosts
