@@ -1,4 +1,4 @@
-name: Deploy to AWS
+name: Deploy to AWS EC2
 
 on:
   push:
@@ -6,30 +6,36 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: Front-end Code/next_app
-        
+        working-directory: frontend/next_app
+
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: '18'
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
-    - name: Install Dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    - name: Build
-      run: npm run build
-      
-    - name: Deploy to AWS
-      run: ./deploy-nextjs.sh
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_REGION: 'us-east-2'
+      - name: Build
+        run: npm run build
+
+      - name: Deploy code
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/front-end.pem
+          tail ~/.ssh/front-end.pem
+          chmod 400 ~/.ssh/front-end.pem
+          ssh-keyscan -H ec2-18-219-13-62.us-east-2.compute.amazonaws.com >> ~/.ssh/known_hosts
+          ssh -i ~/.ssh/front-end.pem ubuntu@ec2-18-219-13-62.us-east-2.compute.amazonaws.com "cd ~/ECE651_Group6/frontend/next_app &&
+            git pull &&
+            npm install &&
+            npm run build &&
+            pm2 restart all"
