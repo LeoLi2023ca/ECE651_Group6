@@ -34,8 +34,4 @@ jobs:
           tail ~/.ssh/front-end.pem
           chmod 400 ~/.ssh/front-end.pem
           ssh-keyscan -H ec2-18-219-13-62.us-east-2.compute.amazonaws.com >> ~/.ssh/known_hosts
-          ssh -i ~/.ssh/front-end.pem ubuntu@ec2-18-219-13-62.us-east-2.compute.amazonaws.com "cd ~/ECE651_Group6/frontend/next_app &&
-            git pull &&
-            npm install &&
-            npm run build &&
-            pm2 restart all"
+          ssh -i ~/.ssh/front-end.pem ubuntu@ec2-18-219-13-62.us-east-2.compute.amazonaws.com "cd ~/ECE651_Group6/frontend/next_app && git pull && npm install && sudo npm run build && pm2 restart all"
