@@ -137,6 +137,59 @@ def login():
             return jsonify({'error': 'Account is not activated.'}), 401
     else:
         return jsonify({'error': 'Invalid email or password'}), 401
+    
+@login_register.route('/forgetPwd', methods=['POST'])
+def forget_password():
+    email = request.json['email']
+    existing_student = Student.query.filter((Student.email == email)).first()
+    existing_tutor = Tutor.query.filter((Tutor.email == email)).first()
+    user = existing_student if existing_student else existing_tutor
+
+    if user:
+        try:
+            token = str(uuid.uuid4())  # Generate a unique activation token
+            user.activation_token = token
+            send_resetPwd_mail(email, token)
+            db.session.commit()
+            return jsonify({'message': 'Reset password email has been sent!'})
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({'error': str(e)}), 500
+    else:
+        return jsonify({'error': 'User not found'}), 404
+    
+@login_register.route('/resetPwd')
+def reset_password():
+    token = request.args.get('token')
+    if not token:
+        return "Reset token is missing", 400
+
+    # Query the database for the token
+    student_user = Student.query.filter_by(activation_token=token).first()
+    tutor_user = Tutor.query.filter_by(activation_token=token).first()
+
+    if student_user:
+        # Token is valid, activate the account and remove the token
+        student_user.registration_completed = True
+        student_user.activation_token = None
+        try:
+            db.session.commit()
+            return render_template('activation_success.html')
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({'error': str(e)}), 500
+    elif tutor_user:
+        # Token is valid, activate the account and remove the token
+        tutor_user.registration_completed = True
+        tutor_user.activation_token = None
+        try:
+            db.session.commit()
+            return render_template('activation_success.html')
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({'error': str(e)}), 500
+    else:
+        return "Invalid or expired activation link."
 
 @login_register.route('/updatePwd', methods=['POST'])
 def update_password():
@@ -189,6 +242,15 @@ def send_welcome_mail(email, token):
     activation_url = 'http://127.0.0.1:5000/activate?token={}'.format(token)
     html_content = render_template('activation_email.html', activation_url=activation_url)
     msg = Message('Welcome to OnlineTutor', recipients=[email], html=html_content)
+    # msg.body = 'Welcome to OnlineTutor! Please click the link below to activate your account:\nhttp://127.0.0.1:5000/activate?token={}'.format(token)
+    with login_register.open_resource('../static/OnlineTutor.jpg') as fp:
+        msg.attach('logo.png', 'image/png', fp.read(), 'inline', headers=[['Content-ID', '<OnlineTutorLogo>']])
+    mail.send(msg)
+
+def send_resetPwd_mail(email, token):
+    reset_url = 'http://127.0.0.1:5000/resetPwd?token={}'.format(token)
+    html_content = render_template('reset_password.html', reset_url=reset_url)
+    msg = Message('OnlineTutor reset password', recipients=[email], html=html_content)
     # msg.body = 'Welcome to OnlineTutor! Please click the link below to activate your account:\nhttp://127.0.0.1:5000/activate?token={}'.format(token)
     with login_register.open_resource('../static/OnlineTutor.jpg') as fp:
         msg.attach('logo.png', 'image/png', fp.read(), 'inline', headers=[['Content-ID', '<OnlineTutorLogo>']])
