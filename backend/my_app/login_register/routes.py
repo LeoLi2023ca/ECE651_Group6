@@ -169,27 +169,25 @@ def reset_password():
     tutor_user = Tutor.query.filter_by(activation_token=token).first()
 
     if student_user:
-        # Token is valid, activate the account and remove the token
-        student_user.registration_completed = True
+        # Token is valid, remove the token
         student_user.activation_token = None
         try:
             db.session.commit()
-            return render_template('activation_success.html')
+            return render_template('reset_password.html')
         except Exception as e:
             db.session.rollback()
             return jsonify({'error': str(e)}), 500
     elif tutor_user:
-        # Token is valid, activate the account and remove the token
-        tutor_user.registration_completed = True
+        # Token is valid, remove the token
         tutor_user.activation_token = None
         try:
             db.session.commit()
-            return render_template('activation_success.html')
+            return render_template('reset_password.html')
         except Exception as e:
             db.session.rollback()
             return jsonify({'error': str(e)}), 500
     else:
-        return "Invalid or expired activation link."
+        return "Invalid or expired reset link."
 
 @login_register.route('/updatePwd', methods=['POST'])
 def update_password():
