@@ -20,7 +20,8 @@ const Links = () => {
 
   //TEMPORARY
   const session = true
-  const isTutor = false
+  const data = localStorage.getItem('isTutor');
+  const isTutor = data?true:false
   return (
     <div className={styles.container}>
       <div className={styles.links}>

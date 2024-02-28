@@ -6,10 +6,13 @@ import { useState } from "react";
 const RegisterForm = ({ onFormSwitch }) => {
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
+    localStorage.setItem('isTutor', false);
 
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(email);
+        localStorage.setItem('isTutor', true);
+
         // Login with back-end code
     };
 
