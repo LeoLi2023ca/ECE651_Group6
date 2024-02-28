@@ -1,14 +1,13 @@
-"use client";
-
 import styles from "./loginForm.module.css";
 import { useState } from "react";
+import axios from "axios";
 
-const RegisterForm = ({ onFormSwitch }) => {
+const LoginForm = ({ onFormSwitch }) => {
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
     localStorage.setItem('isTutor', false);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         console.log(email);
         localStorage.setItem('isTutor', true);
@@ -19,6 +18,7 @@ const RegisterForm = ({ onFormSwitch }) => {
     return (
         <div className={styles.container}>
             <h1 className={styles.title}>Log in</h1>
+            {error && <div className={styles.error}>{error}</div>} {/* Display error message */}
             <form className={styles.loginForm} onSubmit={handleSubmit}>
                 <label className={styles.label} htmlFor="email">Email</label>
                 <input className={styles.input}
@@ -36,12 +36,13 @@ const RegisterForm = ({ onFormSwitch }) => {
                     id="password"
                     name="password"
                 />
-                <button className={styles.button} type="submit">Log in</button>
+                <button className={styles.button} type="submit" disabled={loading}>
+                    {loading ? 'Logging in...' : 'Log in'}
+                </button>
             </form>
             <button className={styles.link} onClick={() => onFormSwitch("register")}>Don't have an account? Register now.</button>
         </div>
     );
 };
 
-export default RegisterForm;
-
+export default LoginForm;
