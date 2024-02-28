@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot Your Password?</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif; /* Google's Roboto font */
+            background-color: #f5f5f5; /* Light gray background */
+            color: #333; /* Dark gray text */
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+            line-height: 1.6; /* Improved readability */
+        }
+        .container {
+            max-width: 600px; /* Set maximum width for content */
+            margin: 20px auto; /* Center content */
+            padding: 20px; /* Add padding */
+            background-color: #fff; /* White background for content */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Add a subtle shadow */
+        }
+        h1 {
+            font-size: 24px; /* Larger header size */
+            color: #1a73e8; /* Google blue for headers */
+        }
+        p {
+            font-size: 16px; /* Normal font size for paragraphs */
+            margin-bottom: 10px; /* Add spacing between paragraphs */
+        }
+        a.button {
+            display: inline-block;
+            padding: 10px 20px;
+            border: 2px solid #1a73e8; /* Google blue for border */
+            color: #1a73e8; /* Google blue for text */
+            text-decoration: none; /* Remove underline */
+            font-weight: bold; /* Bold font weight */
+            border-radius: 4px; /* Rounded corners */
+            transition: background-color 0.3s ease; /* Smooth transition */
+        }
+        a.button:hover {
+            background-color: #f0f0f0; /* Light gray background on hover */
+        }
+        .footer {
+            font-size: 14px; /* Smaller font size for footer */
+            color: #757575; /* Light gray text for footer */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="cid:OnlineTutorLogo" alt="OnlineTutor logo">
+        <h1>Forgot Your Password?</h1>
+        <p>Hi there,</p>
+        <p>We received a request to reset your password for your OnlineTutor account. No worries! Please follow the instructions below to reset your password:</p>
+        <ol>
+            <li>Click the "Reset Password" button below:</li>
+            <li>Follow the instructions on the reset page to create a new password.</li>
+        </ol>
+        <p><a href="{{ reset_password_url }}" class="button">Reset Password</a></p>
+        <p>If you didn't request a password reset, please ignore this email.</p>
+        <p>If you're having any trouble, please don't hesitate to contact us by replying to this email or visiting our <a href="https://www.onlinetutor.com/help">Help Center</a>.</p>
+        <p>Thanks for choosing OnlineTutor!</p>
+        <hr>
+        <p><strong>Contact Information:</strong></p>
+        <p>Email: support@onlinetutor.com</p>
+        <p>Phone: 1-800-123-4567</p>
+        <p>Address: 123 Main Street, City, Country</p>
+        <p class="footer">If you did not make this request, please contact us by replying to this mail.</p>
+    </div>
+</body>
+</html>

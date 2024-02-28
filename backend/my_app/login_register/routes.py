@@ -149,7 +149,7 @@ def forget_password():
         try:
             token = str(uuid.uuid4())  # Generate a unique activation token
             user.activation_token = token
-            send_resetPwd_mail(email, token)
+            send_forget_pwd_mail(email, token)
             db.session.commit()
             return jsonify({'message': 'Reset password email has been sent!'})
         except Exception as e:
@@ -245,9 +245,9 @@ def send_welcome_mail(email, token):
         msg.attach('logo.png', 'image/png', fp.read(), 'inline', headers=[['Content-ID', '<OnlineTutorLogo>']])
     mail.send(msg)
 
-def send_resetPwd_mail(email, token):
+def send_forget_pwd_mail(email, token):
     reset_url = 'http://127.0.0.1:5000/resetPwd?token={}'.format(token)
-    html_content = render_template('reset_password.html', reset_url=reset_url)
+    html_content = render_template('forget_pwd_email.html', reset_url=reset_url)
     msg = Message('OnlineTutor reset password', recipients=[email], html=html_content)
     # msg.body = 'Welcome to OnlineTutor! Please click the link below to activate your account:\nhttp://127.0.0.1:5000/activate?token={}'.format(token)
     with login_register.open_resource('../static/OnlineTutor.jpg') as fp:
