@@ -20,7 +20,7 @@ const router = createRouter({
     {
       path: '/post',
       name: 'post',
-      component: PostView
+      component: PostView,
     },
     {
       path: '/tutor-list',
@@ -30,10 +30,10 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach((to, from, next) => {
-  const isAuthenticated = localStorage.getItem('token');
-  if (to.name !== 'login' && !isAuthenticated) next({ name: 'login' });
-  else next();
-});
+// router.beforeEach((to, from, next) => {
+//   const isAuthenticated = localStorage.getItem('token');
+//   if (to.name !== 'login' && !isAuthenticated) next({ name: 'login' });
+//   else next();
+// });
 
 export default router

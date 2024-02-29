@@ -16,29 +16,43 @@
         <label for="confirmPassword">确认密码:</label>
         <input id="confirmPassword" v-model="confirmPassword" type="password" placeholder="请再次输入密码" />
       </div>
+      <div>
+            <input type="radio" id="radio_1" value="Student" v-model="role">
+            <label for="radio_1">Student</label>
+            <input type="radio" id="radio_2" value="Tutor" v-model="role">
+            <label for="radio_2">Tutor</label>
+        </div>
       <button type="submit">注册</button>
     </form>
   </template>
   
   <script setup>
   import { ref } from 'vue';
-  
+  const role = ref('Student')
   const username = ref('');
   const email = ref('');
   const password = ref('');
   const confirmPassword = ref('');
   
   const handleSubmit = () => {
-    console.log('提交注册', {
-      username: username.value,
-      email: email.value,
-      password: password.value,
-      confirmPassword: confirmPassword.value,
-    });
-  };
-  const handleLogin = () => {
-    router.push('/login');
-  };
+    var data = new FormData();
+    data.append('username', username.value);
+    data.append('password', password.value);
+
+    var config = {
+        method: 'post',
+        url: 'http://localhost:5000/login',
+        data: data
+    };
+
+    axios(config)
+        .then(function (response) {
+            console.log(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+  }
   </script>
   
   

@@ -1,12 +1,8 @@
 <template>
     <header>
       <nav>
-        <ul>
-          <li><router-link to="/">Home</router-link></li>
-          <li><router-link to="/post-list">Posts</router-link></li>
-          <li><router-link to="/tutor-list">Me</router-link></li>
-          <!-- 添加更多导航链接 -->
-        </ul>
+          <router-link to="/">Home</router-link>
+          <router-link to="/post-list">Posts</router-link>        
       </nav>
     </header>
   </template>

@@ -14,8 +14,8 @@ onMounted(() => {
 
 <template>
   <div>
-    <StudentHeader v-if="isStudent" />
-    <TutorHeader v-else />
+    <TutorHeader v-if="isStudent" />
+    <StudentHeader v-else />
     <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" /> -->
 
     <div class="wrapper">

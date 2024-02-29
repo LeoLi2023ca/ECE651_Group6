@@ -19,10 +19,10 @@ def home():
 
 @login_register.route('/register', methods=['POST'])
 def register():
-    username = request.json['username']
-    password = request.json['password']
-    email = request.json['email']
-    id = request.json['id']  # 'Student' or 'Tutor'
+    username = request.form.get('username')
+    password = request.form.get('password')
+    email = request.form.get('email')
+    id = request.form.get('id')  # 'Student' or 'Tutor'
     hashed_password = generate_password_hash(password)
     token = str(uuid.uuid4())  # Generate a unique activation token
     if id == 'Student':
@@ -51,7 +51,7 @@ def register():
     # Add new student to the session and commit
     try:
         db.session.add(new_account)
-        send_welcome_mail(email, token)
+        # send_welcome_mail(email, token)
         db.session.commit()
         return jsonify({'message': 'Account added successfully!'}), 201
     except Exception as e:
@@ -123,15 +123,15 @@ def activate():
     
 @login_register.route('/login', methods=['POST'])
 def login():
-    login_identifier = request.json['login_identifier']
-    password = request.json['password']
-    existing_student = Student.query.filter((Student.username == login_identifier) | (Student.email == login_identifier)).first()
-    existing_tutor = Tutor.query.filter((Tutor.username == login_identifier) | (Tutor.email == login_identifier)).first()
+    username = request.form.get('username')
+    password = request.form.get('password')
+    existing_student = Student.query.filter((Student.username == username)).first()
+    existing_tutor = Tutor.query.filter((Tutor.username == username)).first()
     user = existing_student if existing_student else existing_tutor
 
     # Check if the user exists and the password is correct
     if user and user.password == password:
-        if user.registration_completed:
+        if user.registration_completed==1:
             return jsonify({'message': 'Login successful!'})
         else:
             return jsonify({'error': 'Account is not activated.'}), 401
