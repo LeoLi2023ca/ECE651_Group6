@@ -1,32 +1,37 @@
-from . import post
-
 from flask import request, jsonify, render_template
 import re
 import uuid
 from ..models import db, Student, Tutor, Subject, Student_Post
+from flask import Blueprint
+from datetime import date
 
-@post.route('/')
-def home():
-    return "This is the posting page"
+post = Blueprint('post', __name__)
 
-@post.route('/createPost', methods=['POST'])
-def createPost():
-    data = request.get_json()
-    student = Student.query.filter_by(username=data['username']).first()
-    subject = Subject.query.filter_by(subjectName=data['subject']).first()
+@post.route('/create_post', methods=['POST'])
+def create_post():
+    username = request.form.get('username')
+    title = request.form.get('title')
+    post_date = date.today()
+    msg = request.form.get('msg')
+    salary = request.form.get('salary')
+    subject_name = request.form.get('subject_name')
+    available_time = request.form.get('available_time')
+    status = request.form.get('status')
+
+    student = Student.query.filter_by(username=username).first()
+    # subject = Subject.query.filter_by(subjectName=subject_name).first()
     if student is None:
         return jsonify({'error': 'Student not found'})
     else:
         new_post = Student_Post(
-            studentId=student.studentId,
-            studentName=student.username,
-            title=data['title'],
-            date=data['date'],
-            msg=data['info'],
-            salary=data['salary'],
-            subjectId=subject.subjectId,
-            subjectName=subject.subjectName,
-            status='open'
+            username=username,
+            title=title,
+            post_date=post_date,
+            msg=msg,
+            salary=salary,
+            subject_name=subject_name,
+            available_time=available_time,
+            status=status
         )
         db.session.add(new_post)
         db.session.commit()

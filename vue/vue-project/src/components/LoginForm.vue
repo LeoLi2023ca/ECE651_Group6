@@ -1,27 +1,34 @@
 <template>
-    <form @submit.prevent="handleSubmit">
-        <div>
-            <label for="username">用户名:</label>
-            <input id="username" v-model="username" type="text" placeholder="请输入用户名" />
-        </div>
-        <div>
-            <label for="password">密码:</label>
-            <input id="password" v-model="password" type="password" placeholder="请输入密码" />
-        </div>
+        <a-form name="basic" :label-col="{ span: 6 }" :wrapper-col="{ span: 12 }" autocomplete="off">
+            <a-form-item label="Username" name="username">
+                <a-input v-model:value="username" />
+            </a-form-item>
 
-        <button type="submit">登录</button>
-    </form>
+            <a-form-item label="Password" name="password">
+                <a-input-password v-model:value="password" />
+            </a-form-item>
+            <!-- <a-form-item label="Password" name="password"
+            :rules="[{ required: true, message: 'Please input your password!' }]">
+            <a-input-password v-model:value="password" />
+        </a-form-item> -->
+
+            <a-form-item :wrapper-col="{ offset: 6, span: 12 }">
+                <a-button style="width: 225px;" type="primary" @click="login()">Login</a-button>
+            </a-form-item>
+        </a-form>
 </template>
-  
+
 <script setup>
 import { ref } from 'vue';
-import { useRouter } from 'vue-router'; // 导入useRouter，如果你使用Vue Router来导航
+import { useRouter } from 'vue-router';
 import axios from 'axios';
+
+const router = useRouter();
 
 const username = ref('');
 const password = ref('');
 
-const handleSubmit = async () => {
+const login = async () => {
     var data = new FormData();
     data.append('username', username.value);
     data.append('password', password.value);
@@ -34,13 +41,15 @@ const handleSubmit = async () => {
 
     axios(config)
         .then(function (response) {
-            console.log(JSON.stringify(response.data));
+            if (response.data.code == "1") {
+                // console.log(response)
+                sessionStorage.setItem('token', '1');
+                // sessionStorage.setItem('');
+                router.push({ name: 'home' });
+            }
         })
         .catch(function (error) {
             console.log(error);
         });
 };
-
-
 </script>
-  

@@ -13,22 +13,30 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
-    <TutorHeader v-if="isStudent" />
-    <StudentHeader v-else />
-    <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" /> -->
+  <a-layout class="layout">
+    <div>
+      <TutorHeader v-if="isStudent" />
+      <StudentHeader v-else />
+      <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" /> -->
+      <br>
+      <br>
+      <a-layout-content style="padding: 0 50px">
+        <div :style="{ minHeight: '80vh' }">
+          <RouterView />
+        </div>
+      </a-layout-content>
 
-    <div class="wrapper">
-      <!-- <HelloWorld msg="You did it!" /> -->
-      <!-- <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav> -->
+      <Footer />
     </div>
-
-    <RouterView />
-    <Footer />
-  </div>
+  </a-layout>
 </template>
 
-<style scoped></style>
+<style scoped>
+.layout {
+  min-height: 100vh;
+}
+
+[data-theme='dark'] .site-layout-content {
+  background: #141414;
+}
+</style>

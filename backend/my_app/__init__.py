@@ -1,10 +1,13 @@
 from flask import Flask
 from flask_mail import Mail
 from flask_cors import CORS
-from .models import db
+from my_app.models import db
 
 mail = Mail()
 
+    
+# app.register_blueprint(account)
+# app.register_blueprint(post)
 def create_app():
     app = Flask(__name__)
     CORS(app)
@@ -15,7 +18,7 @@ def create_app():
     # app.config['MYSQL_DB'] = 'OnlineTutor'
 
     # Configure SQLAlchemy connection
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:rainchoi228@localhost/OnlineTutor'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://ray:z56peng@localhost/OnlineTutor'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     # Flask-Mail configuration
@@ -23,14 +26,14 @@ def create_app():
     app.config['MAIL_PORT'] = 587  # The mail server port
     app.config['MAIL_USE_TLS'] = True  # Use TLS
     app.config['MAIL_USE_SSL'] = False  # Use SSL (alternative to TLS)
-    app.config['MAIL_USERNAME'] = 'choichonghou@gmail.com'  # Your email username
-    app.config['MAIL_PASSWORD'] = 'qbwnybyjhkxaczxr'  # Your email password
-    app.config['MAIL_DEFAULT_SENDER'] = 'choichonghou@gmail.com'  # Default sender email address
+    app.config['MAIL_USERNAME'] = 'zray.peng@gmail.com'  # Your email username
+    app.config['MAIL_PASSWORD'] = '!pray4myENEMIES'  # Your email password
+    app.config['MAIL_DEFAULT_SENDER'] = 'zray.peng@gmail.com'  # Default sender email address
 
     mail.init_app(app)
     db.init_app(app)
-
-    from .login_register import login_register
-    app.register_blueprint(login_register)
+    with app.app_context():
+        # db.drop_all()
+        db.create_all()
 
     return app

@@ -1,30 +1,29 @@
 <template>
-    <form @submit.prevent="handleSubmit">
-      <div>
-        <label for="username">用户名:</label>
-        <input id="username" v-model="username" type="text" placeholder="请输入用户名" />
-      </div>
-      <div>
-        <label for="email">电子邮件:</label>
-        <input id="email" v-model="email" type="email" placeholder="请输入电子邮件" />
-      </div>
-      <div>
-        <label for="password">密码:</label>
-        <input id="password" v-model="password" type="password" placeholder="请输入密码" />
-      </div>
-      <div>
-        <label for="confirmPassword">确认密码:</label>
-        <input id="confirmPassword" v-model="confirmPassword" type="password" placeholder="请再次输入密码" />
-      </div>
-      <div>
-            <input type="radio" id="radio_1" value="Student" v-model="role">
-            <label for="radio_1">Student</label>
-            <input type="radio" id="radio_2" value="Tutor" v-model="role">
-            <label for="radio_2">Tutor</label>
-        </div>
-      <button type="submit">注册</button>
-    </form>
-  </template>
+  <a-form name="basic" :label-col="{ span: 6 }" :wrapper-col="{ span: 12 }" autocomplete="off">
+      <a-form-item label="Username" name="username">
+          <a-input v-model:value="username" />
+      </a-form-item>
+
+      <a-form-item label="Email" name="email">
+          <a-input v-model:value="email" />
+      </a-form-item>
+
+      <a-form-item label="Password" name="password">
+          <a-input-password v-model:value="password" />
+      </a-form-item>
+
+      <a-form-item label="Role">
+      <a-radio-group v-model:value="role">
+        <a-radio value="Student">Student</a-radio>
+        <a-radio value="Tutor">Tutor</a-radio>
+      </a-radio-group>
+    </a-form-item>
+
+      <a-form-item :wrapper-col="{ offset: 6, span: 12 }">
+          <a-button style="width: 225px;" type="primary" @click="login()">Register</a-button>
+      </a-form-item>
+  </a-form>
+</template>
   
   <script setup>
   import { ref } from 'vue';
@@ -32,16 +31,17 @@
   const username = ref('');
   const email = ref('');
   const password = ref('');
-  const confirmPassword = ref('');
   
   const handleSubmit = () => {
     var data = new FormData();
     data.append('username', username.value);
     data.append('password', password.value);
+    data.append('id', role.value)
+    data.append('email', email.value)
 
     var config = {
         method: 'post',
-        url: 'http://localhost:5000/login',
+        url: 'http://localhost:5000/register',
         data: data
     };
 
