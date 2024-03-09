@@ -5,6 +5,7 @@ import TutorListView from '../views/TutorListView.vue'
 import PostView from '../views/PostView.vue'
 import TutorView from '../views/TutorView.vue'
 import PostListView from '../views/PostListView.vue'
+import PostForm from '@/components/PostForm.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,6 +24,23 @@ const router = createRouter({
       path: '/post',
       name: 'post',
       component: PostView,
+      children: [
+        {
+          path: 'my-post',
+          name: 'my-post',
+          component: PostForm
+        },
+        {
+          path: 'create-post',
+          name: 'create-post',
+          component: PostForm
+        },        
+        {
+          path: 'post-history',
+          name: 'post-history',
+          component: PostForm
+        },
+      ]
     },
     {
       path: '/post-list',
@@ -44,7 +62,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const token = sessionStorage.getItem('token');
-  if (to.name !== 'login' && token!=='1') next({ name: 'login' });
+  if (to.name !== 'login' && token !== '1') next({ name: 'login' });
   else next();
 });
 

@@ -1,110 +1,149 @@
+<template>
+  <a-form ref="formRef" :model="formState" :label-col="labelCol" :wrapper-col="wrapperCol" style="max-width: 500px;">
+    <a-form-item ref="title" label="title" name="title">
+      <a-input v-model:value="formState.title" />
+    </a-form-item>
+    <a-form-item ref="subject" label="subject" name="subject">
+      <a-input v-model:value="formState.subject" />
+    </a-form-item>
+    <a-form-item ref="timezone" label="timezone" name="timezone">
+      <a-input v-model:value="formState.timezone" />
+    </a-form-item>
+    <a-form-item ref="salary" label="salary" name="salary">
+      <a-input v-model:value="formState.salary" />
+    </a-form-item>
+    <a-form-item ref="message" label="message" name="message">
+        <a-textarea v-model:value="formState.message" :rows="4"/>
+    </a-form-item>
+    <a-form-item :label-col="label - col" :wrapper-col="{ span: 14, offset: 4 }">
+      <a-button type="primary" @click="onSubmit">Create</a-button>
+      <a-button style="margin-left: 17px" @click="resetForm">Reset</a-button>
+    </a-form-item>
+
+
+    <!-- <a-form-item ref="name" label="Activity name" name="name">
+      <a-input v-model:value="formState.name" />
+    </a-form-item>
+    <a-form-item label="Activity zone" name="region">
+      <a-select v-model:value="formState.region" placeholder="please select your zone">
+        <a-select-option value="shanghai">Zone one</a-select-option>
+        <a-select-option value="beijing">Zone two</a-select-option>
+      </a-select>
+    </a-form-item>
+    <a-form-item label="Activity time" required name="date1">
+      <a-date-picker
+        v-model:value="formState.date1"
+        show-time
+        type="date"
+        placeholder="Pick a date"
+        style="width: 100%"
+      />
+    </a-form-item>
+    <a-form-item label="Instant delivery" name="delivery">
+      <a-switch v-model:checked="formState.delivery" />
+    </a-form-item>
+    <a-form-item label="Activity type" name="type">
+      <a-checkbox-group v-model:value="formState.type">
+        <a-checkbox value="1" name="type">Online</a-checkbox>
+        <a-checkbox value="2" name="type">Promotion</a-checkbox>
+        <a-checkbox value="3" name="type">Offline</a-checkbox>
+      </a-checkbox-group>
+    </a-form-item>
+    <a-form-item label="Resources" name="resource">
+      <a-radio-group v-model:value="formState.resource">
+        <a-radio value="1">Sponsor</a-radio>
+        <a-radio value="2">Venue</a-radio>
+      </a-radio-group>
+    </a-form-item>
+    <a-form-item label="Activity form" name="desc">
+      <a-textarea v-model:value="formState.desc" />
+    </a-form-item>
+    <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
+      <a-button type="primary" @click="onSubmit">Create</a-button>
+      <a-button style="margin-left: 10px" @click="resetForm">Reset</a-button>
+    </a-form-item> -->
+  </a-form>
+</template>
 <script setup>
-import { ref } from 'vue';
-const props = defineProps({
-  show: Boolean
-})
-const title = ref('');
-const subject = ref('');
-const msg = ref('');
-const salary = ref('');
-const available_time = ref('');
+import { reactive, ref, toRaw } from 'vue';
+const formRef = ref();
+const labelCol = { span: 4 };
+const wrapperCol = { span: 14 };
+const formState = reactive({
+  title: '',
+  message: '',
+  timezone: '',
+  subject: '',
+  salary: '',
+  available_time: '',
+  status: '',
+});
+// const rules = {
+//   title: [
+//     {
+//       required: true,
+//       message: 'Please input Activity name',
+//       trigger: 'change',
+//     },
+//     {
+//       min: 3,
+//       max: 5,
+//       message: 'Length should be 3 to 5',
+//       trigger: 'blur',
+//     },
+//   ],
+//   timezone: [
+//     {
+//       required: true,
+//       message: 'Please select Activity zone',
+//       trigger: 'change',
+//     },
+//   ],
+//   date1: [
+//     {
+//       required: true,
+//       message: 'Please pick a date',
+//       trigger: 'change',
+//       type: 'object',
+//     },
+//   ],
+//   type: [
+//     {
+//       type: 'array',
+//       required: true,
+//       message: 'Please select at least one activity type',
+//       trigger: 'change',
+//     },
+//   ],
+//   resource: [
+//     {
+//       required: true,
+//       message: 'Please select activity resource',
+//       trigger: 'change',
+//     },
+//   ],
+//   desc: [
+//     {
+//       required: true,
+//       message: 'Please input activity form',
+//       trigger: 'blur',
+//     },
+//   ],
+// };
+const onSubmit = () => {
+  formRef.value
+    .validate()
+    .then(() => {
+      console.log('values', formState, toRaw(formState));
+    })
+    .catch(error => {
+      console.log('error', error);
+    });
+};
+const resetForm = () => {
+  formRef.value.resetFields();
+};
 </script>
 
-<template>
-  <Transition name="modal">
-    <div v-if="show" class="modal-mask">
-      <div class="modal-container">
-        <div class="modal-header">
-          <slot name="header">New Post</slot>
-        </div>
-        <slot>
-          <div>
-          <label for="title">Title: </label>
-          <input v-model="title"> {{ title }}
-        </div>
-        <div>
-          <label for="subject">Subject: </label>
-          <input v-model="subject"> {{ subject }}
-        </div>
-        <div>
-          <label for="msg">Message: </label>
-          <input v-model="msg"> {{ msg }}
-        </div>
-        <div>
-          <label for="salary">Salary: </label>
-          <input v-model="salary"> {{ salary }}
-        </div>
-        <div>
-          <label for="available_time">Available Time: </label>
-          <input v-model="available_time"> {{ available_time }}
-        </div>
-        <br/>
-        <div>
-          <button class="modal-default-button" @click="$emit('close')">Submit</button>
-          <button class="modal-default-button" @click="$emit('close')">Cancel</button>
-        </div>
-        </slot>
-      </div>
-    </div>
-  </Transition>
-</template>
-
-<style>
-.modal-mask {
-  position: fixed;
-  z-index: 9998;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  transition: opacity 0.3s ease;
-}
-
-.modal-container {
-  width: 300px;
-  margin: auto;
-  padding: 20px 30px;
-  background-color: #fff;
-  border-radius: 2px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
-  transition: all 0.3s ease;
-}
-
-.modal-header h3 {
-  margin-top: 0;
-  color: #42b983;
-}
-
-.modal-body {
-  margin: 20px 0;
-}
-
-.modal-default-button {
-  float: right;
-}
-
-/*
- * 对于 transition="modal" 的元素来说
- * 当通过 Vue.js 切换它们的可见性时
- * 以下样式会被自动应用。
- *
- * 你可以简单地通过编辑这些样式
- * 来体验该模态框的过渡效果。
- */
-
-.modal-enter-from {
-  opacity: 0;
-}
-
-.modal-leave-to {
-  opacity: 0;
-}
-
-.modal-enter-from .modal-container,
-.modal-leave-to .modal-container {
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
-}
+<style scoped>
 </style>
