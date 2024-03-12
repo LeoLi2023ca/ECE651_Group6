@@ -4,91 +4,109 @@ from flask_mail import Message, Mail
 import re
 import uuid
 from ..models import db, Student, Tutor
+
 # from my_app import mail, mysql
 from flask import Blueprint
- 
-account = Blueprint('account', __name__)
-email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+
+account = Blueprint("account", __name__)
+email_regex = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
 # mail = current_app.extensions['mail']
 # mysql = current_app.extensions['mysql']
 mail = Mail()
 
-@account.route('/register', methods=['POST'])
+
+@account.route("/register", methods=["POST"])
 def register():
-    username = request.form.get('username')
-    password = request.form.get('password')
-    email = request.form.get('email')
-    role = request.form.get('role')  # 'Student' or 'Tutor'
+    username = request.form.get("username")
+    password = request.form.get("password")
+    email = request.form.get("email")
+    role = request.form.get("role")  # 'Student' or 'Tutor'
     # hashed_password = generate_password_hash(password)
     # token = str(uuid.uuid4())  # Generate a unique activation token
 
     # Validate email format
     if not re.match(email_regex, email):
-        return jsonify({'error': 'Invalid email format'}), 400
-    
+        return jsonify({"error": "Invalid email format"}), 400
+
     # Check for duplicate username or email
-    existing_student = Student.query.filter((Student.username == username) | (Student.email == email)).first()
-    existing_tutor = Tutor.query.filter((Tutor.username == username) | (Tutor.email == email)).first()
+    existing_student = Student.query.filter(
+        (Student.username == username) | (Student.email == email)
+    ).first()
+    existing_tutor = Tutor.query.filter(
+        (Tutor.username == username) | (Tutor.email == email)
+    ).first()
     if existing_student or existing_tutor:
-        return jsonify({'error': 'Username or email already exists.'}), 409
-        
+        return jsonify({"error": "Username or email already exists."}), 409
+
     # Add new student to the session and commit
     try:
-        if role == 'Student':
+        if role == "Student":
             new_account = Student(
-            username=username,
-            nickname=username,
-            password=password,
-            email=email,
-            # activation_token=token
+                username=username,
+                nickname=username,
+                password=password,
+                email=email,
+                # activation_token=token
             )
             db.session.add(new_account)
             # send_welcome_mail(email, token)
             db.session.commit()
-        elif role == 'Tutor':
+        elif role == "Tutor":
             new_account = Tutor(
-            username=username,
-            nickname=username,
-            password=password,
-            email=email,
-            # activation_token=token
+                username=username,
+                nickname=username,
+                password=password,
+                email=email,
+                # activation_token=token
             )
             db.session.add(new_account)
             # send_welcome_mail(email, token)
             db.session.commit()
-        return jsonify({'message': 'Account added successfully!'}), 201
+        return jsonify({"message": "Account added successfully!"}), 201
     except Exception as e:
         db.session.rollback()
-        return jsonify({'error': str(e)}), 500
+        return jsonify({"error": str(e)}), 500
 
-@account.route('/delete_account', methods=['POST'])
+
+@account.route("/delete_account", methods=["POST"])
 def delete_account():
-    account_identifier = request.json.get('identifier')  # Could be either username or email
-    id = request.json.get('id')  # 'Students' or 'Teachers'
+    account_identifier = request.json.get(
+        "identifier"
+    )  # Could be either username or email
+    id = request.json.get("id")  # 'Students' or 'Teachers'
 
     # Determine the model based on the 'id' provided
     model = None
-    if id == 'Student':
+    if id == "Student":
         model = Student
-    elif id == 'Tutor':
+    elif id == "Tutor":
         model = Tutor
     else:
-        return jsonify({'error': 'Invalid account type'}), 400
+        return jsonify({"error": "Invalid account type"}), 400
 
     # Query the database for the user by username or email
-    user = model.query.filter((model.username == account_identifier) | (model.email == account_identifier)).first()
-    
+    user = model.query.filter(
+        (model.username == account_identifier) | (model.email == account_identifier)
+    ).first()
+
     if user:
         try:
             # Delete the user record
             db.session.delete(user)
             db.session.commit()
-            return jsonify({'message': f'Account with username/email: {account_identifier} deleted successfully'}), 200
+            return (
+                jsonify(
+                    {
+                        "message": f"Account with username/email: {account_identifier} deleted successfully"
+                    }
+                ),
+                200,
+            )
         except Exception as e:
             db.session.rollback()
-            return jsonify({'error': str(e)}), 500
+            return jsonify({"error": str(e)}), 500
     else:
-        return jsonify({'error': 'Account not found'}), 404
+        return jsonify({"error": "Account not found"}), 404
 
 
 # @account.route('/activate')
@@ -123,11 +141,12 @@ def delete_account():
 #             return jsonify({'error': str(e)}), 500
 #     else:
 #         return "Invalid or expired activation link."
-    
-@account.route('/login', methods=['POST'])
+
+
+@account.route("/login", methods=["POST"])
 def login():
-    username = request.form.get('username')
-    password = request.form.get('password')
+    username = request.form.get("username")
+    password = request.form.get("password")
     existing_student = Student.query.filter((Student.username == username)).first()
     existing_tutor = Tutor.query.filter((Tutor.username == username)).first()
     user = existing_student if existing_student else existing_tutor
@@ -140,11 +159,34 @@ def login():
     #         return jsonify({'error': 'Account is not activated.'}), 401
     # else:
     #     return jsonify({'error': 'Invalid email or password'}), 401
+    user_info = (
+        {
+            "username": user.username,
+            "nickname": user.password,
+            "email": user.email,
+            "grade": user.grade,
+            "timezone": user.timezone,
+            "msg": user.msg,
+        }
+        if existing_student
+        else {
+            "username": user.username,
+            "nickname": user.password,
+            "email": user.email,
+            "edu_level": user.edu_level,
+            "timezone": user.timezone,
+            "available_time": user.available_time,
+            "msg": user.msg,
+        }
+    )
     if user and user.password == password:
-        return jsonify({'message': 'Login successful!', 'code': '1'})
+        return jsonify(
+            {"message": "Login successful!", "code": "1", "user_info": user_info}
+        )
     else:
-        return jsonify({'error': 'Invalid email or password', 'code': '0'}), 401
-    
+        return jsonify({"error": "Invalid email or password", "code": "0"}), 401
+
+
 # @account.route('/forgetPwd', methods=['POST'])
 # def forget_password():
 #     email = request.json['email']
@@ -164,7 +206,7 @@ def login():
 #             return jsonify({'error': str(e)}), 500
 #     else:
 #         return jsonify({'error': 'User not found'}), 404
-    
+
 # @account.route('/resetPwd')
 # def reset_password():
 #     token = request.args.get('token')
@@ -230,7 +272,7 @@ def login():
 #             return jsonify({'error': str(e)}), 500
 #     else:
 #         return jsonify({'error': 'Student not found'}), 404
-    
+
 # @account.route('/getStudentInfoByUsername', methods=['GET'])
 # def get_student_info_by_id():
 #     username = request.args.get('username')
