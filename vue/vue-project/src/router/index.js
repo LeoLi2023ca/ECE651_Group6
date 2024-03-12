@@ -6,6 +6,8 @@ import PostView from '../views/PostView.vue'
 import TutorView from '../views/TutorView.vue'
 import PostListView from '../views/PostListView.vue'
 import PostForm from '@/components/PostForm.vue'
+import MyPostList from '@/components/MyPostList.vue'
+import PostHistory from '@/components/PostHistory.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,7 +30,7 @@ const router = createRouter({
         {
           path: 'my-post',
           name: 'my-post',
-          component: PostForm
+          component: MyPostList
         },
         {
           path: 'create-post',
@@ -38,7 +40,7 @@ const router = createRouter({
         {
           path: 'post-history',
           name: 'post-history',
-          component: PostForm
+          component: PostHistory
         },
       ]
     },

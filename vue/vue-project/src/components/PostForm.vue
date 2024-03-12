@@ -9,13 +9,16 @@
     <a-form-item ref="timezone" label="timezone" name="timezone">
       <a-input v-model:value="formState.timezone" />
     </a-form-item>
+    <a-form-item ref="available_time" label="time" name="time">
+      <a-input v-model:value="formState.available_time" />
+    </a-form-item>
     <a-form-item ref="salary" label="salary" name="salary">
       <a-input v-model:value="formState.salary" />
     </a-form-item>
     <a-form-item ref="message" label="message" name="message">
         <a-textarea v-model:value="formState.message" :rows="4"/>
     </a-form-item>
-    <a-form-item :label-col="label - col" :wrapper-col="{ span: 14, offset: 4 }">
+    <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
       <a-button type="primary" @click="onSubmit">Create</a-button>
       <a-button style="margin-left: 17px" @click="resetForm">Reset</a-button>
     </a-form-item>
@@ -65,19 +68,24 @@
   </a-form>
 </template>
 <script setup>
-import { reactive, ref, toRaw } from 'vue';
+import { reactive, ref } from 'vue';
+import axios from 'axios';
+import { useRouter } from 'vue-router';
+const router = useRouter();
+const user_info=JSON.parse(sessionStorage.getItem('user_info'));
+
 const formRef = ref();
 const labelCol = { span: 4 };
 const wrapperCol = { span: 14 };
 const formState = reactive({
   title: '',
   message: '',
-  timezone: '',
+  timezone: user_info.timezone,
   subject: '',
   salary: '',
   available_time: '',
-  status: '',
 });
+
 // const rules = {
 //   title: [
 //     {
@@ -130,15 +138,41 @@ const formState = reactive({
 //     },
 //   ],
 // };
-const onSubmit = () => {
-  formRef.value
-    .validate()
-    .then(() => {
-      console.log('values', formState, toRaw(formState));
-    })
-    .catch(error => {
-      console.log('error', error);
-    });
+// const onSubmit = () => {
+//   formRef.value
+//     .validate()
+//     .then(() => {
+//       console.log('values', formState, toRaw(formState));
+//     })
+//     .catch(error => {
+//       console.log('error', error);
+//     });
+// };
+
+const onSubmit = async () => {
+    var data = new FormData();
+
+    data.append('title', formState.title)
+    data.append('subject', formState.subject)
+    data.append('timezone', formState.timezone)
+    data.append('salary', formState.salary)
+    data.append('msg', formState.message)
+    data.append('available_time', formState.available_time)
+    data.append('username', user_info.username)
+    var config = {
+        method: 'post',
+        url: 'http://localhost:5000/create_post',
+        data: data
+    };
+
+    axios(config)
+        .then(function (response) {
+          console.log(response)
+            router.push({ name: 'my-post' });
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 };
 const resetForm = () => {
   formRef.value.resetFields();

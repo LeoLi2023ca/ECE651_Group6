@@ -9,7 +9,7 @@
       </a-menu>
     </a-layout-sider>
     <a-layout style="padding: 0px 30px 0px">
-      <a-layout-content :style="{ background: '#fff', padding: '140px', minHeight: '80vh' }">
+      <a-layout-content :style="{ background: '#fff', padding: '80px', minHeight: '80vh' }">
         <div>
           <router-view></router-view>
         </div>
