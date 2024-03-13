@@ -40,32 +40,63 @@ def register():
 
     # Add new student to the session and commit
     try:
+        user_info = None
+        code = None
         if role == "Student":
-            new_account = Student(
+            user = Student(
                 username=username,
                 nickname=username,
                 password=password,
                 email=email,
                 # activation_token=token
             )
-            db.session.add(new_account)
+            user_info = {
+                "username": user.username,
+                "nickname": user.password,
+                "email": user.email,
+                "grade": user.grade,
+                "timezone": user.timezone,
+                "msg": user.msg,
+            }
+            code = "1"
+            db.session.add(user)
             # send_welcome_mail(email, token)
             db.session.commit()
         elif role == "Tutor":
-            new_account = Tutor(
+            user = Tutor(
                 username=username,
                 nickname=username,
                 password=password,
                 email=email,
                 # activation_token=token
             )
-            db.session.add(new_account)
+            user_info = {
+                "username": user.username,
+                "nickname": user.password,
+                "email": user.email,
+                "edu_level": user.edu_level,
+                "timezone": user.timezone,
+                "available_time": user.available_time,
+                "msg": user.msg,
+            }
+            code = "2"
+            db.session.add(user)
             # send_welcome_mail(email, token)
             db.session.commit()
-        return jsonify({"message": "Account added successfully!"}), 201
+
+        return (
+            jsonify(
+                {
+                    "message": "Account added successfully!",
+                    "code": code,
+                    "user_info": user_info,
+                }
+            ),
+            201,
+        )
     except Exception as e:
         db.session.rollback()
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": str(e)}), 502
 
 
 @account.route("/delete_account", methods=["POST"])
@@ -179,9 +210,10 @@ def login():
             "msg": user.msg,
         }
     )
+    code = "1" if existing_student else "2"
     if user and user.password == password:
         return jsonify(
-            {"message": "Login successful!", "code": "1", "user_info": user_info}
+            {"message": "Login successful!", "code": code, "user_info": user_info}
         )
     else:
         return jsonify({"error": "Invalid email or password", "code": "0"}), 401

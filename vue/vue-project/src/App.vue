@@ -3,20 +3,17 @@ import { RouterLink, RouterView } from 'vue-router'
 import StudentHeader from './components/StudentHeader.vue';
 import TutorHeader from './components/TutorHeader.vue';
 import Footer from './components/Footer.vue';
-import { ref, onMounted } from 'vue';
-
-const isStudent = ref(true);
-
-onMounted(() => {
-  isStudent.value = localStorage.getItem('isStudent');
-});
+import { ref, computed, onMounted } from 'vue';
+import { useStore } from 'vuex';
+const store = useStore();
+const role = computed(() => store.getters.userRole);
 </script>
 
 <template>
   <a-layout class="layout">
     <div>
-      <TutorHeader v-if="isStudent" />
-      <StudentHeader v-else />
+      <TutorHeader v-if="role == '2'" />
+      <StudentHeader v-else-if="role == '1'" />
       <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" /> -->
       <br>
       <br>

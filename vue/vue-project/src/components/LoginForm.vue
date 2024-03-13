@@ -22,7 +22,9 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
+import { useStore } from 'vuex';
 
+const store = useStore();
 const router = useRouter();
 
 const username = ref('');
@@ -41,13 +43,10 @@ const login = async () => {
 
     axios(config)
         .then(function (response) {
-            if (response.data.code == "1") {
-                // console.log(response)
-                sessionStorage.setItem('token', '1');
-                sessionStorage.setItem('user_info', JSON.stringify(response.data.user_info))
-                // sessionStorage.setItem('');
-                router.push({ name: 'home' });
-            }
+            sessionStorage.setItem('token', response.data.code);
+            sessionStorage.setItem('user_info', JSON.stringify(response.data.user_info))
+            store.commit('setUserRole', response.data.code);
+            router.push({ name: 'home' });
         })
         .catch(function (error) {
             console.log(error);

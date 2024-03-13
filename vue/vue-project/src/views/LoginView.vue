@@ -4,7 +4,7 @@
       <LoginForm v-if="isLoginForm" @switchForm="toggleForm" />
       <RegisterForm v-else @switchForm="toggleForm" />
       <a-form-item :wrapper-col="{ offset: 6, span: 12 }">
-        <a-button @click="toggleForm" style="width: 225px;">{{ isLoginForm ? 'Don\'t have an account?' : 'Already haave an account?' }}</a-button>
+        <a-button @click="toggleForm" style="width: 225px;">{{ isLoginForm ? 'Don\'t have an account?' : 'Already have an account?' }}</a-button>
       </a-form-item>
     </a-card>
   </div>

@@ -1,6 +1,6 @@
 <template>
   <div style="margin-bottom: 16px">
-    <a-button type="primary" :disabled="!hasSelected" :loading="state.loading" @click="start">
+    <a-button type="primary" :disabled="!hasSelected" :loading="state.loading" @click="inactivate">
       Inactivate
     </a-button>
     <span style="margin-left: 8px">
@@ -9,30 +9,57 @@
       </template>
     </span>
   </div>
-  <a-table :columns="columns" :data-source="listData"  :row-selection="{ selectedRowKeys: state.selectedRowKeys, onChange: onSelectChange }" :rowKey="record => record.post_id">
-    <template #bodyCell="{ column }">
+  <a-table :columns="columns" :data-source="listData"
+    :row-selection="{ selectedRowKeys: state.selectedRowKeys, onChange: onSelectChange }"
+    :rowKey="record => record.post_id">
+    <template #bodyCell="{ column, text, record }">
       <template v-if="column.key === 'operation'">
-        <a-button>Edit</a-button>
+        <a-button @click="editPost(record.post_id)">Edit</a-button>
       </template>
     </template>
   </a-table>
+  <a-modal v-model:open="open" title="Post" :confirm-loading="confirmLoading" @ok="handleUpdate" ok-text="Update"
+    cancel-text="Cancel">
+    <PostForm ref="post_form" :post_id="current_pid"></PostForm>
+  </a-modal>
 </template>
 <script setup>
 import { onMounted, ref, computed, reactive } from 'vue';
 import axios from 'axios';
+import PostForm from './PostForm.vue';
 
+const post_form = ref(null)
+const current_pid = ref(-1)
 const state = reactive({
   selectedRowKeys: [],
   // Check here to configure the default column
   loading: false,
 });
 const hasSelected = computed(() => state.selectedRowKeys.length > 0);
-const start = () => {
+const inactivate = () => {
   state.loading = true;
-  // ajax request after empty completing
+  var data = new FormData();
+  console.log(state.selectedRowKeys)
+  data.append('post_id_list', JSON.stringify(state.selectedRowKeys));
+
+  var config = {
+    method: 'post',
+    url: 'http://localhost:5000/inactivate_posts',
+    data: data
+  };
+
+  axios(config)
+    .then(function (response) {
+      console.log(response)
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   setTimeout(() => {
     state.loading = false;
     state.selectedRowKeys = [];
+    listData.value = []
+    getPostList();
   }, 1000);
 };
 const onSelectChange = selectedRowKeys => {
@@ -69,7 +96,12 @@ const columns = [
   },
 ];
 const listData = ref([]);
+const open = ref(false);
+const confirmLoading = ref(false);
 onMounted(() => {
+  getPostList();
+});
+function getPostList() {
   const user_info = JSON.parse(sessionStorage.getItem('user_info'));
   const params = {
     username: user_info.username
@@ -93,11 +125,30 @@ onMounted(() => {
     .catch(error => {
       console.error(error);
     });
-})
+}
+const editPost = key => {
+  open.value = true;
+  current_pid.value = key;
+};
 const pagination = {
   onChange: page => {
     console.log(page);
   },
   pageSize: 4,
+};
+
+
+const handleUpdate = () => {
+  if (post_form) {
+    post_form.value.handleUpdate()
+  }
+  confirmLoading.value = true;
+  setTimeout(() => {
+    open.value = false;
+    confirmLoading.value = false;
+    listData.value = []
+    getPostList();
+  }, 2000);
+
 };
 </script>

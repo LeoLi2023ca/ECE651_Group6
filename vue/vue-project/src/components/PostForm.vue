@@ -16,9 +16,9 @@
       <a-input v-model:value="formState.salary" />
     </a-form-item>
     <a-form-item ref="message" label="message" name="message">
-        <a-textarea v-model:value="formState.message" :rows="4"/>
+      <a-textarea v-model:value="formState.message" :rows="4" />
     </a-form-item>
-    <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
+    <a-form-item v-if="!props.post_id" :wrapper-col="{ span: 14, offset: 4 }">
       <a-button type="primary" @click="onSubmit">Create</a-button>
       <a-button style="margin-left: 17px" @click="resetForm">Reset</a-button>
     </a-form-item>
@@ -68,11 +68,21 @@
   </a-form>
 </template>
 <script setup>
-import { reactive, ref } from 'vue';
+import { reactive, ref, onMounted, defineExpose } from 'vue';
 import axios from 'axios';
-import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router'; import { defineProps } from 'vue';
+
+
+const props = defineProps({
+  post_id: -1,
+});
+onMounted(() => {
+  if (props.post_id) {
+    fillPostWithID(props.post_id)
+  }
+});
 const router = useRouter();
-const user_info=JSON.parse(sessionStorage.getItem('user_info'));
+const user_info = JSON.parse(sessionStorage.getItem('user_info'));
 
 const formRef = ref();
 const labelCol = { span: 4 };
@@ -80,7 +90,7 @@ const wrapperCol = { span: 14 };
 const formState = reactive({
   title: '',
   message: '',
-  timezone: user_info.timezone,
+  timezone: !props.post_id?user_info.timezone:'',
   subject: '',
   salary: '',
   available_time: '',
@@ -150,34 +160,88 @@ const formState = reactive({
 // };
 
 const onSubmit = async () => {
-    var data = new FormData();
+  var data = new FormData();
 
-    data.append('title', formState.title)
-    data.append('subject', formState.subject)
-    data.append('timezone', formState.timezone)
-    data.append('salary', formState.salary)
-    data.append('msg', formState.message)
-    data.append('available_time', formState.available_time)
-    data.append('username', user_info.username)
-    var config = {
-        method: 'post',
-        url: 'http://localhost:5000/create_post',
-        data: data
-    };
+  data.append('title', formState.title)
+  data.append('subject', formState.subject)
+  data.append('timezone', formState.timezone)
+  data.append('salary', formState.salary)
+  data.append('msg', formState.message)
+  data.append('available_time', formState.available_time)
+  data.append('username', user_info.username)
+  var config = {
+    method: 'post',
+    url: 'http://localhost:5000/create_post',
+    data: data
+  };
 
-    axios(config)
-        .then(function (response) {
-          console.log(response)
-            router.push({ name: 'my-post' });
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+  axios(config)
+    .then(function (response) {
+      console.log(response)
+      router.push({ name: 'my-post' });
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+const handleUpdate = async () => {
+  var data = new FormData();
+  data.append('post_id', props.post_id)
+  data.append('title', formState.title)
+  data.append('subject', formState.subject)
+  data.append('timezone', formState.timezone)
+  data.append('salary', formState.salary)
+  data.append('msg', formState.message)
+  data.append('available_time', formState.available_time)
+  data.append('username', user_info.username)
+  var config = {
+    method: 'post',
+    url: 'http://localhost:5000/update_post',
+    data: data
+  };
+
+  axios(config)
+    .then(function (response) {
+      console.log(response)
+      router.push({ name: 'my-post' });
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 };
 const resetForm = () => {
   formRef.value.resetFields();
 };
+function fillPostWithID(post_id) {
+  const params = {
+    post_id: post_id
+  };
+  let config = {
+    method: 'get',
+    maxBodyLength: Infinity,
+    url: 'http://localhost:5000/getPostByPostID',
+    headers: {},
+    params: params
+  };
+
+  axios.request(config)
+    .then((response) => {
+      const post = JSON.parse(JSON.stringify(response.data.post));
+      formState.message=post.msg
+      formState.salary=post.salary
+      formState.subject=post.subject_name
+      formState.title=post.title
+      formState.available_time=post.time
+      formState.timezone=post.timezone
+      console.log(post)
+      console.log(JSON.stringify(response.data));
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+};
+defineExpose({handleUpdate})
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
