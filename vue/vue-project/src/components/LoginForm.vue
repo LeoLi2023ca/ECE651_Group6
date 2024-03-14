@@ -7,10 +7,10 @@
         <a-form-item label="Password" name="password">
             <a-input-password v-model:value="password" />
         </a-form-item>
-        <!-- <a-form-item label="Password" name="password"
+        <a-form-item label="Password" name="password"
             :rules="[{ required: true, message: 'Please input your password!' }]">
             <a-input-password v-model:value="password" />
-        </a-form-item> -->
+        </a-form-item>
 
         <a-form-item :wrapper-col="{ offset: 6, span: 12 }">
             <a-button style="width: 225px;" type="primary" @click="login()">Login</a-button>
@@ -37,7 +37,7 @@ const login = async () => {
 
     var config = {
         method: 'post',
-        url: 'http://localhost:5000/login',
+        url: 'http://127.0.0.1:5000/login',
         data: data
     };
 

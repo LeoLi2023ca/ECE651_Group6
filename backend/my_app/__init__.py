@@ -11,6 +11,7 @@ mail = Mail()
 def create_app():
     app = Flask(__name__)
     CORS(app)
+    # CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
     # Configure MySQL connection
     # app.config['MYSQL_HOST'] = 'localhost'
     # app.config['MYSQL_USER'] = 'root'
@@ -33,7 +34,7 @@ def create_app():
     mail.init_app(app)
     db.init_app(app)
     with app.app_context():
-        db.drop_all()
+        # db.drop_all()
         db.create_all()
 
     return app

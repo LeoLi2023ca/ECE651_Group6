@@ -8,6 +8,7 @@ import PostListView from '../views/PostListView.vue'
 import PostForm from '@/components/PostForm.vue'
 import MyPostList from '@/components/MyPostList.vue'
 import PostHistory from '@/components/PostHistory.vue'
+import ChatPage from '@/components/ChatPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -58,6 +59,11 @@ const router = createRouter({
       path: '/tutor/:id',
       name: 'tutor',
       component: TutorView
+    },
+    {
+      path: '/chat/:id',
+      name: 'chat',
+      component: ChatPage
     }
   ]
 })

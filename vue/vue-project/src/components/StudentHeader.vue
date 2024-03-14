@@ -11,6 +11,9 @@
       <a-menu-item key="3">
         <router-link to="/tutor-list">Tutors</router-link>
       </a-menu-item>
+      <a-menu-item key="4">
+        <router-link to="/chat/0">Chat</router-link>
+      </a-menu-item>
       <a-menu-item>
         <a-dropdown>
           <a class="ant-dropdown-link" @click.prevent>
@@ -25,7 +28,7 @@
               <a-menu-item>
                 <a href="javascript:;">Setting</a>
               </a-menu-item>
-              <a-menu-item>
+              <a-menu-item @click="signOut">
                 <a href="javascript:;">Sign Out</a>
               </a-menu-item>
             </a-menu>
@@ -39,11 +42,20 @@
 <script setup>
 import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { DownOutlined } from '@ant-design/icons-vue';
 
 const route = useRoute();
+const router = useRouter();
 const selectedKeys = ref(['1']);
 const token = sessionStorage.getItem('token');
+
+const signOut = () => {
+  sessionStorage.clear();
+  // console.log('sign out');
+  router.push({ name: 'login' });
+};
+
 watch(() => route.path, (newPath) => {
   switch (newPath) {
     case '/':

@@ -178,6 +178,7 @@ def delete_account():
 def login():
     username = request.form.get("username")
     password = request.form.get("password")
+    # print(username, password)
     existing_student = Student.query.filter((Student.username == username)).first()
     existing_tutor = Tutor.query.filter((Tutor.username == username)).first()
     user = existing_student if existing_student else existing_tutor
@@ -190,6 +191,8 @@ def login():
     #         return jsonify({'error': 'Account is not activated.'}), 401
     # else:
     #     return jsonify({'error': 'Invalid email or password'}), 401
+    if not existing_student and not existing_tutor:
+        return jsonify({"error": "User not found"}), 404
     user_info = (
         {
             "username": user.username,

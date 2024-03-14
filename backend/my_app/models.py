@@ -64,4 +64,18 @@ class ChatMessage(db.Model):
     sender_username = db.Column(db.String(50), nullable=False)
     receiver_username = db.Column(db.String(50), nullable=False)
     text = db.Column(db.Text, nullable=False)
+    parent_message_id = db.Column(db.Integer, db.ForeignKey('ChatMessage.id'), nullable=True)
     timestamp = db.Column(db.DateTime, default=db.func.current_timestamp())
+
+    def __repr__(self):
+        return f'<ChatMessage {self.id}>'
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'sender': self.sender_username,
+            'receiver': self.receiver_username,
+            'text': self.text,
+            'parent_message_id': self.parent_message_id,
+            'timestamp': self.timestamp
+        }
