@@ -57,3 +57,11 @@ class Student_Post(db.Model):
 
     def __repr__(self):
         return f'<Student_Post {self.title}>'
+    
+class ChatMessage(db.Model):
+    __tablename__ = 'ChatMessage'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    sender_username = db.Column(db.String(50), nullable=False)
+    receiver_username = db.Column(db.String(50), nullable=False)
+    text = db.Column(db.Text, nullable=False)
+    timestamp = db.Column(db.DateTime, default=db.func.current_timestamp())
