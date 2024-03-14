@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import '../assets/TutorListView.css';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -29,7 +30,7 @@ export default {
     const router = useRouter();
 
     const navigateToTeacher = (id) => {
-      router.push('/tutor/${id}');
+      router.push(`/tutor/${id}`);
     };
 
     return { teachers, navigateToTeacher };
