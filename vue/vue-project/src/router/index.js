@@ -9,6 +9,7 @@ import MyPostList from '@/components/MyPostList.vue'
 import PostHistory from '@/components/PostHistory.vue'
 import StudentProfileView from '@/views/StudentProfileView.vue'
 import StudentSettingView from '@/views/StudentSettingView.vue'
+import ChatPage from '@/components/ChatPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
