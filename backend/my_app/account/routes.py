@@ -219,6 +219,53 @@ def login():
         return jsonify({"error": "Invalid email or password", "code": "0"}), 401
 
 
+@account.route("/getStudentProfileByUsername", methods=["get"])
+def getStudentProfileByUsername():
+    username = request.form.get("username")
+    user = Student.query.filter((Student.username == username)).first()
+    if user:
+        user_info = {
+            "username": user.username,
+            "nickname": user.password,
+            "email": user.email,
+            "grade": user.grade,
+            "timezone": user.timezone,
+            "msg": user.msg,
+        }
+        return jsonify({"message": "Get profile", "user_info": user_info})
+    else:
+        return jsonify({"error": "User not found", "code": "0"}), 401
+
+
+@account.route("/updateStudentProfile", methods=["post"])
+def updateStudentProfile():
+    username = request.form.get("username")
+    nickname = request.form.get("nickname")
+    email = request.form.get("email")
+    grade = request.form.get("grade")
+    timezone = request.form.get("timezone")
+    message = request.form.get("message")
+    user = Student.query.filter((Student.username == username)).first()
+    if user:
+        user.nickname = nickname
+        user.email = email
+        user.grade = grade
+        user.timezone = timezone
+        user.msg = message
+        db.session.commit()
+        user_info = {
+            "username": username,
+            "nickname": nickname,
+            "email": email,
+            "grade": grade,
+            "timezone": timezone,
+            "msg": message,
+        }
+        return jsonify({"message": "profile updated", "user_info": user_info})
+    else:
+        return jsonify({"error": "User not found", "code": "0"}), 401
+
+
 # @account.route('/forgetPwd', methods=['POST'])
 # def forget_password():
 #     email = request.json['email']
@@ -270,24 +317,31 @@ def login():
 #     else:
 #         return "Invalid or expired reset link."
 
-# @account.route('/updatePwd', methods=['POST'])
-# def update_password():
-#     username = request.json['username']
-#     new_password = request.json['new_password']
-#     existing_student = Student.query.filter((Student.username == username)).first()
-#     existing_tutor = Tutor.query.filter((Tutor.username == username)).first()
-#     user = existing_student if existing_student else existing_tutor
 
-#     if user:
-#         user.password = new_password
-#         try:
-#             db.session.commit()
-#             return jsonify({'message': 'Password updated successfully!'})
-#         except Exception as e:
-#             db.session.rollback()
-#             return jsonify({'error': str(e)}), 500
-#     else:
-#         return jsonify({'error': 'User not found'}), 404
+@account.route("/updatePassword", methods=["POST"])
+def update_password():
+    username = request.form.get("username")
+    password = request.form.get("old_pass")
+    new_password = request.form.get("new_pass")
+    existing_student = Student.query.filter((Student.username == username)).first()
+    existing_tutor = Tutor.query.filter((Tutor.username == username)).first()
+    user = existing_student if existing_student else existing_tutor
+
+    if user:
+        if password == user.password:
+            user.password = new_password
+            try:
+                db.session.commit()
+                return jsonify({"message": "Password updated successfully!"})
+            except Exception as e:
+                db.session.rollback()
+                return jsonify({"error": str(e)}), 500
+        else:
+            return jsonify({"error": "Incorrect Old Password"}), 411
+
+    else:
+        return jsonify({"error": "User not found"}), 404
+
 
 # @account.route('/updateStudentInfo', methods=['POST'])
 # def update_student_info():

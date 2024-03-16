@@ -3,7 +3,7 @@ import { RouterLink, RouterView } from 'vue-router'
 import StudentHeader from './components/StudentHeader.vue';
 import TutorHeader from './components/TutorHeader.vue';
 import Footer from './components/Footer.vue';
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
 const store = useStore();
 const role = computed(() => store.getters.userRole);

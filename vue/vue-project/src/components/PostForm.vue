@@ -68,9 +68,9 @@
   </a-form>
 </template>
 <script setup>
-import { reactive, ref, onMounted, defineExpose } from 'vue';
+import { reactive, ref, onMounted } from 'vue';
 import axios from 'axios';
-import { useRouter } from 'vue-router'; import { defineProps } from 'vue';
+import { useRouter } from 'vue-router';
 
 
 const props = defineProps({

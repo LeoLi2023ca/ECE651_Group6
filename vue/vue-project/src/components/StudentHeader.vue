@@ -1,49 +1,56 @@
 <template>
   <a-layout-header>
-    <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="horizontal"
-      :style="{ lineHeight: '64px', display: 'flex', justifyContent: 'flex-end' }">
-      <a-menu-item key="1">
-        <router-link to="/">Home</router-link>
-      </a-menu-item>
-      <a-menu-item key="2">
-        <router-link to="/post/my-post">Post</router-link>
-      </a-menu-item>
-      <a-menu-item key="3">
-        <router-link to="/tutor-list">Tutors</router-link>
-      </a-menu-item>
-      <a-menu-item>
-        <a-dropdown>
-          <a class="ant-dropdown-link" @click.prevent>
-            Me
-            <DownOutlined />
-          </a>
-          <template #overlay>
-            <a-menu v-if="token=='1'">
-              <a-menu-item>
-                <a href="javascript:;">Profile</a>
-              </a-menu-item>
-              <a-menu-item>
-                <a href="javascript:;">Setting</a>
-              </a-menu-item>
-              <a-menu-item>
-                <a href="javascript:;">Sign Out</a>
-              </a-menu-item>
-            </a-menu>
-          </template>
-        </a-dropdown>
-      </a-menu-item>
-    </a-menu>
+    <div :style="{ lineHeight: '64px', display: 'flex', justifyContent: 'flex-end' }">
+      <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="horizontal"
+        :style="{ lineHeight: '64px', display: 'flex' }">
+        <a-menu-item key="1">
+          <router-link to="/">Home</router-link>
+        </a-menu-item>
+        <a-menu-item key="2">
+          <router-link to="/post/my-post">Post</router-link>
+        </a-menu-item>
+        <a-menu-item key="3">
+          <router-link to="/tutor-list">Tutors</router-link>
+        </a-menu-item>
+      </a-menu>
+      <a-avatar shape="square" :size="64">
+        <template #icon>
+          <a-dropdown>
+            <a class="ant-dropdown-link" @click.prevent>
+              <UserOutlined />
+            </a>
+            <template #overlay>
+              <a-menu v-if="role == '1'">
+                <a-menu-item>
+                  <router-link to="/student/my-profile">Profile</router-link>
+                </a-menu-item>
+                <a-menu-item>
+                  <router-link to="/student/settings">Settings</router-link>
+                </a-menu-item>
+                <a-menu-item>
+                  <a @click="signOut()">Sign Out</a>
+                </a-menu-item>
+              </a-menu>
+            </template>
+          </a-dropdown>
+        </template>
+      </a-avatar>
+    </div>
   </a-layout-header>
 </template>
 
 <script setup>
 import { ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
-import { DownOutlined } from '@ant-design/icons-vue';
+import { useRoute, useRouter } from 'vue-router';
+import { UserOutlined } from '@ant-design/icons-vue';
+import { useStore } from 'vuex';
 
+const store = useStore();
 const route = useRoute();
+const router = useRouter();
+
 const selectedKeys = ref(['1']);
-const token = sessionStorage.getItem('token');
+const role = sessionStorage.getItem('role')
 watch(() => route.path, (newPath) => {
   switch (newPath) {
     case '/':
@@ -60,8 +67,18 @@ watch(() => route.path, (newPath) => {
       break;
     case '/tutor-list':
       selectedKeys.value = ['3'];
+      break;
+    default:
+      selectedKeys.value = ['0'];
+      break;
   }
 }, { immediate: true });
+
+function signOut() {
+  store.dispatch("signOut");
+  router.push({ name: 'login' });
+
+}
 </script>
 
 <style scoped>

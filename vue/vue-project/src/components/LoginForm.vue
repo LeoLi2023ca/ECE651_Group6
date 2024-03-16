@@ -43,7 +43,7 @@ const login = async () => {
 
     axios(config)
         .then(function (response) {
-            sessionStorage.setItem('token', response.data.code);
+            sessionStorage.setItem('role', response.data.code);
             sessionStorage.setItem('user_info', JSON.stringify(response.data.user_info))
             store.commit('setUserRole', response.data.code);
             router.push({ name: 'home' });
