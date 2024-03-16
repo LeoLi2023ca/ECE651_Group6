@@ -70,6 +70,11 @@ const router = createRouter({
           component: StudentSettingView
         }
       ]
+    },
+    {
+      path: '/chat/:id',
+      name: 'chat',
+      component: ChatPage
     }
     // {
     //   path: '/tutor/:id',
