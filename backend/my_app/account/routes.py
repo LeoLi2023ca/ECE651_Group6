@@ -240,6 +240,26 @@ def getStudentProfileByUsername():
         return jsonify({"error": "User not found", "code": "0"}), 401
 
 
+@account.route("/getTutorProfileByUsername", methods=["get"])
+def getTutorProfileByUsername():
+    username = request.args.get("username")
+    tutor = Tutor.query.filter((Tutor.username == username)).first()
+    if tutor:
+        user_info = {
+            "username": tutor.username,
+            "nickname": tutor.nickname,
+            "edu_level": tutor.edu_level,
+            "subject_name": tutor.subject_name,
+            "msg": tutor.msg,
+            "salary": tutor.salary,
+            "timezone": tutor.timezone,
+            "available_time": tutor.available_time,
+        }
+        return jsonify({"message": "Get profile", "user_info": user_info})
+    else:
+        return jsonify({"error": "User not found", "code": "0"}), 401
+
+
 @account.route("/updateStudentProfile", methods=["post"])
 def updateStudentProfile():
     username = request.form.get("username")
@@ -262,6 +282,38 @@ def updateStudentProfile():
             "email": email,
             "grade": grade,
             "timezone": timezone,
+            "msg": message,
+        }
+        return jsonify({"message": "profile updated", "user_info": user_info})
+    else:
+        return jsonify({"error": "User not found", "code": "0"}), 401
+
+
+@account.route("/updateTutorProfile", methods=["post"])
+def updateTutorProfile():
+    username = request.form.get("username")
+    nickname = request.form.get("nickname")
+    email = request.form.get("email")
+    edu_level = request.form.get("edu_level")
+    timezone = request.form.get("timezone")
+    available_time = request.form.get("available_time")
+    message = request.form.get("message")
+    user = Tutor.query.filter((Tutor.username == username)).first()
+    if user:
+        user.nickname = nickname
+        user.email = email
+        user.edu_level = edu_level
+        user.timezone = timezone
+        user.available_time = available_time
+        user.msg = message
+        db.session.commit()
+        user_info = {
+            "username": username,
+            "nickname": nickname,
+            "email": email,
+            "edu_level": edu_level,
+            "timezone": timezone,
+            "available_time": available_time,
             "msg": message,
         }
         return jsonify({"message": "profile updated", "user_info": user_info})
@@ -391,3 +443,26 @@ def update_password():
 #     with account.open_resource('../static/OnlineTutor.jpg') as fp:
 #         msg.attach('logo.png', 'image/png', fp.read(), 'inline', headers=[['Content-ID', '<OnlineTutorLogo>']])
 #     mail.send(msg)
+
+
+@account.route("/getAllTutor", methods=["GET"])
+def getAllTutor():
+    tutors = Tutor.query.all()
+    return jsonify(
+        {
+            "list": [
+                {
+                    "username": tutor.username,
+                    "nickname": tutor.nickname,
+                    "edu_level": tutor.edu_level,
+                    "subject_name": tutor.subject_name,
+                    "msg": tutor.msg,
+                    "salary": tutor.salary,
+                    "timezone": tutor.timezone,
+                    "available_time": tutor.available_time,
+                }
+                for tutor in tutors
+                # if tutor.listed == "opening"
+            ]
+        }
+    )

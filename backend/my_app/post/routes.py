@@ -67,6 +67,7 @@ def getAllOpeningPostsByUsername():
             }
         )
 
+
 @post.route("/getAllClosedPostsByUsername", methods=["GET"])
 def getAllClosedPostsByUsername():
     username = request.args.get("username")
@@ -123,25 +124,27 @@ def update_post():
             db.session.rollback()
             return jsonify({"error": str(e)}), 500
 
+
 @post.route("/inactivate_posts", methods=["POST"])
 def inactivate_posts():
-    post_id_list=json.loads(request.form.get('post_id_list'))
+    post_id_list = json.loads(request.form.get("post_id_list"))
     for post_id in post_id_list:
         post = Student_Post.query.filter_by(post_id=post_id).first()
-        post.status='closed'
+        post.status = "closed"
     try:
         db.session.commit()
         return jsonify({"message": "Posts inactivated successfully"})
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
-    
+
+
 @post.route("/activate_post", methods=["POST"])
 def activate_post():
-    post_id=request.form.get('post_id')
+    post_id = request.form.get("post_id")
     post = Student_Post.query.filter_by(post_id=post_id).first()
-    post.status='opening'
-    post.post_date=datetime.now()
+    post.status = "opening"
+    post.post_date = datetime.now()
     try:
         db.session.commit()
         return jsonify({"message": "Posts activated successfully"})
@@ -149,9 +152,10 @@ def activate_post():
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
-@post.route('/delete_posts', methods=['POST'])
+
+@post.route("/delete_posts", methods=["POST"])
 def delete_posts():
-    post_id_list=json.loads(request.form.get('post_id_list'))
+    post_id_list = json.loads(request.form.get("post_id_list"))
     for post_id in post_id_list:
         post = Student_Post.query.filter_by(post_id=post_id).first()
         db.session.delete(post)
@@ -161,6 +165,7 @@ def delete_posts():
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
+
 
 # @post.route('/getAllPostsByStudentID', methods=['GET'])
 # def getAllPostsByStudentID():
@@ -210,3 +215,26 @@ def getPostByPostID():
                 }
             }
         )
+
+
+@post.route("/getAllOpeningPost", methods=["GET"])
+def getAllOpeningPost():
+    posts = Student_Post.query.all()
+    return jsonify(
+        {
+            "list": [
+                {
+                    "post_id": post.post_id,
+                    "title": post.title,
+                    "post_date": post.post_date,
+                    "msg": post.msg,
+                    "salary": post.salary,
+                    "subject_name": post.subject_name,
+                    "available_time": post.available_time,
+                    "status": post.status,
+                }
+                for post in posts
+                if post.status == "opening"
+            ]
+        }
+    )

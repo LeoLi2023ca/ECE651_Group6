@@ -18,8 +18,8 @@
           <a-form-item ref="timezone" label="timezone" name="timezone">
             <a-input v-model:value="formState.timezone" />
           </a-form-item>
-          <a-form-item ref="message" label="message" name="message">
-            <a-textarea :rows="4" v-model:value="formState.message" />
+          <a-form-item ref="msg" label="message" name="message">
+            <a-textarea :rows="4" v-model:value="formState.msg" />
           </a-form-item>
         </a-form>
         <div v-if="componentDisabled">
@@ -42,6 +42,8 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
 import axios from 'axios';
+import { message } from 'ant-design-vue';
+
 const componentDisabled = ref(true);
 const user_info = JSON.parse(sessionStorage.getItem('user_info'));
 
@@ -58,7 +60,7 @@ const formState = reactive({
   email: '',
   grade: '',
   timezone: '',
-  message: ''
+  msg: ''
 })
 
 onMounted(() => {
@@ -70,7 +72,7 @@ function loadProfile() {
   formState.email = user_info.email;
   formState.grade = user_info.grade;
   formState.timezone = user_info.timezone;
-  formState.message = user_info.msg;
+  formState.msg = user_info.msg;
 }
 // const getProfile = async () => {
 //   var data = new FormData();
@@ -102,7 +104,7 @@ const updateProfile = async () => {
   data.append('email', formState.email);
   data.append('grade', formState.grade);
   data.append('timezone', formState.timezone);
-  data.append('message', formState.message);
+  data.append('msg', formState.msg);
 
 
   var config = {
@@ -115,6 +117,7 @@ const updateProfile = async () => {
     .then(function (response) {
       sessionStorage.setItem('user_info', JSON.stringify(response.data.user_info));
       console.log(response);
+      message.success('Profile updated successfully!');
     })
     .catch(function (error) {
       console.log(error);

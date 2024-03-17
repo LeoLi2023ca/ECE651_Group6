@@ -9,6 +9,8 @@ import MyPostList from '@/components/MyPostList.vue'
 import PostHistory from '@/components/PostHistory.vue'
 import StudentProfileView from '@/views/StudentProfileView.vue'
 import StudentSettingView from '@/views/StudentSettingView.vue'
+import TutorProfileView from '@/views/TutorProfileView.vue'
+import TutorSettingView from '@/views/TutorSettingView.vue'
 import ChatPage from '@/components/ChatPage.vue'
 
 const router = createRouter({
@@ -57,16 +59,31 @@ const router = createRouter({
       component: TutorListView
     },
     {
+      path: '/tutor',
+      name: 'tutor',
+      children: [
+        {
+          path: 'my-profile',
+          name: 'tutor-profile',
+          component: TutorProfileView
+        }, {
+          path: 'settings',
+          name: 'tutor-settings',
+          component: TutorSettingView
+        }
+      ]
+    },
+    {
       path: '/student',
       name: 'student',
       children: [
         {
           path: 'my-profile',
-          name: 'my-profile',
+          name: 'student-profile',
           component: StudentProfileView
         }, {
           path: 'settings',
-          name: 'settings',
+          name: 'student-settings',
           component: StudentSettingView
         }
       ]
@@ -75,7 +92,7 @@ const router = createRouter({
       path: '/chat/:id',
       name: 'chat',
       component: ChatPage
-    }
+    },
     // {
     //   path: '/tutor/:id',
     //   name: 'tutor',
