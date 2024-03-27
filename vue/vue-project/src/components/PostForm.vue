@@ -3,14 +3,32 @@
     <a-form-item ref="title" label="title" name="title">
       <a-input v-model:value="formState.title" />
     </a-form-item>
-    <a-form-item ref="subject" label="subject" name="subject">
-      <a-input v-model:value="formState.subject" />
+    <a-form-item label="Subject" name="subject">
+      <a-select v-model:value="formState.subject" placeholder="Select a subject">
+        <a-select-option value="English">English</a-select-option>
+        <a-select-option value="Math">Math</a-select-option>
+        <a-select-option value="Science">Science</a-select-option>
+        <a-select-option value="History">History</a-select-option>
+        <!-- Add more subjects as needed -->
+      </a-select>
     </a-form-item>
     <a-form-item ref="timezone" label="timezone" name="timezone">
-      <a-input v-model:value="formState.timezone" />
+      <a-select v-model:value="formState.timezone" placeholder="Select timezone">
+        <a-select-option v-for="tz in timezones" :key="tz.value" :value="tz.value">{{ tz.label }}</a-select-option>
+      </a-select>
     </a-form-item>
-    <a-form-item ref="available_time" label="time" name="time">
-      <a-input v-model:value="formState.available_time" />
+    <a-form-item label="Available Time" name="available_time">
+      <a-time-picker
+        format="HH:mm"
+        v-model:value="formState.available_time.start"
+        placeholder="Start Time"
+      />
+      <a-time-picker
+        format="HH:mm"
+        v-model:value="formState.available_time.end"
+        placeholder="End Time"
+        style="margin-left: 10px"
+      />
     </a-form-item>
     <a-form-item ref="salary" label="salary" name="salary">
       <a-input v-model:value="formState.salary" />
@@ -90,10 +108,19 @@ const wrapperCol = { span: 14 };
 const formState = reactive({
   title: '',
   message: '',
-  timezone: !props.post_id?user_info.timezone:'',
+  timezone: !props.post_id?user_info.timezone:'UTC -04:00',
   subject: '',
   salary: '',
-  available_time: '',
+  available_time: {
+    start: '',
+    end: '',
+  },
+});
+
+const timezones = Array.from({ length: 25 }, (_, i) => {
+  const value = i - 12;
+  const sign = value >= 0 ? '+' : '-';
+  return { label: `UTC ${sign}${Math.abs(value).toString().padStart(2, '0')}:00`, value: `${sign}${Math.abs(value).toString().padStart(2, '0')}:00` };
 });
 
 // const rules = {
@@ -161,17 +188,18 @@ const formState = reactive({
 
 const onSubmit = async () => {
   var data = new FormData();
+  const availableTime = `${formState.available_time.start.format('HH:mm')} to ${formState.available_time.end.format('HH:mm')}`;
 
   data.append('title', formState.title)
   data.append('subject', formState.subject)
   data.append('timezone', formState.timezone)
   data.append('salary', formState.salary)
   data.append('msg', formState.message)
-  data.append('available_time', formState.available_time)
+  data.append('available_time', availableTime)
   data.append('username', user_info.username)
   var config = {
     method: 'post',
-    url: 'http://localhost:5000/create_post',
+    url: 'http://127.0.0.1:5000/create_post',
     data: data
   };
 
@@ -219,7 +247,7 @@ function fillPostWithID(post_id) {
   let config = {
     method: 'get',
     maxBodyLength: Infinity,
-    url: 'http://localhost:5000/getPostByPostID',
+    url: 'http://127.0.0.1:5000/getPostByPostID',
     headers: {},
     params: params
   };
