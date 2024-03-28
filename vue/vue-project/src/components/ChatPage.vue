@@ -104,6 +104,10 @@
         console.log(error);
       });
    };
+
+   const closeChat = () => {
+    emit('close');
+   };
   </script>
   
   <style scoped>

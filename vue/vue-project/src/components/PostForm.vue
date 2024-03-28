@@ -1,6 +1,6 @@
 <template>
   <a-form ref="formRef" :model="formState" :label-col="labelCol" :wrapper-col="wrapperCol" style="max-width: 500px;">
-    <a-form-item ref="title" label="title" name="title">
+    <a-form-item ref="title" label="Title" name="title">
       <a-input v-model:value="formState.title" />
     </a-form-item>
     <a-form-item label="Subject" name="subject">
@@ -12,12 +12,12 @@
         <!-- Add more subjects as needed -->
       </a-select>
     </a-form-item>
-    <a-form-item ref="timezone" label="timezone" name="timezone">
+    <a-form-item ref="timezone" label="Timezone" name="timezone">
       <a-select v-model:value="formState.timezone" placeholder="Select timezone">
         <a-select-option v-for="tz in timezones" :key="tz.value" :value="tz.value">{{ tz.label }}</a-select-option>
       </a-select>
     </a-form-item>
-    <a-form-item label="Available Time" name="available_time">
+    <a-form-item label="Time" name="available_time">
       <a-time-picker
         format="HH:mm"
         v-model:value="formState.available_time.start"
@@ -30,10 +30,10 @@
         style="margin-left: 10px"
       />
     </a-form-item>
-    <a-form-item ref="salary" label="salary" name="salary">
+    <a-form-item ref="salary" label="Salary" name="salary">
       <a-input v-model:value="formState.salary" />
     </a-form-item>
-    <a-form-item ref="message" label="message" name="message">
+    <a-form-item ref="message" label="Message" name="message">
       <a-textarea v-model:value="formState.message" :rows="4" />
     </a-form-item>
     <a-form-item v-if="!props.post_id" :wrapper-col="{ span: 14, offset: 4 }">
@@ -101,6 +101,7 @@ onMounted(() => {
 });
 const router = useRouter();
 const user_info = JSON.parse(sessionStorage.getItem('user_info'));
+// console.log(user_info);
 
 const formRef = ref();
 const labelCol = { span: 4 };
@@ -224,7 +225,7 @@ const handleUpdate = async () => {
   data.append('username', user_info.username)
   var config = {
     method: 'post',
-    url: 'http://localhost:5000/update_post',
+    url: 'http://127.0.0.1:5000/update_post',
     data: data
   };
 

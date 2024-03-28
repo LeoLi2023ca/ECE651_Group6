@@ -103,7 +103,7 @@ function updatePassword() {
 
     var config = {
         method: 'post',
-        url: 'http://localhost:5000/updatePassword',
+        url: 'http://127.0.0.1:5000/updatePassword',
         data: data
     };
 

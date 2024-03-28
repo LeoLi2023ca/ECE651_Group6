@@ -12,9 +12,9 @@
         <a-menu-item key="3">
           <router-link to="/tutor-list">Tutors</router-link>
         </a-menu-item>
-        <a-menu-item key="4">
+        <!-- <a-menu-item key="4">
           <router-link to="/chat/0">Chat</router-link>
-        </a-menu-item>
+        </a-menu-item> -->
       </a-menu>
       <a-avatar shape="square" :size="64">
         <template #icon>
@@ -71,9 +71,9 @@ watch(() => route.path, (newPath) => {
     case '/tutor-list':
       selectedKeys.value = ['3'];
       break;
-    case '/chat/0':
-      selectedKeys.value = ['4'];
-      break;
+    // case '/chat/0':
+    //   selectedKeys.value = ['4'];
+    //   break;
     default:
       selectedKeys.value = ['0'];
       break;

@@ -72,7 +72,7 @@ onMounted(() => {
     getAllPostList();
 });
 function getAllPostList() {
-    axios.get('http://localhost:5000/getAllOpeningPost')
+    axios.get('http://127.0.0.1:5000/getAllOpeningPost')
         .then(response => {
             console.log(response.data.list);
             for (let i = 0; i < response.data.list.length; i++) {

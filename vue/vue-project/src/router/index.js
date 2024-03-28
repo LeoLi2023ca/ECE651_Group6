@@ -88,11 +88,11 @@ const router = createRouter({
         }
       ]
     },
-    {
-      path: '/chat/:id',
-      name: 'chat',
-      component: ChatPage
-    },
+    // {
+    //   path: '/chat/:id',
+    //   name: 'chat',
+    //   component: ChatPage
+    // },
     // {
     //   path: '/tutor/:id',
     //   name: 'tutor',

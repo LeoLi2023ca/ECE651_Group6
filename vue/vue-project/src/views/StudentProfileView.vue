@@ -109,7 +109,7 @@ const updateProfile = async () => {
 
   var config = {
     method: 'post',
-    url: 'http://localhost:5000/updateStudentProfile',
+    url: 'http://127.0.0.1:5000/updateStudentProfile',
     data: data
   };
 

@@ -44,7 +44,7 @@ const inactivate = () => {
 
   var config = {
     method: 'post',
-    url: 'http://localhost:5000/inactivate_posts',
+    url: 'http://127.0.0.1:5000/inactivate_posts',
     data: data
   };
 
@@ -106,7 +106,7 @@ function getPostList() {
   const params = {
     username: user_info.username
   };
-  axios.get('http://localhost:5000/getAllOpeningPostsByUsername', { params })
+  axios.get('http://127.0.0.1:5000/getAllOpeningPostsByUsername', { params })
     .then(response => {
       for (let i = 0; i < response.data.list.length; i++) {
         listData.value.push({

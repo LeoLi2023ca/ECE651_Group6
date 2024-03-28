@@ -38,7 +38,7 @@ function fillPostWithID(post_id) {
   let config = {
     method: 'get',
     maxBodyLength: Infinity,
-    url: 'http://localhost:5000/getPostByPostID',
+    url: 'http://127.0.0.1:5000/getPostByPostID',
     headers: {},
     params: params
   };

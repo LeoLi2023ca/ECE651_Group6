@@ -15,11 +15,15 @@
                 <a-descriptions-item label="message" :span="4">{{ msg }} </a-descriptions-item>
             </a-descriptions>
         </a-modal>
+        <a-modal v-model:open="chatOpen" title="Chat">
+            <ChatPage v-if="chatOpen" :tutor-username="username" @close="chatOpen = false" />
+        </a-modal>
     </div>
 </template>
 <script setup>
 import { ref } from 'vue';
 import axios from 'axios';
+import ChatPage from './ChatPage.vue';
 const open = ref(false);
 
 const username = ref('');
@@ -30,6 +34,8 @@ const msg = ref('');
 const salary = ref('');
 const timezone = ref('');
 const available_time = ref('');
+
+const chatOpen = ref(false);
 
 function showModal(username) {
     fillProfileWithUsername(username);
@@ -42,7 +48,7 @@ function fillProfileWithUsername(username_) {
     let config = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: 'http://localhost:5000/getTutorProfileByUsername',
+        url: 'http://127.0.0.1:5000/getTutorProfileByUsername',
         headers: {},
         params: params
     };
@@ -66,6 +72,7 @@ function fillProfileWithUsername(username_) {
 
 };
 const handleOk = () => {
+    chatOpen.value = true;
 };
 
 const handleCancel = () => {

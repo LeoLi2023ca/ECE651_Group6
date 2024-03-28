@@ -37,7 +37,7 @@ const deletePosts = () => {
 
   var config = {
     method: 'post',
-    url: 'http://localhost:5000/delete_posts',
+    url: 'http://127.0.0.1:5000/delete_posts',
     data: data
   };
 
@@ -97,7 +97,7 @@ function getPostList() {
   const params = {
     username: user_info.username
   };
-  axios.get('http://localhost:5000/getAllClosedPostsByUsername', { params })
+  axios.get('http://127.0.0.1:5000/getAllClosedPostsByUsername', { params })
     .then(response => {
       for (let i = 0; i < response.data.list.length; i++) {
         listData.value.push({
@@ -123,7 +123,7 @@ function repost(post_id) {
 
   var config = {
     method: 'post',
-    url: 'http://localhost:5000/activate_post',
+    url: 'http://127.0.0.1:5000/activate_post',
     data: data
   };
 
