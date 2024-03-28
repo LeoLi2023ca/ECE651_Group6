@@ -17,17 +17,18 @@
         <a-select-option v-for="tz in timezones" :key="tz.value" :value="tz.value">{{ tz.label }}</a-select-option>
       </a-select>
     </a-form-item>
-    <a-form-item label="Time" name="available_time">
+    <a-form-item label="From" name="available_time">
       <a-time-picker
         format="HH:mm"
-        v-model:value="formState.available_time.start"
+        v-model:value="formState.from"
         placeholder="Start Time"
       />
+    </a-form-item>
+    <a-form-item label="To">
       <a-time-picker
         format="HH:mm"
-        v-model:value="formState.available_time.end"
+        v-model:value="formState.to"
         placeholder="End Time"
-        style="margin-left: 10px"
       />
     </a-form-item>
     <a-form-item ref="salary" label="Salary" name="salary">
@@ -112,10 +113,8 @@ const formState = reactive({
   timezone: !props.post_id?user_info.timezone:'UTC -04:00',
   subject: '',
   salary: '',
-  available_time: {
-    start: '',
-    end: '',
-  },
+  from: '',
+  to: '',
 });
 
 const timezones = Array.from({ length: 25 }, (_, i) => {
@@ -189,7 +188,7 @@ const timezones = Array.from({ length: 25 }, (_, i) => {
 
 const onSubmit = async () => {
   var data = new FormData();
-  const availableTime = `${formState.available_time.start.format('HH:mm')} to ${formState.available_time.end.format('HH:mm')}`;
+  const availableTime = `${formState.from.format('HH:mm')} to ${formState.to.format('HH:mm')}`;
 
   data.append('title', formState.title)
   data.append('subject', formState.subject)
@@ -215,13 +214,14 @@ const onSubmit = async () => {
 };
 const handleUpdate = async () => {
   var data = new FormData();
+  const availableTime = `${formState.from.format('HH:mm')} to ${formState.to.format('HH:mm')}`;
   data.append('post_id', props.post_id)
   data.append('title', formState.title)
   data.append('subject', formState.subject)
   data.append('timezone', formState.timezone)
   data.append('salary', formState.salary)
   data.append('msg', formState.message)
-  data.append('available_time', formState.available_time)
+  data.append('available_time', availableTime)
   data.append('username', user_info.username)
   var config = {
     method: 'post',
@@ -260,7 +260,17 @@ function fillPostWithID(post_id) {
       formState.salary=post.salary
       formState.subject=post.subject_name
       formState.title=post.title
-      formState.available_time=post.time
+      if (post.time) {
+        const times = post.time.split(' to ');
+        if (times.length === 2) {
+          formState.from = times[0];
+          formState.to = times[1];
+        }
+        else{
+          formState.from = '';
+          formState.to = '';
+        }
+      }
       formState.timezone=post.timezone
       console.log(post)
       console.log(JSON.stringify(response.data));

@@ -5,7 +5,7 @@
                 <a-button key="back" @click="handleCancel">Return</a-button>
                 <a-button key="submit" type="primary" @click="handleOk">Contact</a-button>
             </template>
-            <a-descriptions title="Tutor Info" size="small" bordered>
+            <a-descriptions :column="4" title="Tutor Info" size="small" bordered>
                 <a-descriptions-item label="nickname" :span="2">{{ nickname }}</a-descriptions-item>
                 <a-descriptions-item label="Salary" :span="2">{{ salary }}</a-descriptions-item>
                 <a-descriptions-item label="Subject" :span="2">{{ subject_name }}</a-descriptions-item>

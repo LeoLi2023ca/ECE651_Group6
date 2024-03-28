@@ -77,6 +77,7 @@
       .catch(function (error) {
         console.log(error);
       });
+    newMessage.value = ''; // Clear input after sending
   };
 
   const getMessage = () => {

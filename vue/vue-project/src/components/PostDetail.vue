@@ -11,7 +11,7 @@
         <a-descriptions-item label="Salary" :span="2">{{ salary }}</a-descriptions-item>
         <a-descriptions-item label="Time" :span="2">{{ available_time }}</a-descriptions-item>
         <a-descriptions-item label="Timezone" :span="2">{{ timezone }}</a-descriptions-item>
-        <a-descriptions-item label="message" :span="4">{{ message }} </a-descriptions-item>
+        <a-descriptions-item label="Message" :span="4">{{ message }} </a-descriptions-item>
       </a-descriptions>
     </a-modal>
   </div>
