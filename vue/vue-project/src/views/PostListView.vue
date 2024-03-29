@@ -15,17 +15,24 @@
         </a-table>
         <PostDetail ref="post_detail" />
     </a-layout>
+    <a-modal v-model:open="chatOpen" title="Chat">
+        <ChatPage v-if="chatOpen" :receiver="receiverUsername" @close="chatOpen = false" />
+    </a-modal>
 </template>
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 import PostDetail from '@/components/PostDetail.vue';
+import ChatPage from '@/components/ChatPage.vue';
 const post_detail = ref(null);
 const searchText = ref('');
 const listData = ref([]);
 const searched = ref(false);
 const filteredData = ref([]);
+const chatOpen = ref(false);
+const receiverUsername = ref('');
+
 function search() {
     const lowerSearchText = searchText.value.toLowerCase();
     console.log(searchText.value)
@@ -101,6 +108,22 @@ function reset() {
 
 function showPost(post_id) {
     post_detail.value.showModal(post_id);
+}
+
+function contact(post_id) {
+    axios.get('http://127.0.0.1:5000/GetUserNameByPostID', {
+        params: {
+            post_id: post_id
+        }
+    })
+        .then(response => {
+            console.log(response.data.username);
+            receiverUsername.value = response.data.username;
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    chatOpen.value = true;
 }
 
 </script>

@@ -9,9 +9,9 @@
         <a-menu-item key="2">
           <router-link to="/post-list">Posts</router-link>
         </a-menu-item>
-        <a-menu-item key="3">
+        <!-- <a-menu-item key="3">
           <router-link to="/chat/0">Chat</router-link>
-        </a-menu-item>
+        </a-menu-item> -->
       </a-menu>
       <a-avatar shape="square" :size="64">
         <template #icon>
@@ -59,9 +59,9 @@ watch(() => route.path, (newPath) => {
     case '/post-list':
       selectedKeys.value = ['2'];
       break;
-    case '/chat/0':
-      selectedKeys.value = ['3'];
-      break;
+    // case '/chat/0':
+    //   selectedKeys.value = ['3'];
+    //   break;
     default:
       selectedKeys.value = ['0'];
       break;

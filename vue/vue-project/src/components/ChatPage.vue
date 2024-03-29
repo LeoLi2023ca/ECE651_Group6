@@ -1,5 +1,6 @@
 <template>
     <div class="chat-container">
+      <div>Chatting with: {{ receiverUsername }}</div>
       <div class="chat-history">
         <div v-for="message in messages" :key="message.id" class="message">
           <strong>{{ message.sender }}:</strong> {{ message.text }}
@@ -23,15 +24,16 @@
   const store = useStore();
   const user_info = sessionStorage.getItem('user_info') ? JSON.parse(sessionStorage.getItem('user_info')) : null;
   const username = user_info ? user_info.username : 'Anonymous';  
+  const props = defineProps({
+    receiver: String,
+  });
+  const receiverUsername = ref(props.receiver);
 
-  const messages = ref([
-    { id: 1, sender: username, text: 'Hello, how are you?' },
-    { id: 2, sender: 'bsdf', text: 'I\'m good, thanks! And you?' },
-    // Add initial chat history here
-  ]);
+  const messages = ref([]);
 
   onMounted(() => {
     getMessage();
+    console.log(receiverUsername.value);
   });
 //   getMessage();
   
@@ -58,7 +60,7 @@
     }
     data.append('sender', username);
     data.append('text', newMessage.value);
-    data.append('receiver', 'bsdf');
+    data.append('receiver', receiverUsername.value);
     console.log(data)
     var config = {
       method: 'post',
@@ -83,7 +85,7 @@
   const getMessage = () => {
     const params = {
         sender: username,
-        receiver: 'bsdf',
+        receiver: receiverUsername.value,
     };
     const config = {
       method: 'get',

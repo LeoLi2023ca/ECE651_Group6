@@ -16,7 +16,7 @@
             </a-descriptions>
         </a-modal>
         <a-modal v-model:open="chatOpen" title="Chat">
-            <ChatPage v-if="chatOpen" :tutor-username="username" @close="chatOpen = false" />
+            <ChatPage v-if="chatOpen" :receiver="username" @close="chatOpen = false" />
         </a-modal>
     </div>
 </template>

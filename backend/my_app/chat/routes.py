@@ -13,7 +13,7 @@ def get_messages():
     sender_username = request.args.get('sender')
     receiver_username = request.args.get('receiver')
     messages = ChatMessage.query.filter(
-        ((ChatMessage.sender_username == sender_username) & (ChatMessage.receiver_username == receiver_username))
+        ((ChatMessage.sender_username == sender_username) & (ChatMessage.receiver_username == receiver_username)) | ((ChatMessage.sender_username == receiver_username) & (ChatMessage.receiver_username == sender_username))
     ).order_by(ChatMessage.timestamp.asc()).all()
     return jsonify([message.to_dict() for message in messages])
 

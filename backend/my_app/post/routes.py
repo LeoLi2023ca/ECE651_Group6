@@ -238,3 +238,12 @@ def getAllOpeningPost():
             ]
         }
     )
+
+@post.route("/GetUserNameByPostID", methods=["GET"])
+def GetUserNameByPostID():
+    post_id = request.args.get("post_id")
+    post = Student_Post.query.filter_by(post_id=post_id).first()
+    if post is None:
+        return jsonify({"error": "Post not found"}), 401
+    else:
+        return jsonify({"username": post.username})

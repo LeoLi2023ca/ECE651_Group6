@@ -19,7 +19,7 @@ def create_app():
     # app.config['MYSQL_DB'] = 'OnlineTutor'
 
     # Configure SQLAlchemy connection
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://ray:z56peng@localhost/OnlineTutor'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:rainchoi228@localhost/OnlineTutor'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     # Flask-Mail configuration
