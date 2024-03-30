@@ -2,37 +2,42 @@
     <div class="title margin-20">
       <h1>Welcome to TutorEase!</h1>
       <h4>Before matching with students, please spend some time to fill in some of your information. This will help us to recommend students who are suitable for you.</h4>
+      <h5>You can make changes to these afterwards by going to settings -> my information</h5>
     </div>
     <div class="form-container">
       <form @submit.prevent="submitForm">
         <div class="form-group">
           <label for="education_level">Education level:</label>
-          <select name="country">
-            <option value="usa">Highschool</option>
-            <option value="usa">Bachelor</option>
-            <option value="canada">Master</option>
-            <option value="mexico">Phd</option>
+          <select name="education_level" v-model="tutorInfo.education_level">
+            <option value="highschool">Highschool</option>
+            <option value="bachelor">Bachelor</option>
+            <option value="master">Master</option>
+            <option value="phd">Phd</option>
           </select>
         </div>
         <div class="form-group">
           <label for="school_name">School name:</label>
-          <input type="text" id="school_name" v-model="userInfo.email" required>
+          <input type="text" id="school_name" v-model="tutorInfo.school_name" required>
         </div>
         <div class="form-group">
           <label for="subjects">Subjects that you are good at:</label>
-          <input type="checkbox" name="subjects" value="chinese"> Chinese<br>
-          <input type="checkbox" name="subjects" value="english"> English<br>
-          <input type="checkbox" name="subjects" value="math"> Math<br>
-          <input type="checkbox" name="subjects" value="chemistry"> Chemistry<br>
-          <input type="checkbox" name="subjects" value="physics"> Physics<br>
-          <input type="checkbox" name="subjects" value="biology"> Biology<br>
-          <input type="checkbox" name="subjects" value="business_management"> Business management<br>
-          <input type="checkbox" name="subjects" value="geography"> Geography<br>
-          <input type="checkbox" name="subjects" value="history"> History<br>
+          <input type="checkbox" name="subjects" value="chinese" v-model="tutorInfo.subjects"> Chinese<br>
+          <input type="checkbox" name="subjects" value="english" v-model="tutorInfo.subjects"> English<br>
+          <input type="checkbox" name="subjects" value="math" v-model="tutorInfo.subjects"> Math<br>
+          <input type="checkbox" name="subjects" value="chemistry" v-model="tutorInfo.subjects"> Chemistry<br>
+          <input type="checkbox" name="subjects" value="physics" v-model="tutorInfo.subjects"> Physics<br>
+          <input type="checkbox" name="subjects" value="biology" v-model="tutorInfo.subjects"> Biology<br>
+          <input type="checkbox" name="subjects" value="business_management" v-model="tutorInfo.subjects"> Business management<br>
+          <input type="checkbox" name="subjects" value="geography" v-model="tutorInfo.subjects"> Geography<br>
+          <input type="checkbox" name="subjects" value="history" v-model="tutorInfo.subjects"> History<br>
+        </div>
+        <div class="form-group">
+          <label for="tuition">Expected tuition per hour:</label>
+          <input type="number" id="tuition" v-model="tutorInfo.tuition" required>
         </div>
         <div class="form-group">
           <label for="bio">Tell us more about yourself:</label>
-          <textarea id="bio" v-model="userInfo.bio"></textarea>
+          <textarea id="bio" v-model="tutorInfo.bio"></textarea>
         </div>
         <button type="submit">Done</button>
       </form>
@@ -43,16 +48,18 @@
   export default {
     data() {
       return {
-        userInfo: {
-          name: '',
-          email: '',
-          bio: '',
+        tutorInfo: {
+          education_level: '',
+          school_name: '',
+          subjects: [],
+          tuition: '',
+          bio: ''
         },
       };
     },
     methods: {
       submitForm() {
-        console.log('Submitting:', this.userInfo);
+        console.log('Submitting:', this.tutorInfo);
       }
     }
   }
