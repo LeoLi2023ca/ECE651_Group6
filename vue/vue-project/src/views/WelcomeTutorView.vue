@@ -1,28 +1,40 @@
 <template>
-    <div>
-      <div>Welcome to TutorEase!</div>
-      <div>To start your journey, please spend some time to fill in some of your information. This will help us recommend students which is suitable for you.</div>
-      <button>Let's get started</button>
-      <button>Remind me later</button>
+    <div class="title margin-20">
+      <h1>Welcome to TutorEase!</h1>
+      <h4>Before matching with students, please spend some time to fill in some of your information. This will help us to recommend students who are suitable for you.</h4>
     </div>
     <div class="form-container">
       <form @submit.prevent="submitForm">
         <div class="form-group">
-          <label for="name">Name:</label>
-          <input type="text" id="name" v-model="userInfo.name" required>
+          <label for="education_level">Education level:</label>
+          <select name="country">
+            <option value="usa">Highschool</option>
+            <option value="usa">Bachelor</option>
+            <option value="canada">Master</option>
+            <option value="mexico">Phd</option>
+          </select>
         </div>
-  
         <div class="form-group">
-          <label for="email">Email:</label>
-          <input type="email" id="email" v-model="userInfo.email" required>
+          <label for="school_name">School name:</label>
+          <input type="text" id="school_name" v-model="userInfo.email" required>
         </div>
-  
         <div class="form-group">
-          <label for="bio">Short Bio:</label>
+          <label for="subjects">Subjects that you are good at:</label>
+          <input type="checkbox" name="subjects" value="chinese"> Chinese<br>
+          <input type="checkbox" name="subjects" value="english"> English<br>
+          <input type="checkbox" name="subjects" value="math"> Math<br>
+          <input type="checkbox" name="subjects" value="chemistry"> Chemistry<br>
+          <input type="checkbox" name="subjects" value="physics"> Physics<br>
+          <input type="checkbox" name="subjects" value="biology"> Biology<br>
+          <input type="checkbox" name="subjects" value="business_management"> Business management<br>
+          <input type="checkbox" name="subjects" value="geography"> Geography<br>
+          <input type="checkbox" name="subjects" value="history"> History<br>
+        </div>
+        <div class="form-group">
+          <label for="bio">Tell us more about yourself:</label>
           <textarea id="bio" v-model="userInfo.bio"></textarea>
         </div>
-  
-        <button type="submit">Submit</button>
+        <button type="submit">Done</button>
       </form>
     </div>
   </template>
@@ -40,15 +52,21 @@
     },
     methods: {
       submitForm() {
-        // In a real app, you'd likely send this data to a server
         console.log('Submitting:', this.userInfo);
-        // Optionally, clear the form or provide user feedback
       }
     }
   }
   </script>
   
   <style scoped>
+  .title{
+    text-align:center
+  }
+
+  .margin-20{
+    margin: 20px;
+  }
+
   .form-container {
     max-width: 400px;
     margin: 0 auto;
@@ -75,7 +93,7 @@
   }
   
   button[type="submit"] {
-    background-color: #4CAF50;
+    background-color: rgb(25, 29, 87);
     color: white;
     padding: 10px 20px;
     border: none;
@@ -84,7 +102,7 @@
   }
   
   button[type="submit"]:hover {
-    background-color: #45a049;
+    background-color: rgb(46, 54, 158);
   }
   </style>
   
