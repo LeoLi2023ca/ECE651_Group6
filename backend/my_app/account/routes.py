@@ -298,8 +298,8 @@ def updateTutorProfile():
     timezone = request.form.get("timezone")
     available_time = request.form.get("available_time")
     message = request.form.get("message")
-    # subjects = request.form.get("subjects")
-    # subjects = subjects.split(",")
+    subjects = request.form.get("subjects")
+    subjects = subjects.split(",")
     # print(subjects)
     user = Tutor.query.filter((Tutor.username == username)).first()
     if user:
@@ -309,7 +309,7 @@ def updateTutorProfile():
         user.timezone = timezone
         user.available_time = available_time
         user.msg = message
-        # user.set_subjects(subjects)
+        user.set_subjects(subjects)
         db.session.commit()
         user_info = {
             "username": username,

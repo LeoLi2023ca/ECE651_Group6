@@ -45,10 +45,16 @@ class Tutor(db.Model):
     # activation_token = db.Column(db.String(100), unique=True)
     # registration_completed = db.Column(db.Boolean, nullable=False, default=False)
     def set_subjects(self, subjects_list):
-        print(subjects_list)
-        self.subjects = json.dumps(subjects_list)
+        self.subjects = subjects_list
 
     def get_subjects(self):
+        subjects_string = ""
+        for subject in self.subjects:
+            subjects_string += subject + ", "
+        if len(subjects_string) > 2:
+            return subjects_string[:-2]
+        else:
+            return "No subjects listed."
         return self.subjects
 
     def __repr__(self):
