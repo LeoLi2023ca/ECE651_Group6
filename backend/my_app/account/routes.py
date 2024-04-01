@@ -249,7 +249,7 @@ def getTutorProfileByUsername():
             "username": tutor.username,
             "nickname": tutor.nickname,
             "edu_level": tutor.edu_level,
-            "subject_name": tutor.subject_name,
+            "subjects": tutor.get_subjects(),
             "msg": tutor.msg,
             "salary": tutor.salary,
             "timezone": tutor.timezone,
@@ -298,6 +298,9 @@ def updateTutorProfile():
     timezone = request.form.get("timezone")
     available_time = request.form.get("available_time")
     message = request.form.get("message")
+    # subjects = request.form.get("subjects")
+    # subjects = subjects.split(",")
+    # print(subjects)
     user = Tutor.query.filter((Tutor.username == username)).first()
     if user:
         user.nickname = nickname
@@ -306,6 +309,7 @@ def updateTutorProfile():
         user.timezone = timezone
         user.available_time = available_time
         user.msg = message
+        # user.set_subjects(subjects)
         db.session.commit()
         user_info = {
             "username": username,
@@ -455,7 +459,7 @@ def getAllTutor():
                     "username": tutor.username,
                     "nickname": tutor.nickname,
                     "edu_level": tutor.edu_level,
-                    "subject_name": tutor.subject_name,
+                    "subjects": tutor.get_subjects(),
                     "msg": tutor.msg,
                     "salary": tutor.salary,
                     "timezone": tutor.timezone,
