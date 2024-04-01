@@ -12,6 +12,8 @@ import StudentSettingView from '@/views/StudentSettingView.vue'
 import TutorProfileView from '@/views/TutorProfileView.vue'
 import TutorSettingView from '@/views/TutorSettingView.vue'
 import ChatPage from '@/components/ChatPage.vue'
+import WelcomeTutorView from '@/views/WelcomeTutorView.vue'
+import RegisterView from '@/views/RegisterView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -88,6 +90,16 @@ const router = createRouter({
         }
       ]
     },
+    {
+      path: '/welcome-tutor',
+      name: 'welcome-tutor',
+      component: WelcomeTutorView
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: RegisterView
+    },
     // {
     //   path: '/chat/:id',
     //   name: 'chat',
@@ -101,10 +113,10 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach((to, from, next) => {
-  const token = sessionStorage.getItem('role');
-  if (to.name !== 'login' && token !== '1' && token !== '2') next({ name: 'login' });
-  else next();
-});
+// router.beforeEach((to, from, next) => {
+//   const token = sessionStorage.getItem('role');
+//   if (to.name !== 'login' && token !== '1' && token !== '2') next({ name: 'login' });
+//   else next();
+// });
 
 export default router;
