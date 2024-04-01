@@ -23,20 +23,38 @@
                     </a-form-item>
                     <a-form-item label="Subjects" name="subjects">
                         <a-checkbox-group v-model:value="formState.subjects">
-                            <a-checkbox :value="'chinese'">Chinese</a-checkbox>
-                            <a-checkbox :value="'english'">English</a-checkbox>
-                            <a-checkbox :value="'math'">Math</a-checkbox>
-                            <a-checkbox :value="'chemistry'">Chemistry</a-checkbox>
-                            <a-checkbox :value="'physics'">Physics</a-checkbox>
-                            <a-checkbox :value="'biology'">Biology</a-checkbox>
-                            <a-checkbox :value="'business_management'">Business Management</a-checkbox>
-                            <a-checkbox :value="'geography'">Geography</a-checkbox>
-                            <a-checkbox :value="'history'">History</a-checkbox>
+                            <a-checkbox :value="'Chinese'">Chinese</a-checkbox>
+                            <a-checkbox :value="'English'">English</a-checkbox>
+                            <a-checkbox :value="'Math'">Math</a-checkbox>
+                            <a-checkbox :value="'Chemistry'">Chemistry</a-checkbox>
+                            <a-checkbox :value="'Physics'">Physics</a-checkbox>
+                            <a-checkbox :value="'Biology'">Biology</a-checkbox>
+                            <a-checkbox :value="'Business_management'">Business Management</a-checkbox>
+                            <a-checkbox :value="'Geography'">Geography</a-checkbox>
+                            <a-checkbox :value="'History'">History</a-checkbox>
                             <!-- Add more subjects as needed -->
                         </a-checkbox-group>
                     </a-form-item>
+                    <a-form-item label="Salary" name="salaryRange">
+                        <div style="display: flex; justify-content: space-between;">
+                        <a-input-number
+                            v-model:value="formState.salaryRange.min"
+                            style="width: 45%;"
+                            placeholder="Min"
+                            min="0"
+                        />
+                        <a-input-number
+                            v-model:value="formState.salaryRange.max"
+                            style="width: 45%;"
+                            placeholder="Max"
+                            :min="formState.salaryRange.min"
+                        />
+                        </div>
+                    </a-form-item>    
                     <a-form-item ref="timezone" label="Timezone" name="timezone">
-                        <a-input v-model:value="formState.timezone" />
+                        <a-select v-model:value="formState.timezone" placeholder="Select timezone">
+                            <a-select-option v-for="tz in timezones" :key="tz.value" :value="tz.value">{{ tz.label }}</a-select-option>
+                        </a-select>
                     </a-form-item>
                     <a-form-item ref="available_time" label="Available" name="available_time">
                         <a-input v-model:value="formState.available_time" />
@@ -71,6 +89,12 @@ import { message } from 'ant-design-vue';
 const componentDisabled = ref(true);
 const user_info = JSON.parse(sessionStorage.getItem('user_info'));
 
+const timezones = Array.from({ length: 25 }, (_, i) => {
+  const value = i - 12;
+  const sign = value >= 0 ? '+' : '-';
+  return { label: `UTC ${sign}${Math.abs(value).toString().padStart(2, '0')}:00`, value: `${sign}${Math.abs(value).toString().padStart(2, '0')}:00` };
+});
+
 const labelCol = {
     style: {
         width: '80px',
@@ -87,6 +111,10 @@ const formState = reactive({
     available_time: '',
     msg: '',
     subjects: [],
+    salaryRange: {
+        min: 0,
+        max: 0,
+    },
 })
 
 onMounted(() => {
@@ -97,7 +125,19 @@ function loadProfile() {
     formState.nickname = user_info.nickname;
     formState.email = user_info.email;
     formState.edu_level = user_info.edu_level;
+    // if(user_info.timezone == null){
+    //     formState.timezone = 'UTC-4';
+    // }
     formState.timezone = user_info.timezone;
+    if(user_info.salary == null){
+        formState.salaryRange.min = 0;
+        formState.salaryRange.max = 0;
+    }
+    else{
+        formState.salaryRange.min = user_info.salary.split('-')[0];
+        formState.salaryRange.max = user_info.salary.split('-')[1];
+    }
+    formState.subjects = user_info.subjects.split(',');
     formState.available_time = user_info.available_time;
     formState.msg = user_info.msg;
 }
@@ -130,11 +170,12 @@ const updateProfile = async () => {
     data.append('nickname', formState.nickname);
     data.append('email', formState.email);
     data.append('edu_level', formState.edu_level);
-    data.append('timezone', formState.timezone);
-    data.append('available_time', formState.available_time)
-    data.append('message', formState.msg);
+    data.append('timezone', formState.timezone || 'UTC-4');
+    data.append('available_time', formState.available_time || '');
+    data.append('message', formState.msg || '');
     // console.log(formState.subjects);
     data.append('subjects', formState.subjects);
+    data.append('salary', `${formState.salaryRange.min}-${formState.salaryRange.max}`)
 
 
     var config = {

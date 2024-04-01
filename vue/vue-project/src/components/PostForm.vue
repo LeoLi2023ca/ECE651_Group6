@@ -31,9 +31,22 @@
         placeholder="End Time"
       />
     </a-form-item>
-    <a-form-item ref="salary" label="Salary" name="salary">
-      <a-input v-model:value="formState.salary" />
-    </a-form-item>
+    <a-form-item label="Salary" name="salary">
+        <div style="display: flex; justify-content: space-between;">
+        <a-input-number
+            v-model:value="formState.salary.min"
+            style="width: 45%;"
+            placeholder="Min"
+            min="0"
+        />
+        <a-input-number
+            v-model:value="formState.salary.max"
+            style="width: 45%;"
+            placeholder="Max"
+            :min="formState.salary.min"
+        />
+        </div>
+    </a-form-item>   
     <a-form-item ref="message" label="Message" name="message">
       <a-textarea v-model:value="formState.message" :rows="4" />
     </a-form-item>
@@ -112,7 +125,10 @@ const formState = reactive({
   message: '',
   timezone: !props.post_id?user_info.timezone:'UTC -04:00',
   subject: '',
-  salary: '',
+  salary: {
+    min: 0,
+    max: 0,
+  },
   from: '',
   to: '',
 });
@@ -193,7 +209,7 @@ const onSubmit = async () => {
   data.append('title', formState.title)
   data.append('subject', formState.subject)
   data.append('timezone', formState.timezone)
-  data.append('salary', formState.salary)
+  data.append('salary', `${formState.salary.min}-${formState.salary.max}`)
   data.append('msg', formState.message)
   data.append('available_time', availableTime)
   data.append('username', user_info.username)
@@ -219,7 +235,7 @@ const handleUpdate = async () => {
   data.append('title', formState.title)
   data.append('subject', formState.subject)
   data.append('timezone', formState.timezone)
-  data.append('salary', formState.salary)
+  data.append('salary', `${formState.salary.min}-${formState.salary.max}`)
   data.append('msg', formState.message)
   data.append('available_time', availableTime)
   data.append('username', user_info.username)

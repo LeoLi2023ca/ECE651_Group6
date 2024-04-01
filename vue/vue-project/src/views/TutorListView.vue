@@ -9,9 +9,9 @@
     <a-row :gutter="16">
       <a-col v-for="(item, index) in paginatedData" :key="index" :span="8">
         <a-card :title="item.nickname" :style="{ margin: '10px' }" @click="showProfile(item.username)">
-          <p>{{ item.subject_name }}</p>
-          <p>{{ item.edu_level }}</p>
-          <p>{{ item.salary }}</p>
+          <p>{{ "Subjects: "+item.subject_name }}</p>
+          <p>{{ "Education: "+item.edu_level }}</p>
+          <p>{{ "Expected Salary: "+item.salary }}</p>
         </a-card>
       </a-col>
     </a-row>
@@ -76,7 +76,7 @@ async function loadData() {
           username: response.data.list[i].username,
           nickname: response.data.list[i].nickname,
           edu_level: response.data.list[i].edu_level,
-          subject_name: response.data.list[i].subject_name,
+          subject_name: response.data.list[i].subjects,
           msg: response.data.list[i].msg,
           salary: response.data.list[i].salary,
           timezone: response.data.list[i].timezone,

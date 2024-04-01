@@ -211,6 +211,8 @@ def login():
             "timezone": user.timezone,
             "available_time": user.available_time,
             "msg": user.msg,
+            "subjects": user.get_subjects(),
+            "salary": user.salary,
         }
     )
     code = "1" if existing_student else "2"
@@ -300,6 +302,7 @@ def updateTutorProfile():
     message = request.form.get("message")
     subjects = request.form.get("subjects")
     subjects = subjects.split(",")
+    salary = request.form.get("salary")
     # print(subjects)
     user = Tutor.query.filter((Tutor.username == username)).first()
     if user:
@@ -310,6 +313,7 @@ def updateTutorProfile():
         user.available_time = available_time
         user.msg = message
         user.set_subjects(subjects)
+        user.salary = salary
         db.session.commit()
         user_info = {
             "username": username,
@@ -319,6 +323,8 @@ def updateTutorProfile():
             "timezone": timezone,
             "available_time": available_time,
             "msg": message,
+            "subjects": user.get_subjects(),
+            "salary": salary,
         }
         return jsonify({"message": "profile updated", "user_info": user_info})
     else:
