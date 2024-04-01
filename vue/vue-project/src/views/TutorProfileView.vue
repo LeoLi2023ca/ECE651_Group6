@@ -118,10 +118,15 @@ const formState = reactive({
 })
 
 onMounted(() => {
+    getProfile(user_info.username);
     loadProfile();
 });
 
 function loadProfile() {
+    if(!user_info){
+        console.log('user_info is null');
+        return;
+    }
     formState.nickname = user_info.nickname;
     formState.email = user_info.email;
     formState.edu_level = user_info.edu_level;
@@ -129,40 +134,51 @@ function loadProfile() {
     //     formState.timezone = 'UTC-4';
     // }
     formState.timezone = user_info.timezone;
-    if(user_info.salary == null){
-        formState.salaryRange.min = 0;
-        formState.salaryRange.max = 0;
+    // console.log(user_info.salary)
+    // if(user_info.salary == null){
+    //     formState.salaryRange.min = 0;
+    //     formState.salaryRange.max = 0;
+    // }
+    // else{
+    //     console.log(user_info.salary);
+    //     formState.salaryRange.min = user_info.salary.split('-')[0];
+    //     formState.salaryRange.max = user_info.salary.split('-')[1];
+    // }
+    formState.salaryRange.min = 0;
+    formState.salaryRange.max = 0;
+    if (user_info.subjects != null){
+        formState.subjects = user_info.subjects.split(',');
     }
     else{
-        formState.salaryRange.min = user_info.salary.split('-')[0];
-        formState.salaryRange.max = user_info.salary.split('-')[1];
+        formState.subjects = [];
     }
-    formState.subjects = user_info.subjects.split(',');
+    console.log(formState.subjects);
     formState.available_time = user_info.available_time;
     formState.msg = user_info.msg;
 }
-// const getProfile = async () => {
-//   var data = new FormData();
+function getProfile(username_) {
+    const params = {
+        username: username_
+    };
+    let config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: 'http://127.0.0.1:5000/getTutorProfileByUsername',
+        headers: {},
+        params: params
+    };
 
-//   data.append('username', user.username);
+    axios.request(config)
+        .then((response) => {
+            // update user_info
+            sessionStorage.setItem('user_info', JSON.stringify(response.data.user_info));
+            // console.log(JSON.stringify(response.data));
+        })
+        .catch((error) => {
+            console.log(error);
+        });
 
-//   var config = {
-//     method: 'get',
-//     url: 'http://localhost:5000/getStudentProfileByUsername',
-//     data: data
-//   };
-
-//   axios(config)
-//     .then(function (response) {
-//       sessionStorage.setItem('role', response.data.code);
-//       sessionStorage.setItem('user_info', JSON.stringify(response.data.user_info))
-//       store.commit('setUserRole', response.data.code);
-//       router.push({ name: 'home' });
-//     })
-//     .catch(function (error) {
-//       console.log(error);
-//     });
-// }
+};
 
 const updateProfile = async () => {
     var data = new FormData();

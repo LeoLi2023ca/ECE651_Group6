@@ -33,7 +33,7 @@ import { ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
-import $ from 'jquery'
+import $ from 'jquery';
 
 const store = useStore();
 const router = useRouter();

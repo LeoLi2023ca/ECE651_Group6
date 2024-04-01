@@ -38,7 +38,7 @@ class Tutor(db.Model):
     timezone = db.Column(db.VARCHAR(50), default="UTC")
     available_time = db.Column(db.String(100), default="")
     subjects = db.Column(MutableList.as_mutable(db.PickleType), default=[])
-    salary = db.Column(db.String(50), nullable=True)
+    salary = db.Column(db.String(50), default="0-0")
     msg = db.Column(db.String(255), default="Hello, I am a tutor")
     # listed? Tutor setting to be listed(in student view of tutor list, same as status of student post) or not
 
@@ -50,12 +50,12 @@ class Tutor(db.Model):
     def get_subjects(self):
         subjects_string = ""
         for subject in self.subjects:
-            subjects_string += subject + ", "
-        if len(subjects_string) > 2:
-            return subjects_string[:-2]
+            subjects_string += subject + ","
+        if len(subjects_string) > 0:
+            subjects_string = subjects_string[:-1]
         else:
-            return "No subjects listed."
-        return self.subjects
+            subjects_string = "No subjects listed."
+        return subjects_string
 
     def __repr__(self):
         return f"<Tutor {self.username}>"
