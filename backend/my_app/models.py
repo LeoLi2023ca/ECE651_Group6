@@ -1,4 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.ext.mutable import MutableList
+import json
 
 db = SQLAlchemy()
 
@@ -35,13 +37,25 @@ class Tutor(db.Model):
     )
     timezone = db.Column(db.VARCHAR(50), default="UTC")
     available_time = db.Column(db.String(100), default="")
-    subject_name = db.Column(db.String(50), nullable=True)
+    subjects = db.Column(MutableList.as_mutable(db.PickleType), default=[])
     salary = db.Column(db.String(50), nullable=True)
     msg = db.Column(db.String(255), default="Hello, I am a tutor")
     # listed? Tutor setting to be listed(in student view of tutor list, same as status of student post) or not
 
     # activation_token = db.Column(db.String(100), unique=True)
     # registration_completed = db.Column(db.Boolean, nullable=False, default=False)
+    def set_subjects(self, subjects_list):
+        self.subjects = subjects_list
+
+    def get_subjects(self):
+        subjects_string = ""
+        for subject in self.subjects:
+            subjects_string += subject + ", "
+        if len(subjects_string) > 2:
+            return subjects_string[:-2]
+        else:
+            return "No subjects listed."
+        return self.subjects
 
     def __repr__(self):
         return f"<Tutor {self.username}>"

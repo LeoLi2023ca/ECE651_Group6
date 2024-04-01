@@ -59,7 +59,7 @@ function fillProfileWithUsername(username_) {
             username.value = tutor_info.username;
             nickname.value = tutor_info.nickname;
             edu_level.value = tutor_info.edu_level;
-            subject_name.value = tutor_info.subject_name;
+            subject_name.value = tutor_info.subjects;
             msg.value = tutor_info.msg;
             salary.value = tutor_info.salary;
             timezone.value = tutor_info.timezone;

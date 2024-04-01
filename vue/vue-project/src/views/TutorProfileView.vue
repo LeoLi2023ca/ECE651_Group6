@@ -6,22 +6,42 @@
             <div style="max-width: 600px;">
                 <a-form :model="formState" :label-col="labelCol" :wrapper-col="wrapperCol" layout="horizontal"
                     :disabled="componentDisabled">
-                    <a-form-item ref="nickname" label="nickname" name="nickname">
+                    <a-form-item ref="nickname" label="Nickname" name="nickname">
                         <a-input v-model:value="formState.nickname" />
                     </a-form-item>
-                    <a-form-item ref="email" label="email" name="email">
+                    <a-form-item ref="email" label="Email" name="email">
                         <a-input v-model:value="formState.email" />
                     </a-form-item>
-                    <a-form-item ref="edu_level" label="edu_level" name="edu_level">
-                        <a-input v-model:value="formState.edu_level" />
+                    <a-form-item ref="edu_level" label="Education" name="edu_level">
+                        <a-select v-model:value="formState.edu_level" placeholder="Select a subject">
+                            <a-select-option value="highschool">highschool</a-select-option>
+                            <a-select-option value="bachelor">bachelor</a-select-option>
+                            <a-select-option value="master">master</a-select-option>
+                            <a-select-option value="phd">phd</a-select-option>
+                            <!-- Add more subjects as needed -->
+                        </a-select>
                     </a-form-item>
-                    <a-form-item ref="timezone" label="timezone" name="timezone">
+                    <a-form-item label="Subjects" name="subjects">
+                        <a-checkbox-group v-model:value="formState.subjects">
+                            <a-checkbox :value="'chinese'">Chinese</a-checkbox>
+                            <a-checkbox :value="'english'">English</a-checkbox>
+                            <a-checkbox :value="'math'">Math</a-checkbox>
+                            <a-checkbox :value="'chemistry'">Chemistry</a-checkbox>
+                            <a-checkbox :value="'physics'">Physics</a-checkbox>
+                            <a-checkbox :value="'biology'">Biology</a-checkbox>
+                            <a-checkbox :value="'business_management'">Business Management</a-checkbox>
+                            <a-checkbox :value="'geography'">Geography</a-checkbox>
+                            <a-checkbox :value="'history'">History</a-checkbox>
+                            <!-- Add more subjects as needed -->
+                        </a-checkbox-group>
+                    </a-form-item>
+                    <a-form-item ref="timezone" label="Timezone" name="timezone">
                         <a-input v-model:value="formState.timezone" />
                     </a-form-item>
-                    <a-form-item ref="available_time" label="available" name="available_time">
+                    <a-form-item ref="available_time" label="Available" name="available_time">
                         <a-input v-model:value="formState.available_time" />
                     </a-form-item>
-                    <a-form-item ref="msg" label="message" name="msg">
+                    <a-form-item ref="msg" label="Message" name="msg">
                         <a-textarea :rows="4" v-model:value="formState.msg" />
                     </a-form-item>
                 </a-form>
@@ -66,6 +86,7 @@ const formState = reactive({
     timezone: '',
     available_time: '',
     msg: '',
+    subjects: [],
 })
 
 onMounted(() => {
@@ -112,6 +133,8 @@ const updateProfile = async () => {
     data.append('timezone', formState.timezone);
     data.append('available_time', formState.available_time)
     data.append('message', formState.msg);
+    // console.log(formState.subjects);
+    data.append('subjects', formState.subjects);
 
 
     var config = {
