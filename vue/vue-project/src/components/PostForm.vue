@@ -5,9 +5,14 @@
     </a-form-item>
     <a-form-item label="Subject" name="subject">
       <a-select v-model:value="formState.subject" placeholder="Select a subject">
+        <a-select-option value="Chinese">Chinese</a-select-option>
         <a-select-option value="English">English</a-select-option>
         <a-select-option value="Math">Math</a-select-option>
-        <a-select-option value="Science">Science</a-select-option>
+        <a-select-option value="Chemistry">Chemistry</a-select-option>
+        <a-select-option value="Physics">Physics</a-select-option>
+        <a-select-option value="Biology">Biology</a-select-option>
+        <a-select-option value="Business_Management">Business Management</a-select-option>
+        <a-select-option value="Geography">Geography</a-select-option>
         <a-select-option value="History">History</a-select-option>
         <!-- Add more subjects as needed -->
       </a-select>

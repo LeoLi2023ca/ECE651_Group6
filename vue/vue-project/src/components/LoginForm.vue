@@ -43,6 +43,7 @@ const login = async () => {
             sessionStorage.setItem('user_info', JSON.stringify(response.data.user_info))
             store.commit('setUserRole', response.data.code);
             router.push({ name: 'home' });
+            alert('Login successful!');
         })
         .catch(function (error) {
             if(error.response.status == 401){

@@ -2,6 +2,14 @@
   <a-layout>
     <div :style="{ display: 'flex', margin: '10px' }"><a-input placeholder="Search" v-model:value="searchText"
         style="margin-right: 10px;" />
+      <a-select
+        v-model:value="selectedSubject"
+        style="margin-right: 10px; width: 200px;"
+        placeholder="Select a subject"
+        @change="searchBySubject"
+      >
+        <a-select-option v-for="subject in subjects" :key="subject" :value="subject">{{ subject }}</a-select-option>
+      </a-select>
       <a-button style="margin-right: 10px;" type="primary" @click="search">Search</a-button>
       <a-button @click="reset">Reset</a-button>
     </div>
@@ -34,6 +42,9 @@ const searched = ref(false);
 const filteredData = ref([]);
 const tutor_detail = ref(null);
 const paginatedData = ref([]);
+const subjects = ref(['Chinese', 'English', 'Math', 'Chemistry', 'Physics', 'Biology', 'Business Management', 'Geography', 'History']);
+const selectedSubject = ref(null);
+
 onMounted(async () => {
   await loadData();
   const start = (currentPage.value - 1) * pageSize.value;
@@ -65,6 +76,20 @@ function search() {
   } else {
     paginatedData.value = data.value.slice(start, end);
   }
+}
+
+function searchBySubject() {
+  // searchText.value = subject.toLowerCase(); // Assuming you want to keep using searchText for consistency
+  filteredData.value = data.value.filter((item) => {
+    // Assuming subject_name is a string or an array of strings
+    if (Array.isArray(item.subject_name)) {
+      return item.subject_name.map(s => s.toLowerCase()).includes(selectedSubject.value.toLowerCase());
+    } else {
+      return item.subject_name.toLowerCase().includes(selectedSubject.value.toLowerCase());
+    }
+  });
+  searched.value = true;
+  updatePaginatedData();
 }
 
 async function loadData() {
@@ -108,5 +133,13 @@ function reset() {
   const end = start + pageSize.value;
   paginatedData.value = data.value.slice(start, end);
   currentPage.value = 1;
+  selectedSubject.value = null;
 }
+
+function updatePaginatedData() {
+  const start = (currentPage.value - 1) * pageSize.value;
+  const end = start + pageSize.value;
+  paginatedData.value = searched.value ? filteredData.value.slice(start, end) : data.value.slice(start, end);
+}
+
 </script>

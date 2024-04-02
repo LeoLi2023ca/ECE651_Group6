@@ -29,7 +29,7 @@
                             <a-checkbox :value="'Chemistry'">Chemistry</a-checkbox>
                             <a-checkbox :value="'Physics'">Physics</a-checkbox>
                             <a-checkbox :value="'Biology'">Biology</a-checkbox>
-                            <a-checkbox :value="'Business_management'">Business Management</a-checkbox>
+                            <a-checkbox :value="'Business_Management'">Business Management</a-checkbox>
                             <a-checkbox :value="'Geography'">Geography</a-checkbox>
                             <a-checkbox :value="'History'">History</a-checkbox>
                             <!-- Add more subjects as needed -->
