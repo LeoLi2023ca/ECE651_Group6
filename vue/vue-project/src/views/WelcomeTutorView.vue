@@ -132,7 +132,7 @@ button[type="submit"]:hover {
 .form-container {
   max-width: 600px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 30px;
   border: 2px solid #e0e0e0;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

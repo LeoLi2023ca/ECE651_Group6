@@ -1,5 +1,5 @@
-<template>
-    <a-layout-content style="display: flex; align-items: center; justify-content: center; min-height: 100vh;">
+  <template>
+    <a-layout-content style="display: flex; align-items: center; justify-content: center; min-height: 80vh;">
       <div class="form-container">
         <a-form
           ref="formRef"
@@ -133,15 +133,17 @@
   <style scoped>
   .form-container {
     max-width: 600px;
-    margin: 5vh auto 20px auto;
-    padding: 30px;
+    margin: 5vh auto 0px auto;
+    padding: 40px;
     background: #fff;
-    border: 1px solid #d9d9d9;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(to right, #ffffff, #f2f2f2);
     display: flex;
     flex-direction: column;
     text-align: center;
+
   }
   
   .form-title {
