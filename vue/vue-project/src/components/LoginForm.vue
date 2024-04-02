@@ -45,7 +45,16 @@ const login = async () => {
             router.push({ name: 'home' });
         })
         .catch(function (error) {
-            console.log(error);
+            if(error.response.status == 401){
+                alert('Invalid username or password');
+            }
+            else if(error.response.status == 404){
+                alert('User not found');
+            }
+            else{
+                alert('Something went wrong');
+                console.log(error);
+            }
         });
 };
 </script>

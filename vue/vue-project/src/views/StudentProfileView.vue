@@ -6,19 +6,28 @@
       <div style="max-width: 600px;">
         <a-form :model="formState" :label-col="labelCol" :wrapper-col="wrapperCol" layout="horizontal"
           :disabled="componentDisabled">
-          <a-form-item ref="nickname" label="nickname" name="nickname">
+          <a-form-item ref="nickname" label="Nickname" name="nickname">
             <a-input v-model:value="formState.nickname" />
           </a-form-item>
-          <a-form-item ref="email" label="email" name="email">
+          <a-form-item ref="email" label="Email" name="email">
             <a-input v-model:value="formState.email" />
           </a-form-item>
-          <a-form-item ref="grade" label="grade" name="grade">
-            <a-input v-model:value="formState.grade" />
+          <a-form-item ref="grade" label="Grade" name="grade">
+            <a-select v-model:value="formState.grade" placeholder="grade">
+                <a-select-option value="kindergarten">kindergarten</a-select-option>
+                <a-select-option value="primary">primary</a-select-option>
+                <a-select-option value="secondary">secondary</a-select-option>
+                <a-select-option value="bachelor">bachelor</a-select-option>
+                <a-select-option value="graduate">graduate</a-select-option>
+                <!-- Add more subjects as needed -->
+            </a-select>
           </a-form-item>
-          <a-form-item ref="timezone" label="timezone" name="timezone">
-            <a-input v-model:value="formState.timezone" />
+          <a-form-item ref="timezone" label="Timezone" name="timezone">
+            <a-select v-model:value="formState.timezone" placeholder="Select timezone">
+                <a-select-option v-for="tz in timezones" :key="tz.value" :value="tz.value" :default="'UTC -04:00'">{{ tz.label }}</a-select-option>
+            </a-select>
           </a-form-item>
-          <a-form-item ref="msg" label="message" name="message">
+          <a-form-item ref="msg" label="Message" name="message">
             <a-textarea :rows="4" v-model:value="formState.msg" />
           </a-form-item>
         </a-form>
@@ -96,6 +105,11 @@ function loadProfile() {
 //       console.log(error);
 //     });
 // }
+const timezones = Array.from({ length: 25 }, (_, i) => {
+  const value = i - 12;
+  const sign = value >= 0 ? '+' : '-';
+  return { label: `UTC ${sign}${Math.abs(value).toString().padStart(2, '0')}:00`, value: `${sign}${Math.abs(value).toString().padStart(2, '0')}:00` };
+});
 
 const updateProfile = async () => {
   var data = new FormData();

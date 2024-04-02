@@ -53,7 +53,7 @@
                     </a-form-item>    
                     <a-form-item ref="timezone" label="Timezone" name="timezone">
                         <a-select v-model:value="formState.timezone" placeholder="Select timezone">
-                            <a-select-option v-for="tz in timezones" :key="tz.value" :value="tz.value">{{ tz.label }}</a-select-option>
+                            <a-select-option v-for="tz in timezones" :key="tz.value" :value="tz.value" :default="'UTC -04:00'">{{ tz.label }}</a-select-option>
                         </a-select>
                     </a-form-item>
                     <a-form-item ref="available_time" label="Available" name="available_time">
@@ -118,7 +118,7 @@ const formState = reactive({
 })
 
 onMounted(() => {
-    getProfile(user_info.username);
+    // getProfile(user_info.username);
     loadProfile();
 });
 
@@ -128,6 +128,7 @@ function loadProfile() {
         return;
     }
     formState.nickname = user_info.nickname;
+    // console.log(user_info.email);
     formState.email = user_info.email;
     formState.edu_level = user_info.edu_level;
     // if(user_info.timezone == null){
@@ -144,15 +145,15 @@ function loadProfile() {
     //     formState.salaryRange.min = user_info.salary.split('-')[0];
     //     formState.salaryRange.max = user_info.salary.split('-')[1];
     // }
-    formState.salaryRange.min = 0;
-    formState.salaryRange.max = 0;
+    formState.salaryRange.min = user_info.salary.split('-')[0];
+    formState.salaryRange.max = user_info.salary.split('-')[1];
     if (user_info.subjects != null){
         formState.subjects = user_info.subjects.split(',');
     }
     else{
         formState.subjects = [];
     }
-    console.log(formState.subjects);
+    // console.log(formState.subjects);
     formState.available_time = user_info.available_time;
     formState.msg = user_info.msg;
 }
