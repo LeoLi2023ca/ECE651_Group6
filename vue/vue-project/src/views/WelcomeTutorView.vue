@@ -195,6 +195,6 @@ button[type="submit"] {
 }
 
 .checkbox-text {
-  color: rgb(121, 125, 129);
+  /* color: rgb(121, 125, 129); */
 }
 </style>
