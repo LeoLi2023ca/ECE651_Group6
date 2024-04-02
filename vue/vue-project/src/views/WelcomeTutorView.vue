@@ -42,7 +42,9 @@
         <label for="bio">Tell us more about yourself:</label>
         <textarea id="bio" v-model="tutorInfo.bio"></textarea>
       </div>
-      <button type="submit">Done</button>
+      <div class="center-button">
+        <button type="submit">Done</button>
+      </div>
     </form>
   </div>
 </template>
@@ -194,7 +196,12 @@ button[type="submit"] {
   cursor: pointer;
 }
 
-.checkbox-text {
-  /* color: rgb(121, 125, 129); */
+.center-button {
+  text-align: center; 
 }
+
+/* .checkbox-text {
+  color: rgb(121, 125, 129);
+} */
 </style>
+
