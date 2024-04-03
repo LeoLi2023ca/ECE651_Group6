@@ -45,7 +45,7 @@ def getAllOpeningPostsByUsername():
     username = request.args.get("username")
     student = Student.query.filter_by(username=username).first()
     if student is None:
-        return jsonify({"error": "Student not found"})
+        return jsonify({"error": "Student not found"}), 401
     else:
         posts = Student_Post.query.filter_by(username=username).all()
         return jsonify(
@@ -73,7 +73,7 @@ def getAllClosedPostsByUsername():
     username = request.args.get("username")
     student = Student.query.filter_by(username=username).first()
     if student is None:
-        return jsonify({"error": "Student not found"})
+        return jsonify({"error": "Student not found"}), 401
     else:
         posts = Student_Post.query.filter_by(username=username).all()
         return jsonify(
@@ -199,7 +199,7 @@ def getPostByPostID():
     post_id = request.args.get("post_id")
     post = Student_Post.query.filter_by(post_id=post_id).first()
     if post is None:
-        return jsonify({"error": "Post not found"})
+        return jsonify({"error": "Post not found"}), 401
     else:
         return jsonify(
             {

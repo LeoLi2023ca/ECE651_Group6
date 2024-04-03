@@ -140,48 +140,6 @@ def register():
         db.session.rollback()
         return jsonify({"error": str(e)}), 502
 
-
-@account.route("/delete_account", methods=["POST"])
-def delete_account():
-    account_identifier = request.json.get(
-        "identifier"
-    )  # Could be either username or email
-    id = request.json.get("id")  # 'Students' or 'Teachers'
-
-    # Determine the model based on the 'id' provided
-    model = None
-    if id == "Student":
-        model = Student
-    elif id == "Tutor":
-        model = Tutor
-    else:
-        return jsonify({"error": "Invalid account type"}), 400
-
-    # Query the database for the user by username or email
-    user = model.query.filter(
-        (model.username == account_identifier) | (model.email == account_identifier)
-    ).first()
-
-    if user:
-        try:
-            # Delete the user record
-            db.session.delete(user)
-            db.session.commit()
-            return (
-                jsonify(
-                    {
-                        "message": f"Account with username/email: {account_identifier} deleted successfully"
-                    }
-                ),
-                200,
-            )
-        except Exception as e:
-            db.session.rollback()
-            return jsonify({"error": str(e)}), 500
-    else:
-        return jsonify({"error": "Account not found"}), 404
-
-
 # @account.route('/activate')
 # def activate():
 #     token = request.args.get('token')
