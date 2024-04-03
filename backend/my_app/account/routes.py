@@ -476,3 +476,117 @@ def getAllTutor():
             ]
         }
     )
+
+@account.route("/studentRequestMatching", methods=["POST"])
+def studentRequestMatching():
+    student_username = request.args.get("student_username")
+    tutor_username = request.args.get("tutor_username")
+    student = Student.query.filter((Student.username == student_username)).first()
+    tutor = Tutor.query.filter((Tutor.username == tutor_username)).first()
+    if student and tutor:
+        student.tutors_asked.append(tutor_username)
+        tutor.students_asked.append(student_username)
+        db.session.commit()
+        return jsonify({"message": "Request sent successfully!"})
+    else:
+        return jsonify({"error": "Student or Tutor not found"}), 404
+    
+@account.route("/tutorConfirmMatching", methods=["POST"])
+def tutorConfirmMatching():
+    tutor_username = request.form.get("tutor_username")
+    student_username = request.form.get("student_username")
+    tutor = Tutor.query.filter((Tutor.username == tutor_username)).first()
+    student = Student.query.filter((Student.username == student_username)).first()
+    if student and tutor:
+        tutor.matched_students.append(student_username)
+        student.matched_tutors.append(tutor_username)
+        if student_username in tutor.students_asked:
+            tutor.students_asked.remove(student_username)
+        if tutor_username in student.tutors_asked:
+            student.tutors_asked.remove(tutor_username)
+        db.session.commit()
+        return jsonify({"message": "Request sent successfully!"})
+    else:
+        return jsonify({"error": "Student or Tutor not found"}), 404
+    
+@account.route("/tutorRejectMatching", methods=["POST"])
+def tutorRejectMatching():
+    tutor_username = request.form.get("tutor_username")
+    student_username = request.form.get("student_username")
+    tutor = Tutor.query.filter((Tutor.username == tutor_username)).first()
+    student = Student.query.filter((Student.username == student_username)).first()
+    if student and tutor:
+        if student_username in tutor.students_asked:
+            tutor.students_asked.remove(student_username)
+        if tutor_username in student.tutors_asked:
+            student.tutors_asked.remove(tutor_username)
+        db.session.commit()
+        return jsonify({"message": "Request sent successfully!"})
+    else:
+        return jsonify({"error": "Student or Tutor not found"}), 404
+    
+@account.route("/studentCancelMatching", methods=["POST"])
+def studentCancelMatching():
+    student_username = request.form.get("student_username")
+    tutor_username = request.form.get("tutor_username")
+    student = Student.query.filter((Student.username == student_username)).first()
+    tutor = Tutor.query.filter((Tutor.username == tutor_username)).first()
+    if student and tutor:
+        if tutor_username in student.tutors_asked:
+            student.tutors_asked.remove(tutor_username)
+        if student_username in tutor.students_asked:
+            tutor.students_asked.remove(student_username)
+        db.session.commit()
+        return jsonify({"message": "Request sent successfully!"})
+    else:
+        return jsonify({"error": "Student or Tutor not found"}), 404
+    
+@account.route("/getStudentsAskedTutor", methods=["GET"])
+def getStudentsAskedTutor():
+    student_username = request.args.get("student_username")
+    student = Student.query.filter((Student.username == student_username)).first()
+    if student:
+        asked_tutors = []
+        for tutor in student.tutors_asked:
+            tutor = Tutor.query.filter((Tutor.username == tutor)).first()
+            if tutor:
+                asked_tutors.append(
+                    {
+                        "username": tutor.username,
+                        "nickname": tutor.nickname,
+                        "edu_level": tutor.edu_level,
+                        "subjects": tutor.get_subjects(),
+                        "msg": tutor.msg,
+                        "salary": tutor.salary,
+                        "timezone": tutor.timezone,
+                        "available_time": tutor.available_time,
+                    }
+                )
+        return jsonify({"list": asked_tutors})
+    else:
+        return jsonify({"error": "Student not found"}), 404
+    
+@account.route("/getStudentMatchedTutor", methods=["GET"])
+def getStudentMatchedTutor():
+    student_username = request.args.get("student_username")
+    student = Student.query.filter((Student.username == student_username)).first()
+    if student:
+        matched_tutors = []
+        for tutor in student.matched_tutors:
+            tutor = Tutor.query.filter((Tutor.username == tutor)).first()
+            if tutor:
+                matched_tutors.append(
+                    {
+                        "username": tutor.username,
+                        "nickname": tutor.nickname,
+                        "edu_level": tutor.edu_level,
+                        "subjects": tutor.get_subjects(),
+                        "msg": tutor.msg,
+                        "salary": tutor.salary,
+                        "timezone": tutor.timezone,
+                        "available_time": tutor.available_time,
+                    }
+                )
+        return jsonify({"list": matched_tutors})
+    else:
+        return jsonify({"error": "Student not found"}), 404

@@ -4,7 +4,7 @@
         style="margin-right: 10px;" />
       <a-select
         v-model:value="selectedSubject"
-        style="margin-right: 10px; width: 200px;"
+        style="margin-left: 10px; width: 200px;"
         placeholder="Select a subject"
         @change="searchBySubject"
       >

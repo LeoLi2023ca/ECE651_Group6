@@ -9,6 +9,7 @@
       <div class="chat-input">
         <input v-model="newMessage" @keyup.enter="sendMessageApi" placeholder="Type a message..." />
         <button @click="sendMessageApi">Send</button>
+        <button v-if="user_role=='1'" @click="matchWithTutor" class="match-button">Match</button>
       </div>
     </div>
   </template>
@@ -23,6 +24,7 @@
 
   const store = useStore();
   const user_info = sessionStorage.getItem('user_info') ? JSON.parse(sessionStorage.getItem('user_info')) : null;
+  const user_role = sessionStorage.getItem('role');
   const username = user_info ? user_info.username : 'Anonymous';  
   const props = defineProps({
     receiver: String,
@@ -107,6 +109,33 @@
         console.log(error);
       });
    };
+
+   const matchWithTutor = () => {
+    const confirmMessage = `Do you want to ask for matching with ${receiverUsername.value}?`;
+    if(confirm(confirmMessage) == false){
+        return;
+    };
+    console.log(receiverUsername.value);
+    console.log(username);
+    const params = {
+        student_username: username,
+        tutor_username: receiverUsername.value,
+    };
+    const config = {
+      method: 'post',
+      url: 'http://127.0.0.1:5000/studentRequestMatching',
+      params: params
+    };
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        message.success('Match request sent successfully!');
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+  
 
    const closeChat = () => {
     emit('close');

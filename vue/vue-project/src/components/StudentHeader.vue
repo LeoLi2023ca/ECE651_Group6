@@ -3,18 +3,18 @@
     <div :style="{ lineHeight: '64px', display: 'flex', justifyContent: 'flex-end' }">
       <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="horizontal"
         :style="{ lineHeight: '64px', display: 'flex' }">
-        <a-menu-item key="1">
+        <a-menu-item key="1" class="custom-separator">
           <router-link to="/">Home</router-link>
         </a-menu-item>
-        <a-menu-item key="2">
+        <a-menu-item key="2" class="custom-separator">
           <router-link to="/post/my-post">Post</router-link>
         </a-menu-item>
-        <a-menu-item key="3">
+        <a-menu-item key="3" class="custom-separator">
           <router-link to="/tutor-list">Tutors</router-link>
         </a-menu-item>
-        <!-- <a-menu-item key="4">
-          <router-link to="/chat/0">Chat</router-link>
-        </a-menu-item> -->
+        <a-menu-item key="4" class="custom-separator">
+          <router-link to="/student-matching">Matching</router-link>
+        </a-menu-item>
       </a-menu>
       <a-avatar shape="square" :size="64">
         <template #icon>
@@ -71,9 +71,9 @@ watch(() => route.path, (newPath) => {
     case '/tutor-list':
       selectedKeys.value = ['3'];
       break;
-    // case '/chat/0':
-    //   selectedKeys.value = ['4'];
-    //   break;
+    case '/student-matching':
+      selectedKeys.value = ['4'];
+      break;
     default:
       selectedKeys.value = ['0'];
       break;
@@ -96,5 +96,8 @@ function signOut() {
 
 [data-theme='dark'] .site-layout-content {
   background: #141414;
+}
+.custom-separator {
+  margin-right: 24px; /* Adjust as needed */
 }
 </style>
