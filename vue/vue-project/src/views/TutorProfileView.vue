@@ -35,18 +35,14 @@
                     </a-form-item>
                     <a-form-item label="Salary" name="salaryRange">
                         <div style="display: flex; justify-content: space-between;">
-                        <a-input-number
-                            v-model:value="formState.salaryRange.min"
-                            style="width: 45%;"
-                            placeholder="Min"
-                            min="0"
-                        />
-                        <a-input-number
-                            v-model:value="formState.salaryRange.max"
-                            style="width: 45%;"
-                            placeholder="Max"
-                            :min="formState.salaryRange.min"
-                        />
+                            <div style="flex: 1; margin-right: 10px;">
+                            <label for="tuition-min">Min</label>
+                            <a-input-number id="tuition-min" v-model:value="formState.salaryRange.min" style="width: 100%;" />
+                            </div>
+                            <div style="flex: 1;">
+                            <label for="tuition-max">Max</label>
+                            <a-input-number id="tuition-max" v-model:value="formState.salaryRange.max" min="formState.salaryRange.min" style="width: 100%;" />
+                            </div>
                         </div>
                     </a-form-item>    
                     <a-form-item ref="timezone" label="Timezone" name="timezone">

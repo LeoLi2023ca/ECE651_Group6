@@ -73,6 +73,15 @@ const register = () => {
 
         })
         .catch(function (error) {
+            if(error.response.status == 409){
+                alert('Username already exists!');
+            }
+            else if(error.response.status == 400){
+                alert('Email Format is invalid!');
+            }
+            else{
+                alert('Something went wrong');
+            }
             console.log(error);
         });
 }

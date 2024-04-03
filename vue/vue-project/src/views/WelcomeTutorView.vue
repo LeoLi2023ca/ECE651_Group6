@@ -68,7 +68,7 @@ export const timezones = Array.from({ length: 25 }, (_, i) => {
   const sign = value >= 0 ? '+' : '-';
   return { label: `UTC ${sign}${Math.abs(value).toString().padStart(2, '0')}:00`, value: `${sign}${Math.abs(value).toString().padStart(2, '0')}:00` };
 });
-const user_info = JSON.parse(sessionStorage.getItem('user_info'));
+export const user_info = JSON.parse(sessionStorage.getItem('user_info'));
 export default {
   data() {
     return {
