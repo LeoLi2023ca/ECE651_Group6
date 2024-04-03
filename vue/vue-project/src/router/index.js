@@ -125,10 +125,10 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach((to, from, next) => {
-  const token = sessionStorage.getItem('role');
-  if (to.name !== 'login' && token !== '1' && token !== '2') next({ name: 'login' });
-  else next();
-});
+// router.beforeEach((to, from, next) => {
+//   const token = sessionStorage.getItem('role');
+//   if (to.name !== 'login' && token !== '1' && token !== '2') next({ name: 'login' });
+//   else next();
+// });
 
 export default router;

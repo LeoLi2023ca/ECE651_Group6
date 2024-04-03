@@ -14,6 +14,47 @@ email_regex = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
 # mysql = current_app.extensions['mysql']
 mail = Mail()
 
+@account.route("/validate_username", methods=["POST"])
+def validate_username():
+    username = request.form.get("username")
+
+    existing_student = Student.query.filter(
+        (Student.username == username)
+    ).first()
+    existing_tutor = Tutor.query.filter(
+        (Tutor.username == username)
+    ).first()
+
+    return (
+        jsonify(
+            {
+                "message": "ok",
+                "isValid": not (existing_student or existing_tutor),
+            }
+        ),
+        201,
+    )
+
+@account.route("/validate_email", methods=["POST"])
+def validate_email():
+    email = request.form.get("email")
+
+    existing_student = Student.query.filter(
+        (Student.email == email)
+    ).first()
+    existing_tutor = Tutor.query.filter(
+        (Tutor.email == email)
+    ).first()
+    
+    return (
+        jsonify(
+            {
+                "message": "ok",
+                "isValid": not (existing_student or existing_tutor),
+            }
+        ),
+        201,
+    )
 
 @account.route("/register", methods=["POST"])
 def register():
@@ -22,11 +63,11 @@ def register():
     email = request.form.get("email")
     role = request.form.get("role")  # 'Student' or 'Tutor'
     # hashed_password = generate_password_hash(password)
-    # token = str(uuid.uuid4())  # Generate a unique activation token
+    token = str(uuid.uuid4())  # Generate a unique activation token
 
     # Validate email format
     if not re.match(email_regex, email):
-        return jsonify({"error": "Invalid email format"}), 400
+        return jsonify({"isSuccess": True, "error": "Invalid email format"}), 400
 
     # Check for duplicate username or email
     existing_student = Student.query.filter(
@@ -34,9 +75,9 @@ def register():
     ).first()
     existing_tutor = Tutor.query.filter(
         (Tutor.username == username) | (Tutor.email == email)
-    ).first()
+    ).first() 
     if existing_student or existing_tutor:
-        return jsonify({"error": "Username or email already exists."}), 409
+        return jsonify({"isSuccess": True, "error": "Username or email already exists."}), 409
 
     # Add new student to the session and commit
     try:
@@ -48,7 +89,7 @@ def register():
                 nickname=username,
                 password=password,
                 email=email,
-                # activation_token=token
+                activation_token=token
             )
             user_info = {
                 "username": user.username,
@@ -60,7 +101,7 @@ def register():
             }
             code = "1"
             db.session.add(user)
-            # send_welcome_mail(email, token)
+            send_welcome_mail(email, token)
             db.session.commit()
         elif role == "Tutor":
             user = Tutor(
@@ -68,7 +109,7 @@ def register():
                 nickname=username,
                 password=password,
                 email=email,
-                # activation_token=token
+                activation_token=token
             )
             user_info = {
                 "username": user.username,
@@ -81,7 +122,7 @@ def register():
             }
             code = "2"
             db.session.add(user)
-            # send_welcome_mail(email, token)
+            send_welcome_mail(email, token)
             db.session.commit()
 
         return (
@@ -90,6 +131,7 @@ def register():
                     "message": "Account added successfully!",
                     "code": code,
                     "user_info": user_info,
+                    "isSuccess": True
                 }
             ),
             201,
@@ -410,35 +452,35 @@ def update_password():
     else:
         return jsonify({"error": "User not found"}), 404
 
-# @account.route('/getStudentInfoByUsername', methods=['GET'])
-# def get_student_info_by_id():
-#     username = request.args.get('username')
-#     student = Student.query.filter_by(id=username).first()
-#     if student:
-#         return jsonify({'username': student.username, 'email': student.email, 'grade': student.grade, 'timezone': student.timezone, 'msg': student.msg})
-#     else:
-#         return jsonify({'error': 'Student not found'}), 404
+@account.route('/getStudentInfoByUsername', methods=['GET'])
+def get_student_info_by_id():
+    username = request.args.get('username')
+    student = Student.query.filter_by(id=username).first()
+    if student:
+        return jsonify({'username': student.username, 'email': student.email, 'grade': student.grade, 'timezone': student.timezone, 'msg': student.msg})
+    else:
+        return jsonify({'error': 'Student not found'}), 404
 
-# def activation_token():
-#     return str(uuid.uuid4())
+def activation_token():
+    return str(uuid.uuid4())
 
-# def send_welcome_mail(email, token):
-#     activation_url = 'http://127.0.0.1:5000/activate?token={}'.format(token)
-#     html_content = render_template('activation_email.html', activation_url=activation_url)
-#     msg = Message('Welcome to OnlineTutor', recipients=[email], html=html_content)
-#     # msg.body = 'Welcome to OnlineTutor! Please click the link below to activate your account:\nhttp://127.0.0.1:5000/activate?token={}'.format(token)
-#     with login_register.open_resource('../static/OnlineTutor.jpg') as fp:
-#         msg.attach('logo.png', 'image/png', fp.read(), 'inline', headers=[['Content-ID', '<OnlineTutorLogo>']])
-#     mail.send(msg)
+def send_welcome_mail(email, token):
+    activation_url = 'http://127.0.0.1:5000/activate?token={}'.format(token)
+    html_content = render_template('activation_email.html', activation_url=activation_url)
+    msg = Message('Welcome to OnlineTutor', sender = 'peter@mailtrap.io', recipients=[email], html=html_content)
+    # msg.body = 'Welcome to OnlineTutor! Please click the link below to activate your account:\nhttp://127.0.0.1:5000/activate?token={}'.format(token)
+    with account.open_resource('../static/OnlineTutor.jpg') as fp:
+        msg.attach('logo.png', 'image/png', fp.read(), 'inline', headers=[['Content-ID', '<OnlineTutorLogo>']])
+    mail.send(msg)
 
-# def send_forget_pwd_mail(email, token):
-#     reset_url = 'http://127.0.0.1:5000/resetPwd?token={}'.format(token)
-#     html_content = render_template('forget_pwd_email.html', reset_url=reset_url)
-#     msg = Message('OnlineTutor reset password', recipients=[email], html=html_content)
-#     # msg.body = 'Welcome to OnlineTutor! Please click the link below to activate your account:\nhttp://127.0.0.1:5000/activate?token={}'.format(token)
-#     with account.open_resource('../static/OnlineTutor.jpg') as fp:
-#         msg.attach('logo.png', 'image/png', fp.read(), 'inline', headers=[['Content-ID', '<OnlineTutorLogo>']])
-#     mail.send(msg)
+def send_forget_pwd_mail(email, token):
+    reset_url = 'http://127.0.0.1:5000/resetPwd?token={}'.format(token)
+    html_content = render_template('forget_pwd_email.html', reset_url=reset_url)
+    msg = Message('OnlineTutor reset password', recipients=[email], html=html_content)
+    # msg.body = 'Welcome to OnlineTutor! Please click the link below to activate your account:\nhttp://127.0.0.1:5000/activate?token={}'.format(token)
+    with account.open_resource('../static/OnlineTutor.jpg') as fp:
+        msg.attach('logo.png', 'image/png', fp.read(), 'inline', headers=[['Content-ID', '<OnlineTutorLogo>']])
+    mail.send(msg)
 
 
 @account.route("/getAllTutor", methods=["GET"])

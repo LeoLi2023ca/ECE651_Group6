@@ -6,7 +6,8 @@ import Footer from './components/Footer.vue';
 import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
 const store = useStore();
-const role = computed(() => store.getters.userRole);
+// const role = computed(() => store.getters.userRole);
+const role = 2;
 </script>
 
 <template>
@@ -15,8 +16,8 @@ const role = computed(() => store.getters.userRole);
       <TutorHeader v-if="role == '2'" />
       <StudentHeader v-else-if="role == '1'" />
       <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" /> -->
-      <br>
-      <br>
+      <!-- <br>
+      <br> -->
       <a-layout-content style="padding: 0 50px">
         <div :style="{ minHeight: '80vh' }">
           <RouterView />
