@@ -20,6 +20,8 @@
             <a-col v-for="(item, index) in askedPaginatedData" :key="index" :span="8">
             <a-card :title="item.nickname" :style="{ margin: '10px' }" @click="setUsername(item.username)">
                 <p>{{ "Grade: "+item.grade }}</p>
+                <a-button @click.stop="confirmMatching(item.username)" type="primary">Confirm Matching</a-button>
+                <a-button @click.stop="rejectMatching(item.username)" type="danger" style="margin-left: 8px;">Reject Matching</a-button>
                 <!-- <p>{{ "Education: "+item.edu_level }}</p>
                 <p>{{ "Expected Salary: "+item.salary }}</p> -->
             </a-card>
@@ -39,6 +41,7 @@
   import ChatPage from '@/components/ChatPage.vue';
   
   import axios from 'axios';
+import { Modal } from 'ant-design-vue';
   
   const pageSize = ref(9);
   const currentPage = ref(1);
@@ -105,6 +108,72 @@
         console.error(error);
       });
   }
+
+  async function confirmMatching(username) {
+    Modal.confirm({
+      title: 'Confirm Matching',
+      content: `Are you sure you want to confirm matching with ${username}?`,
+      onOk: () => {
+        const params = {
+          tutor_username: user_info.username,
+          student_username: username
+        };
+        const config = {
+          method: 'post',
+          url: 'http://127.0.0.1:5000/tutorConfirmMatching',
+          params: params
+        };
+        axios.request(config)
+          .then((response) => {
+            console.log(response);
+            if(response.data.status === 'success'){
+              Matched.value.push(askedForMatching.value.find(item => item.username === username));
+              askedForMatching.value = askedForMatching.value.filter(item => item.username !== username);
+            }
+            window.location.reload();
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      },
+      onCancel: () => {
+        console.log('Cancel');
+      },
+    });
+    
+  };
+
+  async function rejectMatching(username) {
+    Modal.confirm({
+      title: 'Reject Matching',
+      content: `Are you sure you want to reject matching with ${username}?`,
+      onOk: () => {
+        const params = {
+          tutor_username: user_info.username,
+          student_username: username
+        };
+        const config = {
+          method: 'post',
+          url: 'http://127.0.0.1:5000/tutorRejectMatching',
+          params: params
+        };
+        axios.request(config)
+          .then((response) => {
+            console.log(response);
+            if(response.data.status === 'success'){
+              askedForMatching.value = askedForMatching.value.filter(item => item.username !== username);
+            }
+            window.location.reload();
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        },
+        onCancel: () => {
+          console.log('Cancel');
+        },
+      });
+  };
   
   function setUsername(username) {
     currentChatUsername.value = username;

@@ -493,8 +493,9 @@ def studentRequestMatching():
     
 @account.route("/tutorConfirmMatching", methods=["POST"])
 def tutorConfirmMatching():
-    tutor_username = request.form.get("tutor_username")
-    student_username = request.form.get("student_username")
+    tutor_username = request.args.get("tutor_username")
+    student_username = request.args.get("student_username")
+    print(tutor_username, student_username)
     tutor = Tutor.query.filter((Tutor.username == tutor_username)).first()
     student = Student.query.filter((Student.username == student_username)).first()
     if student and tutor:
@@ -511,8 +512,8 @@ def tutorConfirmMatching():
     
 @account.route("/tutorRejectMatching", methods=["POST"])
 def tutorRejectMatching():
-    tutor_username = request.form.get("tutor_username")
-    student_username = request.form.get("student_username")
+    tutor_username = request.args.get("tutor_username")
+    student_username = request.args.get("student_username")
     tutor = Tutor.query.filter((Tutor.username == tutor_username)).first()
     student = Student.query.filter((Student.username == student_username)).first()
     if student and tutor:
