@@ -6,8 +6,9 @@ import Footer from './components/Footer.vue';
 import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
 const store = useStore();
-// const role = computed(() => store.getters.userRole);
-const role = 2;
+const role = computed(() => store.getters.userRole);
+import { provide } from 'vue';
+provide('role', role);
 </script>
 
 <template>
