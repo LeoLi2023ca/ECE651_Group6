@@ -37,20 +37,16 @@
       />
     </a-form-item>
     <a-form-item label="Salary" name="salary">
-        <div style="display: flex; justify-content: space-between;">
-        <a-input-number
-            v-model:value="formState.salary.min"
-            style="width: 45%;"
-            placeholder="Min"
-            min="0"
-        />
-        <a-input-number
-            v-model:value="formState.salary.max"
-            style="width: 45%;"
-            placeholder="Max"
-            :min="formState.salary.min"
-        />
-        </div>
+      <div style="display: flex; justify-content: space-between;">
+          <div style="flex: 1; margin-right: 10px;">
+          <!-- <label for="tuition-min">Min</label> -->
+          <a-input-number id="tuition-min" v-model:value="formState.salary.min" style="width: 100%;" />
+          </div>
+          <div style="flex: 1;">
+          <!-- <label for="tuition-max">Max</label> -->
+          <a-input-number id="tuition-max" v-model:value="formState.salary.max" min="formState.salary.min" style="width: 100%;" />
+          </div>
+      </div>
     </a-form-item>   
     <a-form-item ref="message" label="Message" name="message">
       <a-textarea v-model:value="formState.message" :rows="4" />
@@ -128,7 +124,7 @@ const wrapperCol = { span: 14 };
 const formState = reactive({
   title: '',
   message: '',
-  timezone: !props.post_id?user_info.timezone:'UTC -04:00',
+  timezone: 'UTC -04:00',
   subject: '',
   salary: {
     min: 0,

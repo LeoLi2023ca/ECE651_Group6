@@ -22,6 +22,7 @@
                 <p>{{ "Subjects: "+item.subject_name }}</p>
                 <p>{{ "Education: "+item.edu_level }}</p>
                 <p>{{ "Expected Salary: "+item.salary }}</p>
+                <a-button @click.stop="cancelMatching(item.username)" type="primary">Cancel Matching</a-button>
             </a-card>
             </a-col>
         </a-row>
@@ -34,6 +35,7 @@
   <script setup>
   import { computed, ref, onMounted } from 'vue';
   import TutorDetail from '@/components/TutorDetail.vue';
+  import { Modal } from 'ant-design-vue';
   
   import axios from 'axios';
   
@@ -106,6 +108,38 @@
         console.error(error);
       });
   }
+
+  async function cancelMatching(username) {
+    Modal.confirm({
+      title: 'Cancel Matching',
+      content: `Are you sure you want to cancel matching with ${username}?`,
+      onOk: () => {
+        const params = {
+          tutor_username: username,
+          student_username: user_info.username
+        };
+        const config = {
+          method: 'post',
+          url: 'http://127.0.0.1:5000/studentCancelMatching',
+          params: params
+        };
+        axios.request(config)
+          .then((response) => {
+            console.log(response);
+            if(response.data.status === 'success'){
+              askedForMatching.value = askedForMatching.value.filter(item => item.username !== username);
+            }
+            window.location.reload();
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        },
+        onCancel: () => {
+          console.log('Cancel');
+        },
+      });
+  };
   
   function showProfile(username) {
     tutor_detail.value.showModal(username);

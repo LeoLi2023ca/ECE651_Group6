@@ -531,8 +531,8 @@ def tutorRejectMatching():
     
 @account.route("/studentCancelMatching", methods=["POST"])
 def studentCancelMatching():
-    student_username = request.form.get("student_username")
-    tutor_username = request.form.get("tutor_username")
+    student_username = request.args.get("student_username")
+    tutor_username = request.args.get("tutor_username")
     student = Student.query.filter((Student.username == student_username)).first()
     tutor = Tutor.query.filter((Tutor.username == tutor_username)).first()
     if student and tutor:
