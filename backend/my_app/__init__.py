@@ -3,6 +3,10 @@ from flask_mail import Mail
 from flask_cors import CORS
 from my_app.models import db
 
+from my_app.account import account
+from my_app.post import post
+from my_app.chat import chat
+
 mail = Mail()
 
     
@@ -30,6 +34,9 @@ def create_app():
     # app.config['MAIL_USERNAME'] =   # Your email username
     # app.config['MAIL_PASSWORD'] =   # Your email password
     # app.config['MAIL_DEFAULT_SENDER'] =   # Default sender email address
+    app.register_blueprint(account)
+    app.register_blueprint(post)
+    app.register_blueprint(chat)
 
     mail.init_app(app)
     db.init_app(app)

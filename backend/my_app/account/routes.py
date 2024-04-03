@@ -410,23 +410,6 @@ def update_password():
     else:
         return jsonify({"error": "User not found"}), 404
 
-
-# @account.route('/updateStudentInfo', methods=['POST'])
-# def update_student_info():
-#     username = request.json['username']
-#     new_info = request.json['info']
-#     existing_student = Student.query.filter((Student.username == username)).first()
-#     if existing_student:
-#         existing_student.msg = new_info
-#         try:
-#             db.session.commit()
-#             return jsonify({'message': 'Email updated successfully!'})
-#         except Exception as e:
-#             db.session.rollback()
-#             return jsonify({'error': str(e)}), 500
-#     else:
-#         return jsonify({'error': 'Student not found'}), 404
-
 # @account.route('/getStudentInfoByUsername', methods=['GET'])
 # def get_student_info_by_id():
 #     username = request.args.get('username')
