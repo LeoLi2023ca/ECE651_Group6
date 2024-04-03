@@ -9,9 +9,9 @@
         <a-menu-item key="2">
           <router-link to="/post-list">Posts</router-link>
         </a-menu-item>
-        <!-- <a-menu-item key="3">
-          <router-link to="/chat/0">Chat</router-link>
-        </a-menu-item> -->
+        <a-menu-item key="3">
+          <router-link to="/tutor-matching">Matching</router-link>
+        </a-menu-item>
       </a-menu>
       <a-avatar shape="square" :size="64">
         <template #icon>

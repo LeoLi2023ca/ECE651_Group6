@@ -15,6 +15,7 @@ import ChatPage from '@/components/ChatPage.vue'
 import WelcomeTutorView from '@/views/WelcomeTutorView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import StudentMatchingView from '@/views/StudentMatchingView.vue'
+import TutorMatchingView from '@/views/TutorMatchingView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -105,6 +106,11 @@ const router = createRouter({
       path: '/student-matching',
       name: 'student-matching',
       component: StudentMatchingView
+    },
+    {
+      path: '/tutor-matching',
+      name: 'tutor-matching',
+      component: TutorMatchingView
     }
     // {
     //   path: '/chat/:id',

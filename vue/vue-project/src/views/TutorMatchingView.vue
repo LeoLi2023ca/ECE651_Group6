@@ -1,14 +1,14 @@
 <template>
     <a-layout>
-        <TutorDetail ref="tutor_detail" />
+        <!-- <TutorDetail ref="tutor_detail" /> -->
         <div class="section">
-        <h2 class="title">Matched Tutors</h2>
+        <h2 class="title">Matched Students</h2>
         <a-row :gutter="16">
             <a-col v-for="(item, index) in paginatedData" :key="index" :span="8">
-            <a-card :title="item.nickname" :style="{ margin: '10px' }" @click="showProfile(item.username)">
-                <p>{{ "Subjects: "+item.subject_name }}</p>
-                <p>{{ "Education: "+item.edu_level }}</p>
-                <p>{{ "Expected Salary: "+item.salary }}</p>
+            <a-card :title="item.nickname" :style="{ margin: '10px' }" @click="setUsername(item.username)">
+                <p>{{ "Grade: "+item.grade }}</p>
+                <!-- <p>{{ "Education: "+item.edu_level }}</p>
+                <p>{{ "Expected Salary: "+item.salary }}</p> -->
             </a-card>
             </a-col>
         </a-row>
@@ -18,10 +18,10 @@
         <h2 class="title">Asked For Matching</h2>
         <a-row :gutter="16">
             <a-col v-for="(item, index) in askedPaginatedData" :key="index" :span="8">
-            <a-card :title="item.nickname" :style="{ margin: '10px' }" @click="showProfile(item.username)">
-                <p>{{ "Subjects: "+item.subject_name }}</p>
-                <p>{{ "Education: "+item.edu_level }}</p>
-                <p>{{ "Expected Salary: "+item.salary }}</p>
+            <a-card :title="item.nickname" :style="{ margin: '10px' }" @click="setUsername(item.username)">
+                <p>{{ "Grade: "+item.grade }}</p>
+                <!-- <p>{{ "Education: "+item.edu_level }}</p>
+                <p>{{ "Expected Salary: "+item.salary }}</p> -->
             </a-card>
             </a-col>
         </a-row>
@@ -29,11 +29,14 @@
             @showSizeChange="handlePageSizeChange" />
         </div>
     </a-layout>
+    <a-modal v-model:open="chatOpen" title="Chat">
+        <ChatPage v-if="chatOpen" :receiver="currentChatUsername" @close="chatOpen = false" />
+    </a-modal>
   </template>
   
   <script setup>
   import { computed, ref, onMounted } from 'vue';
-  import TutorDetail from '@/components/TutorDetail.vue';
+  import ChatPage from '@/components/ChatPage.vue';
   
   import axios from 'axios';
   
@@ -45,6 +48,8 @@
   const askedForMatching = ref([]);
   const Matched = ref([]);
   const user_info = JSON.parse(sessionStorage.getItem('user_info'));
+  const chatOpen = ref(false);
+  const currentChatUsername = ref('');
   
   onMounted(async () => {
     await loadData();
@@ -56,11 +61,11 @@
   
   async function loadData() {
     const params = {
-      student_username: user_info.username,
+      tutor_username: user_info.username,
     };
     const config = {
       method: 'get',
-      url: 'http://127.0.0.1:5000/getStudentsAskedTutor',
+      url: 'http://127.0.0.1:5000/getTutorsAskedStudent',
       params: params
     };
     await axios.request(config)
@@ -69,12 +74,9 @@
           askedForMatching.value.push({
             username: response.data.list[i].username,
             nickname: response.data.list[i].nickname,
-            edu_level: response.data.list[i].edu_level,
-            subject_name: response.data.list[i].subjects,
+            grade: response.data.list[i].grade,
             msg: response.data.list[i].msg,
-            salary: response.data.list[i].salary,
             timezone: response.data.list[i].timezone,
-            available_time: response.data.list[i].available_time,
           })
         }
       })
@@ -84,7 +86,7 @@
     
     const config2 = {
       method: 'get',
-      url: 'http://127.0.0.1:5000/getStudentMatchedTutor',
+      url: 'http://127.0.0.1:5000/getTutorMatchedStudent',
       params: params
     };
     await axios.request(config2)
@@ -93,12 +95,9 @@
           Matched.value.push({
             username: response.data.list[i].username,
             nickname: response.data.list[i].nickname,
-            edu_level: response.data.list[i].edu_level,
-            subject_name: response.data.list[i].subjects,
+            grade: response.data.list[i].grade,
             msg: response.data.list[i].msg,
-            salary: response.data.list[i].salary,
             timezone: response.data.list[i].timezone,
-            available_time: response.data.list[i].available_time,
           })
         }
       })
@@ -107,8 +106,9 @@
       });
   }
   
-  function showProfile(username) {
-    tutor_detail.value.showModal(username);
+  function setUsername(username) {
+    currentChatUsername.value = username;
+    chatOpen.value = true;
   }
   
   function handlePageChange(page) {

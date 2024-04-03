@@ -590,3 +590,47 @@ def getStudentMatchedTutor():
         return jsonify({"list": matched_tutors})
     else:
         return jsonify({"error": "Student not found"}), 404
+    
+@account.route("/getTutorsAskedStudent", methods=["GET"])
+def getTutorsAskedStudent():
+    tutor_username = request.args.get("tutor_username")
+    tutor = Tutor.query.filter((Tutor.username == tutor_username)).first()
+    if tutor:
+        asked_students = []
+        for student in tutor.students_asked:
+            student = Student.query.filter((Student.username == student)).first()
+            if student:
+                asked_students.append(
+                    {
+                        "username": student.username,
+                        "nickname": student.nickname,
+                        "grade": student.grade,
+                        "timezone": student.timezone,
+                        "msg": student.msg,
+                    }
+                )
+        return jsonify({"list": asked_students})
+    else:
+        return jsonify({"error": "Tutor not found"}), 404
+    
+@account.route("/getTutorMatchedStudent", methods=["GET"])
+def getTutorMatchedStudent():
+    tutor_username = request.args.get("tutor_username")
+    tutor = Tutor.query.filter((Tutor.username == tutor_username)).first()
+    if tutor:
+        matched_students = []
+        for student in tutor.matched_students:
+            student = Student.query.filter((Student.username == student)).first()
+            if student:
+                matched_students.append(
+                    {
+                        "username": student.username,
+                        "nickname": student.nickname,
+                        "grade": student.grade,
+                        "timezone": student.timezone,
+                        "msg": student.msg,
+                    }
+                )
+        return jsonify({"list": matched_students})
+    else:
+        return jsonify({"error": "Tutor not found"}), 404
