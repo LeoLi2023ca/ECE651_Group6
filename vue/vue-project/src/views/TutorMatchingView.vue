@@ -41,7 +41,7 @@
   import ChatPage from '@/components/ChatPage.vue';
   
   import axios from 'axios';
-import { Modal } from 'ant-design-vue';
+  import { Modal } from 'ant-design-vue';
   
   const pageSize = ref(9);
   const currentPage = ref(1);

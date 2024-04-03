@@ -19,6 +19,7 @@
         <a-card :title="item.nickname" :style="{ margin: '10px' }" @click="showProfile(item.username)">
           <p>{{ "Subjects: "+item.subject_name }}</p>
           <p>{{ "Education: "+item.edu_level }}</p>
+          <p>{{ "School Name: "+item.school_name }}</p>
           <p>{{ "Expected Salary: "+item.salary }}</p>
         </a-card>
       </a-col>

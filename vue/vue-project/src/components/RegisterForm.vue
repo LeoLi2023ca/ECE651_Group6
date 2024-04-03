@@ -64,7 +64,12 @@ const register = () => {
             sessionStorage.setItem('role', response.data.code);
             sessionStorage.setItem('user_info', JSON.stringify(response.data.user_info))
             store.commit('setUserRole', response.data.code);
-            router.push({ name: 'home' });
+            if(response.data.code == '1'){
+              router.push({ name: 'home' });
+            }
+            else{
+              router.push({ name: 'welcome-tutor' });
+            }
 
         })
         .catch(function (error) {

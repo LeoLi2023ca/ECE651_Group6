@@ -301,6 +301,7 @@ def updateTutorProfile():
     available_time = request.form.get("available_time")
     message = request.form.get("message")
     subjects = request.form.get("subjects")
+    school_name = request.form.get("school_name")
     subjects = subjects.split(",")
     salary = request.form.get("salary")
     # print(subjects)
@@ -308,6 +309,7 @@ def updateTutorProfile():
     if user:
         user.nickname = nickname
         user.email = email
+        user.school_name = school_name
         user.edu_level = edu_level
         user.timezone = timezone
         user.available_time = available_time
@@ -319,6 +321,7 @@ def updateTutorProfile():
             "username": username,
             "nickname": nickname,
             "email": email,
+            "school_name": school_name,
             "edu_level": edu_level,
             "timezone": timezone,
             "available_time": available_time,

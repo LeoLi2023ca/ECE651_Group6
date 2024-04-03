@@ -9,6 +9,9 @@
                     <a-form-item ref="email" label="Email" name="email">
                         <a-input v-model:value="formState.email" />
                     </a-form-item>
+                    <a-form-item ref="school_name" label="School Name" name="school_name">
+                        <a-input v-model:value="formState.school_name" />
+                    </a-form-item>
                     <a-form-item ref="edu_level" label="Education" name="edu_level">
                         <a-select v-model:value="formState.edu_level" placeholder="Select a subject">
                             <a-select-option value="highschool">highschool</a-select-option>
@@ -98,8 +101,9 @@ const wrapperCol = {
     span: 20,
 };
 const formState = reactive({
-    nickname: '123',
+    nickname: user_info.nickname,
     email: '',
+    school_name: '',
     edu_level: '',
     timezone: '',
     available_time: '',
@@ -124,6 +128,7 @@ function loadProfile() {
     formState.nickname = user_info.nickname;
     // console.log(user_info.email);
     formState.email = user_info.email;
+    formState.school_name = user_info.school_name;
     formState.edu_level = user_info.edu_level;
     // if(user_info.timezone == null){
     //     formState.timezone = 'UTC-4';

@@ -24,19 +24,28 @@
       </div>
       <div class="form-group">
         <label for="subjects">Subjects that you are good at:</label>
-        <input type="checkbox" name="subjects" value="chinese" v-model="tutorInfo.subjects"> <span class="checkbox-text">Chinese</span><br>
-        <input type="checkbox" name="subjects" value="english" v-model="tutorInfo.subjects"> <span class="checkbox-text">English</span><br>
-        <input type="checkbox" name="subjects" value="math" v-model="tutorInfo.subjects"> <span class="checkbox-text">Math</span><br>
-        <input type="checkbox" name="subjects" value="chemistry" v-model="tutorInfo.subjects"> <span class="checkbox-text">Chemistry</span><br>
-        <input type="checkbox" name="subjects" value="physics" v-model="tutorInfo.subjects"> <span class="checkbox-text">Physics</span><br>
-        <input type="checkbox" name="subjects" value="biology" v-model="tutorInfo.subjects"> <span class="checkbox-text">Biology</span><br>
-        <input type="checkbox" name="subjects" value="business_management" v-model="tutorInfo.subjects"> <span class="checkbox-text">Business management</span><br>
-        <input type="checkbox" name="subjects" value="geography" v-model="tutorInfo.subjects"> <span class="checkbox-text">Geography</span><br>
-        <input type="checkbox" name="subjects" value="history" v-model="tutorInfo.subjects"> <span class="checkbox-text">History</span><br>
+        <input type="checkbox" name="subjects" value="Chinese" v-model="tutorInfo.subjects"> <span class="checkbox-text">Chinese</span><br>
+        <input type="checkbox" name="subjects" value="English" v-model="tutorInfo.subjects"> <span class="checkbox-text">English</span><br>
+        <input type="checkbox" name="subjects" value="Math" v-model="tutorInfo.subjects"> <span class="checkbox-text">Math</span><br>
+        <input type="checkbox" name="subjects" value="Chemistry" v-model="tutorInfo.subjects"> <span class="checkbox-text">Chemistry</span><br>
+        <input type="checkbox" name="subjects" value="Physics" v-model="tutorInfo.subjects"> <span class="checkbox-text">Physics</span><br>
+        <input type="checkbox" name="subjects" value="Biology" v-model="tutorInfo.subjects"> <span class="checkbox-text">Biology</span><br>
+        <input type="checkbox" name="subjects" value="Business_management" v-model="tutorInfo.subjects"> <span class="checkbox-text">Business management</span><br>
+        <input type="checkbox" name="subjects" value="Geography" v-model="tutorInfo.subjects"> <span class="checkbox-text">Geography</span><br>
+        <input type="checkbox" name="subjects" value="History" v-model="tutorInfo.subjects"> <span class="checkbox-text">History</span><br>
       </div>
       <div class="form-group">
-        <label for="tuition">Expected tuition per hour:</label>
-        <input type="number" id="tuition" v-model="tutorInfo.tuition" required>
+        <label for="tuition-min">Minimum expected tuition per hour:</label>
+        <input type="number" id="tuition-min" v-model="tutorInfo.tuition.min" required placeholder="Min" style="margin-right: 10px;">
+
+        <label for="tuition-max">Maximum expected tuition per hour:</label>
+        <input type="number" id="tuition-max" v-model="tutorInfo.tuition.max" required placeholder="Max" min="tutorInfo.tuition.min">
+      </div>
+      <div class="form-group">
+        <label for="timezone">Timezone:</label>
+        <select id="timezone" v-model="tutorInfo.timezone">
+          <option v-for="tz in timezones" :key="tz.value" :value="tz.value">{{ tz.label }}</option>
+        </select>
       </div>
       <div class="form-group">
         <label for="bio">Tell us more about yourself:</label>
@@ -50,6 +59,16 @@
 </template>
 
 <script>
+
+import router from '@/router';
+import axios from 'axios';
+
+export const timezones = Array.from({ length: 25 }, (_, i) => {
+  const value = i - 12;
+  const sign = value >= 0 ? '+' : '-';
+  return { label: `UTC ${sign}${Math.abs(value).toString().padStart(2, '0')}:00`, value: `${sign}${Math.abs(value).toString().padStart(2, '0')}:00` };
+});
+const user_info = JSON.parse(sessionStorage.getItem('user_info'));
 export default {
   data() {
     return {
@@ -57,14 +76,52 @@ export default {
         education_level: '',
         school_name: '',
         subjects: [],
-        tuition: '',
+        tuition: {
+          min: 0,
+          max: 0
+        },
+        timezone: '',
         bio: ''
       },
+      timezones: timezones,
+      user_info: user_info
     };
   },
   methods: {
     submitForm() {
       console.log('Submitting:', this.tutorInfo);
+      var data = new FormData();
+      // console.log(this.tutorInfo.username);
+      console.log(user_info.username);
+      data.append('username', user_info.username); // Assuming username is part of tutorInfo
+      data.append('nickname', user_info.username); // Assuming nickname is part of tutorInfo
+      data.append('email', user_info.email); // Assuming email is part of tutorInfo
+      data.append('edu_level', this.tutorInfo.education_level);
+      data.append('school_name', this.tutorInfo.school_name);
+      data.append('timezone', this.tutorInfo.timezone);
+      // Assuming available_time and message are part of tutorInfo
+      data.append('available_time', user_info.available_time || '');
+      data.append('message', this.tutorInfo.bio || '');
+      // console.log(formState.subjects);
+      data.append('subjects', this.tutorInfo.subjects);
+      data.append('salary', `${this.tutorInfo.tuition.min}-${this.tutorInfo.tuition.max}`)
+
+
+      var config = {
+          method: 'post',
+          url: 'http://127.0.0.1:5000/updateTutorProfile',
+          data: data
+      };
+
+      axios(config)
+          .then(function (response) {
+              sessionStorage.setItem('user_info', JSON.stringify(response.data.user_info));
+              console.log(response);
+              router.push({ name: 'home' });
+          })
+          .catch(function (error) {
+              console.log(error);
+          });
     }
   }
 }

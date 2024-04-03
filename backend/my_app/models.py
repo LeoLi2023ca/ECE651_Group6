@@ -37,6 +37,7 @@ class Tutor(db.Model):
     edu_level = db.Column(
         db.Enum("highschool", "bachelor", "master", "phd", "tbd"), default="tbd"
     )
+    school_name = db.Column(db.String(100), default="tbd")
     timezone = db.Column(db.VARCHAR(50), default="UTC")
     available_time = db.Column(db.String(100), default="")
     subjects = db.Column(MutableList.as_mutable(db.PickleType), default=[])
