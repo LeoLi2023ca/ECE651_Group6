@@ -1,12 +1,11 @@
 # conftest.py
 import pytest
-from my_app import create_app, db as _db  # Adjust the import based on your application structure
+from my_app import test_app, db as _db  # Adjust the import based on your application structure
 from my_app.models import Student, Tutor, Subject, Student_Post, ChatMessage  # Adjust the import based on your application structure
 
 @pytest.fixture(scope='module')
 def test_client():
-    flask_app = create_app()  # Create an app with the testing configuration
-
+    flask_app = test_app()  # Create an app with the testing configuration
     # Flask provides a way to test your application by exposing the Werkzeug test Client
     testing_client = flask_app.test_client()
 
@@ -21,6 +20,7 @@ def test_client():
 @pytest.fixture(scope='module')
 def init_database(test_client):
     # Create the database and the database table(s)
+    _db.drop_all()
     _db.create_all()
 
     # Insert user data

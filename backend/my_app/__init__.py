@@ -45,3 +45,17 @@ def create_app():
         db.create_all()
 
     return app
+
+def test_app():
+    app = Flask(__name__)
+    CORS(app)
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:rainchoi228@localhost/OnlineTutorTest'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.register_blueprint(account)
+    app.register_blueprint(post)
+    app.register_blueprint(chat)
+    db.init_app(app)
+    with app.app_context():
+        db.drop_all()
+        db.create_all()
+    return app
