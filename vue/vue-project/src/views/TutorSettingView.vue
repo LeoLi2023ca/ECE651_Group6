@@ -139,7 +139,7 @@
     border: 2px solid #e0e0e0;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background: linear-gradient(to right, #ffffff, #f2f2f2);
+    background: linear-gradient(to right, #ffffff, #abd0ea);
     display: flex;
     flex-direction: column;
     text-align: center;

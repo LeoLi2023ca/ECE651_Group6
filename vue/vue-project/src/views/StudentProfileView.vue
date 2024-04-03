@@ -1,53 +1,43 @@
 <template>
-  <a-layout style="padding: 0px 30px 0px">
-    <a-layout-content
-      :style="{ background: '#fff', padding: '80px', minHeight: '80vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }">
-
-      <div style="max-width: 600px;">
-        <a-form :model="formState" :label-col="labelCol" :wrapper-col="wrapperCol" layout="horizontal"
-          :disabled="componentDisabled">
-          <a-form-item ref="nickname" label="Nickname" name="nickname">
-            <a-input v-model:value="formState.nickname" />
-          </a-form-item>
-          <a-form-item ref="email" label="Email" name="email">
-            <a-input v-model:value="formState.email" />
-          </a-form-item>
-          <a-form-item ref="grade" label="Grade" name="grade">
-            <a-select v-model:value="formState.grade" placeholder="grade">
-                <a-select-option value="kindergarten">kindergarten</a-select-option>
-                <a-select-option value="primary">primary</a-select-option>
-                <a-select-option value="secondary">secondary</a-select-option>
-                <a-select-option value="bachelor">bachelor</a-select-option>
-                <a-select-option value="graduate">graduate</a-select-option>
-                <!-- Add more subjects as needed -->
-            </a-select>
-          </a-form-item>
-          <a-form-item ref="timezone" label="Timezone" name="timezone">
-            <a-select v-model:value="formState.timezone" placeholder="Select timezone">
-                <a-select-option v-for="tz in timezones" :key="tz.value" :value="tz.value" :default="'UTC -04:00'">{{ tz.label }}</a-select-option>
-            </a-select>
-          </a-form-item>
-          <a-form-item ref="msg" label="Message" name="message">
-            <a-textarea :rows="4" v-model:value="formState.msg" />
-          </a-form-item>
-        </a-form>
-        <div v-if="componentDisabled">
+  <a-layout-content style="display: flex; align-items: center; justify-content: center; min-height: 80vh;">
+    <div class="form-container">
+      <a-typography-title :level="4" class="form-title">Student Profile</a-typography-title>
+      <a-form :model="formState" layout="vertical" :disabled="componentDisabled">
+        <a-form-item label="Nickname" name="nickname">
+          <a-input v-model:value="formState.nickname" />
+        </a-form-item>
+        <a-form-item label="Email" name="email">
+          <a-input v-model:value="formState.email" />
+        </a-form-item>
+        <a-form-item label="Grade" name="grade">
+          <a-select v-model:value="formState.grade" placeholder="Select grade">
+            <a-select-option value="kindergarten">Kindergarten</a-select-option>
+            <a-select-option value="kindergarten">Kindergarten</a-select-option>
+            <a-select-option value="primary">Primary</a-select-option>
+            <a-select-option value="secondary">Secondary</a-select-option>
+            <a-select-option value="bachelor">Bachelor</a-select-option>
+            <a-select-option value="graduate">Graduate</a-select-option>
+            <a-select-option value="other">Other</a-select-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item label="Timezone" name="timezone">
+          <a-select v-model:value="formState.timezone" placeholder="Select timezone">
+            <a-select-option v-for="tz in timezones" :key="tz.value" :value="tz.value">{{ tz.label }}</a-select-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item label="Message" name="message">
+          <a-textarea :rows="4" v-model:value="formState.msg" />
+        </a-form-item>
+        <div style="text-align: center;">
           <a-button @click="e => (componentDisabled = !componentDisabled)">
             Edit
           </a-button>
         </div>
-        <div v-else :label-col="labelCol" :wrapper-col="wrapperCol">
-          <a-button @click="e => (updateProfile(), componentDisabled = !componentDisabled)">
-            Submit
-          </a-button>
-          <a-button style="margin-left: 17px" @click="e => (loadProfile(), componentDisabled = !componentDisabled)">
-            Cancel
-          </a-button>
-        </div>
-      </div>
-    </a-layout-content>
-  </a-layout>
+      </a-form>
+    </div>
+  </a-layout-content>
 </template>
+
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
 import axios from 'axios';
@@ -56,14 +46,14 @@ import { message } from 'ant-design-vue';
 const componentDisabled = ref(true);
 const user_info = JSON.parse(sessionStorage.getItem('user_info'));
 
-const labelCol = {
-  style: {
-    width: '80px',
-  },
-};
-const wrapperCol = {
-  span: 20,
-};
+// const labelCol = {
+//   style: {
+//     width: '80px',
+//   },
+// };
+// const wrapperCol = {
+//   span: 20,
+// };
 const formState = reactive({
   nickname: '123',
   email: '',
@@ -138,3 +128,43 @@ const updateProfile = async () => {
     });
 };
 </script>
+
+
+<style scoped>
+.form-container {
+    width: 100%; 
+    max-width: 400px;
+    margin: 5vh auto 0px auto;
+    padding: 40px;
+    background: #fff;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(to right, #ffffff, #e49290);
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.form-title {
+  color: rgb(232, 122, 121);
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.a-form-item {
+  margin-bottom: 20px;
+}
+
+.form-container .ant-btn {
+  background-color: rgb(63, 195, 128);
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+  
+.form-container .ant-btn:hover {
+  background-color: rgb(232, 122, 121);
+  color: white;
+}
+</style>

@@ -1,11 +1,8 @@
 <template>
-    <a-layout style="padding: 0px 30px 0px">
-        <a-layout-content
-            :style="{ background: '#fff', padding: '80px', minHeight: '80vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }">
-
-            <div style="max-width: 600px;">
-                <a-form :model="formState" :label-col="labelCol" :wrapper-col="wrapperCol" layout="horizontal"
-                    :disabled="componentDisabled">
+        <a-layout-content style="display: flex; align-items: center; justify-content: center; min-height: 80vh;">
+            <div class="form-container">
+                <a-typography-title :level="4" class="form-title">Tutor Profile</a-typography-title>
+                <a-form :model="formState" layout="vertical" :disabled="componentDisabled">
                     <a-form-item ref="nickname" label="Nickname" name="nickname">
                         <a-input v-model:value="formState.nickname" />
                     </a-form-item>
@@ -18,21 +15,19 @@
                             <a-select-option value="bachelor">bachelor</a-select-option>
                             <a-select-option value="master">master</a-select-option>
                             <a-select-option value="phd">phd</a-select-option>
-                            <!-- Add more subjects as needed -->
                         </a-select>
                     </a-form-item>
                     <a-form-item label="Subjects" name="subjects">
                         <a-checkbox-group v-model:value="formState.subjects">
-                            <a-checkbox :value="'Chinese'">Chinese</a-checkbox>
-                            <a-checkbox :value="'English'">English</a-checkbox>
-                            <a-checkbox :value="'Math'">Math</a-checkbox>
-                            <a-checkbox :value="'Chemistry'">Chemistry</a-checkbox>
-                            <a-checkbox :value="'Physics'">Physics</a-checkbox>
-                            <a-checkbox :value="'Biology'">Biology</a-checkbox>
-                            <a-checkbox :value="'Business_Management'">Business Management</a-checkbox>
+                            <a-checkbox class="checkbox-text" :value="'Chinese'">Chinese</a-checkbox>
+                            <a-checkbox class="checkbox-text" :value="'English'">English</a-checkbox>
+                            <a-checkbox class="checkbox-text" :value="'Math'">Math</a-checkbox>
+                            <a-checkbox class="checkbox-text" :value="'Chemistry'">Chemistry</a-checkbox>
+                            <a-checkbox class="checkbox-text" :value="'Physics'">Physics</a-checkbox>
+                            <a-checkbox class="checkbox-text" :value="'Biology'">Biology</a-checkbox>
+                            <!-- <a-checkbox :value="'Business_Management'">Business Management</a-checkbox> -->
                             <a-checkbox :value="'Geography'">Geography</a-checkbox>
                             <a-checkbox :value="'History'">History</a-checkbox>
-                            <!-- Add more subjects as needed -->
                         </a-checkbox-group>
                     </a-form-item>
                     <a-form-item label="Salary" name="salaryRange">
@@ -79,7 +74,6 @@
                 </div>
             </div>
         </a-layout-content>
-    </a-layout>
 </template>
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
@@ -212,3 +206,47 @@ const updateProfile = async () => {
         });
 };
 </script>
+
+<style scoped>
+.form-container {
+    width: 100%; 
+    max-width: 400px;
+    margin: 5vh auto 0px auto;
+    padding: 40px;
+    background: #fff;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(to right, #ffffff, #abd0ea);
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.form-title {
+    color:  rgb(33, 150, 243);
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.a-form-item {
+  margin-bottom: 20px;
+}
+
+.form-container .ant-btn {
+  background-color: rgb(63, 195, 128);
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+  
+.form-container .ant-btn:hover {
+  background-color:  rgb(33, 150, 243);
+  color: white;
+}
+
+/* .checkbox-text {
+  color: rgb(14, 15, 17);
+} */
+
+</style>
