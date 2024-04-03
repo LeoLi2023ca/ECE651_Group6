@@ -263,7 +263,7 @@ def login():
             {"message": "Login successful!", "code": code, "user_info": user_info}
         )
     else:
-        return jsonify({"error": "Invalid email or password", "code": "0"}), 401
+        return jsonify({"error": "Invalid username or password.", "code": "0"}), 401
 
 
 @account.route("/getStudentProfileByUsername", methods=["get"])
