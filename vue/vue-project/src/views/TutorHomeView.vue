@@ -6,7 +6,7 @@
         <a-col :xs="24" :sm="24" :md="12" class="text-column">
           <div class="main-section">
             <h1 class="title">Use your teaching specialties to make money!</h1>
-            <a-list>
+            <!-- <a-list>
               <a-list-item>
                 <a-list-item-meta
                     :avatar="{ src: 'circle-icon-path' }"
@@ -25,14 +25,14 @@
                     title="No intermediate costs"
                 />
               </a-list-item>
-            </a-list>
+            </a-list> -->
             <router-link to="/post/my-post">
               <a-button type="primary" size="large">Start now</a-button>
             </router-link>
           </div>
         </a-col>
         <a-col :xs="24" :sm="24" :md="12" class="image-column">
-          <img src="../../public/dev2.png" alt="Learn Image" class="responsive-image" />
+          <img src="/dev2.png" alt="Learn Image" class="responsive-image" />
         </a-col>
       </a-row>
 
@@ -64,21 +64,21 @@
           </a-col>
           <a-col :xs="24" :sm="12" :lg="8">
             <div class="feature">
-              <img class="feature-icon" src="../../public/offer11.png" alt="1-on-1 lessons" />
+              <img class="feature-icon" src="/offer11.png" alt="1-on-1 lessons" />
               <h3>Flexible Schedule</h3>
               <p>Set your own hours and teach at your convenience, from any location.</p>
             </div>
           </a-col>
           <a-col :xs="24" :sm="12" :lg="8">
             <div class="feature">
-              <img class="feature-icon" src="../../public/offer10.png" alt="Group Class" />
+              <img class="feature-icon" src="/offer10.png" alt="Group Class" />
               <h3>Competitive Earnings</h3>
               <p>Enjoy fair compensation for your expertise with zero platform fees.</p>
             </div>
           </a-col>
           <a-col :xs="24" :sm="12" :lg="8">
             <div class="feature">
-              <img class="feature-icon" src="../../public/offer9.png" alt="All major subjects" />
+              <img class="feature-icon" src="/offer9.png" alt="All major subjects" />
               <h3>Global Community</h3>
               <p>Join a network of professionals and grow your teaching career.</p>
             </div>

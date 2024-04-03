@@ -6,7 +6,7 @@
         <a-col :xs="24" :sm="24" :md="12" class="text-column">
           <div class="main-section">
             <h1 class="title">Become a PRO in any subject</h1>
-            <a-list>
+            <!-- <a-list>
               <a-list-item>
                 <a-list-item-meta
                     :avatar="{ src: 'circle-icon-path' }"
@@ -25,14 +25,14 @@
                     title="All major courses offered, including English Math Science Geography History and more!"
                 />
               </a-list-item>
-            </a-list>
+            </a-list> -->
             <router-link to="/post/my-post">
               <a-button type="primary" size="large">Start now</a-button>
             </router-link>
           </div>
         </a-col>
         <a-col :xs="24" :sm="24" :md="12" class="image-column">
-          <img src="../../public/dev1.png" alt="Learn Image" class="responsive-image" />
+          <img src="/dev1.png" alt="Learn Image" class="responsive-image" />
         </a-col>
       </a-row>
 
@@ -64,21 +64,21 @@
           </a-col>
           <a-col :xs="24" :sm="12" :lg="8">
             <div class="feature">
-              <img class="feature-icon" src="../../public/offer6.png" alt="1-on-1 lessons" />
+              <img class="feature-icon" src="/offer6.png" alt="1-on-1 lessons" />
               <h3>1-on-1 Lessons</h3>
               <p>Find tutors from around the world sharing their language, dialects, knowledge and culture.</p>
             </div>
           </a-col>
           <a-col :xs="24" :sm="12" :lg="8">
             <div class="feature">
-              <img class="feature-icon" src="../../public/offer5.png" alt="Group Class" />
+              <img class="feature-icon" src="/offer5.png" alt="Group Class" />
               <h3>Free Chat, Free Use</h3>
               <p>We provide a platform to communicate directly with the tutor, no charges, no intermediary costs!</p>
             </div>
           </a-col>
           <a-col :xs="24" :sm="12" :lg="8">
             <div class="feature">
-              <img class="feature-icon" src="../../public/offer7.png" alt="All major subjects" />
+              <img class="feature-icon" src="/offer7.png" alt="All major subjects" />
               <h3>All major subjects</h3>
               <p>You can find almost any school subject and study with global or local tutors from Tutorease.</p>
             </div>
@@ -126,7 +126,7 @@
             <a-collapse-panel header="What are the payment options?" key="2">
               <p>Unfortunately, we only provide a platform for you to communicate with your tutors, and do not offer any payment guarantees that require you to communicate with your tutors.</p>
             </a-collapse-panel>
-            <a-collapse-panel header="How do I book a lesson?？" key="3">
+            <a-collapse-panel header="How do I book a lesson?" key="3">
               <p>Direct communication with tutors you like.</p>
             </a-collapse-panel>
 
@@ -145,18 +145,13 @@
 
       </div>
 
-
-
-
-
-
-
-
     </a-layout-content>
   </a-layout>
 </template>
 
 <script setup>
+import { inject } from 'vue';
+const role = inject('role');
 </script>
 
 <style scoped>
