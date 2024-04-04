@@ -97,7 +97,7 @@ const wrapperCol = {
     span: 20,
 };
 const formState = reactive({
-    nickname: user_info.nickname,
+    nickname: user_info.username,
     email: '',
     school_name: '',
     edu_level: '',
@@ -121,7 +121,7 @@ function loadProfile() {
         console.log('user_info is null');
         return;
     }
-    formState.nickname = user_info.nickname;
+    formState.nickname = user_info.username;
     // console.log(user_info.email);
     formState.email = user_info.email;
     formState.school_name = user_info.school_name;

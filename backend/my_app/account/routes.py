@@ -38,6 +38,17 @@ def validate_username():
 @account.route("/validate_email", methods=["POST"])
 def validate_email():
     email = request.form.get("email")
+    if not re.match(email_regex, email):
+        return (
+            jsonify(
+                {
+                    "message": "Email Format is Wrong!",
+                    "isValid": False,
+                    "FormatError": True
+                },
+                201
+            )
+        )
 
     existing_student = Student.query.filter(
         (Student.email == email)
@@ -45,12 +56,13 @@ def validate_email():
     existing_tutor = Tutor.query.filter(
         (Tutor.email == email)
     ).first()
-    
+
     return (
         jsonify(
             {
                 "message": "ok",
                 "isValid": not (existing_student or existing_tutor),
+                "Format Error": False
             }
         ),
         201,
