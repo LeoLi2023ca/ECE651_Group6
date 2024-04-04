@@ -219,9 +219,14 @@ def login():
     code = "1" if existing_student else "2"
     if user and user.password == password:
         if user.registration_completed:
-            return jsonify(
-                {"message": "Login successful!", "code": code, "user_info": user_info}
-            )
+            if code == "2" and not user.welcome_form_completed:
+                return jsonify(
+                    {"message": "Login successful!", "code": code, "user_info": user_info, "to_welcome_form": True}
+                )
+            else:
+                return jsonify(
+                    {"message": "Login successful!", "code": code, "user_info": user_info, "to_welcome_form": False}
+                )
         else:
             return jsonify({"error": "Your account is not yet activated.", "code": "0"}), 401
     else:
@@ -320,6 +325,7 @@ def updateTutorProfile():
         user.msg = message
         user.set_subjects(subjects)
         user.salary = salary
+        user.welcome_form_completed = True
         db.session.commit()
         user_info = {
             "username": username,

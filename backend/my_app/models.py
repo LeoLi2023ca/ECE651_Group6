@@ -21,7 +21,7 @@ class Student(db.Model):
     matched_tutors = db.Column(MutableList.as_mutable(db.PickleType), default=[])
     tutors_asked = db.Column(MutableList.as_mutable(db.PickleType), default=[])
     activation_token = db.Column(db.String(100), unique=True)
-    # registration_completed = db.Column(db.Boolean, nullable=False, default=False)
+    registration_completed = db.Column(db.Boolean, nullable=False, default=False)
 
     def __repr__(self):
         return f"<Student {self.username}>"
@@ -48,7 +48,8 @@ class Tutor(db.Model):
     # listed? Tutor setting to be listed(in student view of tutor list, same as status of student post) or not
 
     activation_token = db.Column(db.String(100), unique=True)
-    # registration_completed = db.Column(db.Boolean, nullable=False, default=False)
+    registration_completed = db.Column(db.Boolean, nullable=False, default=False)
+    welcome_form_completed = db.Column(db.Boolean, nullable=False, default=False)
     def set_subjects(self, subjects_list):
         self.subjects = subjects_list
 
