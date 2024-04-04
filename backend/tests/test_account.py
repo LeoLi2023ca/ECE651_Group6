@@ -69,6 +69,44 @@ def test_register_wrong_email(test_client):
     assert response.status_code == 400
     assert b"Invalid email format" in response.data
 
+def test_validate_username(test_client):
+    response = test_client.post('/validate_username', data={
+        'username': 'teststudent12'
+    })
+    assert response.status_code == 201
+
+def test_validate_email_wrong(test_client):
+    response = test_client.post('/validate_email', data={
+        'email': 'teststudent12'
+    })
+    assert response.status_code == 200
+    assert b"Email Format is Wrong!" in response.data
+
+def test_validate_email(test_client):
+    response = test_client.post('/validate_email', data={
+        'email': 'teststudent12@example.com'
+    })
+    assert response.status_code == 201
+    assert b"ok" in response.data
+
+def test_activate(test_client):
+    response = test_client.get('/getActivationToken', query_string={
+        'username': 'teststudent'
+    })
+    assert response.status_code == 200
+    token = response.get_json()['token']
+    response = test_client.get('/activate', query_string={
+        'token': token
+    })
+    assert response.status_code == 200
+
+    response = test_client.get('/getActivationToken', query_string={
+        'username': 'teststudent'
+    })
+    assert response.status_code == 200
+    token = response.get_json()['token']
+    assert token == None
+
 def test_login_wrong(test_client):
     """Test wrong login."""
     response = test_client.post('/login', data={

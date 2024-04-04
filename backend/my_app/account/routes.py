@@ -62,7 +62,7 @@ def validate_email():
             {
                 "message": "ok",
                 "isValid": not (existing_student or existing_tutor),
-                "Format Error": False
+                "FormatError": False
             }
         ),
         201,
@@ -152,6 +152,22 @@ def register():
         db.session.rollback()
         return jsonify({"error": str(e)}), 502
 
+@account.route('/getActivationToken', methods=["GET"])
+def getActivationToken():
+    username = request.args.get('username')
+    existing_student = Student.query.filter(
+        (Student.username == username)
+    ).first()
+    existing_tutor = Tutor.query.filter(
+        (Tutor.username == username)
+    ).first()
+    token = ""
+    if existing_student:
+        token = existing_student.activation_token
+    else:
+        token = existing_tutor.activation_token
+    return jsonify({'token': token}), 200
+
 @account.route('/activate')
 def activate():
     token = request.args.get('token')
@@ -164,6 +180,7 @@ def activate():
 
     if student_user:
         # Token is valid, activate the account and remove the token
+        # return jsonify({'error': 'fuck'}), 210
         student_user.registration_completed = True
         student_user.activation_token = None
         try:

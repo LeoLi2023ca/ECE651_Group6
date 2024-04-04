@@ -12,13 +12,24 @@ def test_create_post(test_client):
     assert response.status_code == 201
     assert b"Account added successfully!" in response.data
 
+    response = test_client.get('/getActivationToken', query_string={
+        'username': 'teststudent'
+    })
+    assert response.status_code == 200
+    token = response.get_json()['token']
+    response = test_client.get('/activate', query_string={
+        'token': token
+    })
+    assert response.status_code == 200
+
     response = test_client.post('/create_post', data={
         'username': 'teststudent',
         'title': 'Test Post',
         'msg': 'This is a test post',
-        'salary': '100',
+        'salary': '100-200',
         'subject': 'Math',
-        'available_time': 'Monday 9:00 AM'
+        'available_time': 'Monday 9:00 AM',
+        'timezone': '-04:00'
     })
     assert response.status_code == 200
     assert b"Post created successfully" in response.data
@@ -41,7 +52,8 @@ def test_create_post_wrong(test_client):
         'msg': 'This is a test post',
         'salary': '100',
         'subject': 'Math',
-        'available_time': 'Monday 9:00 AM'
+        'available_time': 'Monday 9:00 AM',
+        'timezone': '-04:00'
     })
     assert response.status_code == 401
 
@@ -166,7 +178,8 @@ def test_GetPostById(test_client):
         'msg': 'This is a test post',
         'salary': '100-110',
         'subject': 'Math',
-        'available_time': 'Monday 9:00 AM'
+        'available_time': 'Monday 9:00 AM',
+        'timezone': '-04:00'
     })
     assert response.status_code == 200
     assert b"Post created successfully" in response.data
