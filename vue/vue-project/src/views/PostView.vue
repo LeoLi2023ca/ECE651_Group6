@@ -1,5 +1,5 @@
 <template>
-  <a-layout>
+  <a-layout style="padding: 30px 10px 0px">
     <a-layout-sider width="200" style="background: #fff">
       <a-menu v-model:selectedKeys="selectedKeys" mode="inline"
         :style="{ height: '100%', borderRight: 0, background: '#fff' }">

@@ -1,5 +1,5 @@
 <template>
-    <a-layout style="padding: 100px 30px 0px">
+    <a-layout style="padding: 30px 30px 0px">
         <div :style="{ display: 'flex', marginBottom: '20px' }"><a-input placeholder="Search" v-model:value="searchText"
                 style="margin-right: 10px;" />
             <a-button style="margin-right: 10px;" type="primary" @click="search">Search</a-button>

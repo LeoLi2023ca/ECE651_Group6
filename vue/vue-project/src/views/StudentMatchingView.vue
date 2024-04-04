@@ -1,5 +1,5 @@
 <template>
-    <a-layout>
+    <a-layout style="padding-top: 50px; padding-left: 30px;">
         <TutorDetail ref="tutor_detail" />
         <div class="section">
         <h2 class="title">Matched Tutors</h2>
