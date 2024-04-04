@@ -8,7 +8,6 @@ import 'ant-design-vue/dist/reset.css';
 import store from './store';
 import $ from 'jquery'
 
-
 const app = createApp(App)
 app.use(Antd)
 app.use(router)

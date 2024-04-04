@@ -16,12 +16,18 @@ import WelcomeTutorView from '@/views/WelcomeTutorView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import StudentMatchingView from '@/views/StudentMatchingView.vue'
 import TutorMatchingView from '@/views/TutorMatchingView.vue'
+import HomeBeforeLoginView from '@/views/HomeBeforeLoginView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
+      name: 'homeBeforeLogin',
+      component: HomeBeforeLoginView
+    },
+    {
+      path: '/home-loginned',
       name: 'home',
       component: HomeView
     },
@@ -127,7 +133,8 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const token = sessionStorage.getItem('role');
-  if (to.name !== 'login' && token !== '1' && token !== '2') next({ name: 'login' });
+  console.log(to.name)
+  if ((to.name !== 'login' && to.name !== 'register' && to.name !== 'homeBeforeLogin') && token !== '1' && token !== '2') next({ name: 'login' });
   else next();
 });
 

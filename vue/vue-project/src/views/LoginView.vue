@@ -2,11 +2,13 @@
   <a-layout-content style="display: flex; align-items: center; justify-content: center; min-height: 80vh;">
     <div class="grid-container">
       <a-card class="login-register-form">
-        <LoginForm v-if="isLoginForm" @switchForm="toggleForm" />
-        <RegisterForm v-else @switchForm="toggleForm" />
+        <LoginForm/>
+        <!-- <RegisterForm v-else @switchForm="toggleForm" /> -->
         <a-form-item :wrapper-col="{ offset: 6, span: 12 }">
           <div class="center-button">
-            <a-button @click="toggleForm" class="toggle-button">{{ isLoginForm ? 'Don\'t have an account?' : 'Already have an account?' }}</a-button>
+            <router-link to="/register">
+              <a-button >Don't have an account?</a-button>
+            </router-link>
           </div>
         </a-form-item>
       </a-card>

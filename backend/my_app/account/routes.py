@@ -140,38 +140,38 @@ def register():
         db.session.rollback()
         return jsonify({"error": str(e)}), 502
 
-# @account.route('/activate')
-# def activate():
-#     token = request.args.get('token')
-#     if not token:
-#         return "Activation token is missing", 400
+@account.route('/activate')
+def activate():
+    token = request.args.get('token')
+    if not token:
+        return "Activation token is missing", 400
 
-#     # Query the database for the token
-#     student_user = Student.query.filter_by(activation_token=token).first()
-#     tutor_user = Tutor.query.filter_by(activation_token=token).first()
+    # Query the database for the token
+    student_user = Student.query.filter_by(activation_token=token).first()
+    tutor_user = Tutor.query.filter_by(activation_token=token).first()
 
-#     if student_user:
-#         # Token is valid, activate the account and remove the token
-#         student_user.registration_completed = True
-#         student_user.activation_token = None
-#         try:
-#             db.session.commit()
-#             return render_template('activation_success.html')
-#         except Exception as e:
-#             db.session.rollback()
-#             return jsonify({'error': str(e)}), 500
-#     elif tutor_user:
-#         # Token is valid, activate the account and remove the token
-#         tutor_user.registration_completed = True
-#         tutor_user.activation_token = None
-#         try:
-#             db.session.commit()
-#             return render_template('activation_success.html')
-#         except Exception as e:
-#             db.session.rollback()
-#             return jsonify({'error': str(e)}), 500
-#     else:
-#         return "Invalid or expired activation link."
+    if student_user:
+        # Token is valid, activate the account and remove the token
+        student_user.registration_completed = True
+        student_user.activation_token = None
+        try:
+            db.session.commit()
+            return render_template('activation_success.html')
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({'error': str(e)}), 500
+    elif tutor_user:
+        # Token is valid, activate the account and remove the token
+        tutor_user.registration_completed = True
+        tutor_user.activation_token = None
+        try:
+            db.session.commit()
+            return render_template('activation_success.html')
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({'error': str(e)}), 500
+    else:
+        return "Invalid or expired activation link."
 
 
 @account.route("/login", methods=["POST"])

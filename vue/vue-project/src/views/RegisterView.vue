@@ -1,31 +1,18 @@
 <template>
-    <a-form id="register_form" name="basic" :label-col="{ span: 6 }" :wrapper-col="{ span: 12 }" autocomplete="off">
-        <a-form-item label="Username" name="username">
-            <a-input v-model:value="username" @change="validate_username"/>
-            <div id="username_warning" class="red" style="display: none;">This username has already been registered</div>
-        </a-form-item>
-
-        <a-form-item label="Email" name="email">
-            <a-input v-model:value="email" @change="validate_email"/>
-            <div id="email_warning" class="red" style="display: none;">This email has already been registered</div>
-        </a-form-item>
-
-        <a-form-item label="Password" name="password">
-            <a-input-password v-model:value="password" @change="validate_password"/>
-            <div id="password_warning" class="red" style="display: none;">Password must have at least 8 characters</div>
-        </a-form-item>
-
-        <a-form-item label="Role">
-            <a-radio-group v-model:value="role">
-                <a-radio value="Student">Student</a-radio>
-                <a-radio value="Tutor">Tutor</a-radio>
-            </a-radio-group>
-        </a-form-item>
-
-        <a-form-item :wrapper-col="{ offset: 6, span: 12 }">
-            <a-button style="width: 225px;" type="primary" @click="register()">Register</a-button>
-        </a-form-item>
-    </a-form>
+    <a-layout-content style="display: flex; align-items: center; justify-content: center; min-height: 80vh;">
+        <div class="grid-container">
+        <a-card class="login-register-form">
+            <RegisterForm/>
+            <a-form-item :wrapper-col="{ offset: 6, span: 12 }">
+            <div class="center-button">
+                <router-link to="/login">
+                    <a-button >Already have an account?</a-button>
+                </router-link>
+            </div>
+            </a-form-item>
+        </a-card>
+        </div>
+    </a-layout-content>
     <div id="activation_reminder">
         <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
             <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
@@ -43,6 +30,7 @@ import axios from 'axios';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import $ from 'jquery';
+import RegisterForm from '../components/RegisterForm.vue';
 
 const store = useStore();
 const router = useRouter();
@@ -231,5 +219,38 @@ h2 {
 
 @keyframes fill{
     100%{box-shadow: inset 0px 0px 0px 30px #7ac142}
+}
+</style>
+
+<style>
+.grid-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2vh auto; 
+}
+
+.login-register-form {
+  margin: 5vh auto 20px auto;
+  max-width: 600px;
+  padding: 20px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(to right, #ffffff, #f2f2f2);
+  margin-bottom: 2vh; 
+}
+
+.center-button {
+  display: flex; 
+  justify-content: center; 
+  width: 100%; 
+}
+
+.toggle-button {
+  background: none; 
+  border: none; 
+  text-decoration: underline; 
+  color: rgb(33, 150, 243);
 }
 </style>
