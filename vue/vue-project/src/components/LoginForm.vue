@@ -46,7 +46,12 @@ const login = async () => {
             sessionStorage.setItem('role', response.data.code);
             sessionStorage.setItem('user_info', JSON.stringify(response.data.user_info))
             store.commit('setUserRole', response.data.code);
-            router.push({ name: 'home' });
+            console.log(response.data)
+            if(response.data.to_welcome_form){              
+              router.push({ name: 'welcome-tutor' }).then(() => {window.location.reload();});
+            }else{
+              router.push({ name: 'home' });
+            }
             alert('Login successful!');
         })
         .catch(function (error) {

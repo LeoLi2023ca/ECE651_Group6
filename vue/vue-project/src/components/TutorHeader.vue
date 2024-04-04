@@ -4,7 +4,7 @@
       <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="horizontal"
         :style="{ lineHeight: '64px', display: 'flex' }">
         <a-menu-item key="1">
-          <router-link to="/">Home</router-link>
+          <router-link to="/home-loginned">Home</router-link>
         </a-menu-item>
         <a-menu-item key="2">
           <router-link to="/post-list">Posts</router-link>

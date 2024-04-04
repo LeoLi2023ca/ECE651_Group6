@@ -92,7 +92,7 @@ export default {
       console.log('Submitting:', this.tutorInfo);
       var data = new FormData();
       // console.log(this.tutorInfo.username);
-      console.log(user_info.username);
+      console.log(user_info);
       data.append('username', user_info.username); // Assuming username is part of tutorInfo
       data.append('nickname', user_info.username); // Assuming nickname is part of tutorInfo
       data.append('email', user_info.email); // Assuming email is part of tutorInfo
