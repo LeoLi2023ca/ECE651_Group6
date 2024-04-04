@@ -72,15 +72,15 @@ const register = () => {
                 $("#activation_reminder").css( "display", "flex" );
             }
 
-            sessionStorage.setItem('role', response.data.code);
-            sessionStorage.setItem('user_info', JSON.stringify(response.data.user_info))
-            store.commit('setUserRole', response.data.code);
-            if(response.data.code == '1'){
-              router.push({ name: 'home' });
-            }
-            else{
-              router.push({ name: 'welcome-tutor' });
-            }
+            // sessionStorage.setItem('role', response.data.code);
+            // sessionStorage.setItem('user_info', JSON.stringify(response.data.user_info))
+            // store.commit('setUserRole', response.data.code);
+            // if(response.data.code == '1'){
+            //   router.push({ name: 'home' });
+            // }
+            // else{
+            //   router.push({ name: 'welcome-tutor' });
+            // }
 
         })
         .catch(function (error) {

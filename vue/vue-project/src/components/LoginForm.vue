@@ -51,7 +51,8 @@ const login = async () => {
         })
         .catch(function (error) {
             if(error.response.status == 401){
-                alert('Invalid username or password');
+                console.log(error);
+                alert(error.response.data["error"]);
             }
             else if(error.response.status == 404){
                 alert('User not found');

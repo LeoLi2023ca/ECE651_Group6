@@ -1,5 +1,5 @@
 <template>
-    <a-layout-content style="display: flex; align-items: center; justify-content: center; min-height: 80vh;">
+    <a-layout-content id="register_form" style="display: flex; align-items: center; justify-content: center; min-height: 80vh;">
         <div class="grid-container">
         <a-card class="login-register-form">
             <RegisterForm/>
@@ -40,105 +40,10 @@ const username = ref('');
 const email = ref('');
 const password = ref('');
 
-const register = () => {
-    var data = new FormData();
-    data.append('username', username.value);
-    data.append('password', password.value);
-    data.append('role', role.value)
-    data.append('email', email.value)
-
-    var config = {
-        method: 'post',
-        url: 'http://127.0.0.1:5000/register',
-        data: data
-    };
-
-    axios(config)
-        .then(function (response) {
-            console.log(response.status)
-            if(response.data.isSuccess){
-                $("#register_form").css( "display", "None" );
-                $("#activation_reminder").css( "display", "flex" );
-
-                // sessionStorage.setItem('role', response.data.code);
-                // sessionStorage.setItem('user_info', JSON.stringify(response.data.user_info))
-                // store.commit('setUserRole', response.data.code);
-                // router.push({ name: 'home' });
-            }
-
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-}
-
-const validate_username = () => {
-    var data = new FormData();
-    data.append('username', username.value);
-
-    var config = {
-        method: 'post',
-        url: 'http://127.0.0.1:5000/validate_username',
-        data: data
-    };
-
-    axios(config)
-        .then(function (response) {
-            console.log(response.status)
-            if(!response.data.isValid){
-                $("#username_warning").css( "display", "block" );
-            }else{
-                $("#username_warning").css( "display", "none" );
-            }
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-}
-
-const validate_email = () => {
-    var data = new FormData();
-    data.append('email', email.value);
-
-    var config = {
-        method: 'post',
-        url: 'http://127.0.0.1:5000/validate_email',
-        data: data
-    };
-
-    axios(config)
-        .then(function (response) {
-            console.log(response.status)
-            if(!response.data.isValid){
-                $("#email_warning").css( "display", "block" );
-            }else{
-                $("#email_warning").css( "display", "none" );
-            }
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-}
-
-const validate_password = () => {
-    if(password.value.length < 8){
-        $("#password_warning").css( "display", "block" );
-    }else{
-        $("#password_warning").css( "display", "none" );
-    }
-}
 </script>
 
 
 <style scoped>
-.red{
-    color: red;
-}
-
-#register_form{
-    display: block;
-}
-
 #activation_reminder{
   display: none;
   justify-content: center;

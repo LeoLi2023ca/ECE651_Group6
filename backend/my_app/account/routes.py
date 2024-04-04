@@ -183,6 +183,7 @@ def login():
     existing_tutor = Tutor.query.filter((Tutor.username == username)).first()
     user = existing_student if existing_student else existing_tutor
 
+
     # Check if the user exists and the password is correct
     # if user and user.password == password:
     #     if user.registration_completed==1:
@@ -217,9 +218,12 @@ def login():
     )
     code = "1" if existing_student else "2"
     if user and user.password == password:
-        return jsonify(
-            {"message": "Login successful!", "code": code, "user_info": user_info}
-        )
+        if user.registration_completed:
+            return jsonify(
+                {"message": "Login successful!", "code": code, "user_info": user_info}
+            )
+        else:
+            return jsonify({"error": "Your account is not yet activated.", "code": "0"}), 401
     else:
         return jsonify({"error": "Invalid username or password.", "code": "0"}), 401
 
