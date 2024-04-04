@@ -9,7 +9,8 @@
   
         <a-form-item label="Email" name="email">
           <a-input v-model:value="email" @change="validate_email"/>
-          <div id="email_warning" class="red" style="visibility: hidden;">This email has already been registered</div>
+          <div v-if="format_error==false" id="email_warning" class="red" style="visibility: hidden;">This email has already been registered</div>
+          <div v-else id="email_warning" class="red" style="visibility: hidden;">The email's format is wrong!</div>
         </a-form-item>
   
         <a-form-item label="Password" name="password">
@@ -49,6 +50,7 @@ const role = ref('Student')
 const username = ref('');
 const email = ref('');
 const password = ref('');
+const format_error = ref(true);
 
 const register = () => {
     var data = new FormData();
@@ -136,6 +138,9 @@ const validate_email = () => {
         .then(function (response) {
             console.log(response.status)
             if(!response.data.isValid){
+                if(response.data["FormatError"]){
+                  format_error = true;
+                }
                 $("#email_warning").css( "visibility", "visible" );
             }else{
                 $("#email_warning").css( "visibility", "hidden" );
