@@ -103,6 +103,7 @@ async function loadData() {
           nickname: response.data.list[i].nickname,
           edu_level: response.data.list[i].edu_level,
           subject_name: response.data.list[i].subjects,
+          school_name: response.data.list[i].school_name,
           msg: response.data.list[i].msg,
           salary: response.data.list[i].salary,
           timezone: response.data.list[i].timezone,

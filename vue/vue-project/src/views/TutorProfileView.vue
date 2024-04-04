@@ -185,7 +185,7 @@ const updateProfile = async () => {
     data.append('timezone', formState.timezone || 'UTC-4');
     data.append('available_time', formState.available_time || '');
     data.append('message', formState.msg || '');
-    // console.log(formState.subjects);
+    data.append('school_name', formState.school_name);
     data.append('subjects', formState.subjects);
     data.append('salary', `${formState.salaryRange.min}-${formState.salaryRange.max}`)
 

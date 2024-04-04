@@ -45,12 +45,13 @@ function fillPostWithID(post_id) {
 
   axios.request(config)
     .then((response) => {
+      console.log("Test" + response);
       const post = JSON.parse(JSON.stringify(response.data.post));
       message.value = post.msg
       salary.value = post.salary
       subject.value = post.subject_name
       title.value = post.title
-      available_time.value = post.time
+      available_time.value = post.available_time
       timezone.value = post.timezone
       console.log(post)
       console.log(JSON.stringify(response.data));

@@ -20,7 +20,7 @@
   import { ref } from 'vue';
   import { computed } from 'vue';
   import { useStore } from 'vuex';
-  import { onMounted } from 'vue';
+  import { onMounted, onUnmounted} from 'vue';
 
   const store = useStore();
   const user_info = sessionStorage.getItem('user_info') ? JSON.parse(sessionStorage.getItem('user_info')) : null;
@@ -30,12 +30,14 @@
     receiver: String,
   });
   const receiverUsername = ref(props.receiver);
+  console.log(props);
 
   const messages = ref([]);
 
-  onMounted(() => {
-    getMessage();
-    console.log(receiverUsername.value);
+  onMounted(() => {   console.log(receiverUsername.value);   // Start polling for messages every second
+    const intervalId = setInterval(getMessage, 1000);    // Stop polling when the component is unmounted   
+    onUnmounted(() => {     clearInterval(intervalId);   }
+    ); 
   });
 //   getMessage();
   
@@ -94,21 +96,27 @@
       url: 'http://127.0.0.1:5000/get_message',
       params: params
     };
+    var buffer = []
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
+        // messages.value = [];
         response.data.forEach(element => {
-          messages.value.push({
+          buffer.push({
             id: element.id,
             sender: element.sender,
             text: element.text,
           });
         });
+      }).then(() => {
+        messages.value = buffer;
       })
       .catch(function (error) {
         console.log(error);
       });
+      
    };
+   
 
    const matchWithTutor = () => {
     const confirmMessage = `Do you want to ask for matching with ${receiverUsername.value}?`;

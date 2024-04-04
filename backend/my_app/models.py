@@ -88,7 +88,9 @@ class Student_Post(db.Model):
     salary = db.Column(db.String(50), nullable=True)
     subject_name = db.Column(db.String(50), nullable=False)
     available_time = db.Column(db.String(100), default="")
+    timezone = db.Column(db.String(100), default="UTC -04:00")
     status = db.Column(db.String(50), default="open", nullable=False)
+
 
     def __repr__(self):
         return f"<Student_Post {self.title}>"

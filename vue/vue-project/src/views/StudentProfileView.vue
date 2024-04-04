@@ -3,7 +3,7 @@
     <div class="form-container">
       <a-typography-title :level="4" class="form-title">Student Profile</a-typography-title>
       <a-form :model="formState" layout="vertical" :disabled="componentDisabled">
-        <a-form-item label="Nickname" name="nickname">
+        <a-form-item label="Username" name="nickname">
           <a-input v-model:value="formState.nickname" />
         </a-form-item>
         <a-form-item label="Email" name="email">
@@ -11,7 +11,6 @@
         </a-form-item>
         <a-form-item label="Grade" name="grade">
           <a-select v-model:value="formState.grade" placeholder="Select grade">
-            <a-select-option value="kindergarten">Kindergarten</a-select-option>
             <a-select-option value="kindergarten">Kindergarten</a-select-option>
             <a-select-option value="primary">Primary</a-select-option>
             <a-select-option value="secondary">Secondary</a-select-option>
@@ -28,12 +27,22 @@
         <a-form-item label="Message" name="message">
           <a-textarea :rows="4" v-model:value="formState.msg" />
         </a-form-item>
-        <div style="text-align: center;">
-          <a-button @click="e => (componentDisabled = !componentDisabled)">
-            Edit
-          </a-button>
-        </div>
+        
       </a-form>
+      <div v-if="componentDisabled">
+          <a-button @click="e => (componentDisabled = !componentDisabled)">
+              Edit
+          </a-button>
+      </div>
+      <div v-else :label-col="labelCol" :wrapper-col="wrapperCol">
+          <a-button @click="e => (updateProfile(), componentDisabled = !componentDisabled)">
+              Submit
+          </a-button>
+          <a-button style="margin-left: 17px"
+              @click="e => (loadProfile(), componentDisabled = !componentDisabled)">
+              Cancel
+          </a-button>
+      </div>
     </div>
   </a-layout-content>
 </template>
@@ -67,7 +76,7 @@ onMounted(() => {
 });
 
 function loadProfile() {
-  formState.nickname = user_info.nickname;
+  formState.nickname = user_info.username;
   formState.email = user_info.email;
   formState.grade = user_info.grade;
   formState.timezone = user_info.timezone;

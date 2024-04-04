@@ -117,13 +117,14 @@ function contact(post_id) {
         }
     })
         .then(response => {
-            console.log(response.data.username);
+            console.log("Test" + response.data.username);
             receiverUsername.value = response.data.username;
+            chatOpen.value = true;
         })
         .catch(error => {
             console.error(error);
         });
-    chatOpen.value = true;
+    
 }
 
 </script>

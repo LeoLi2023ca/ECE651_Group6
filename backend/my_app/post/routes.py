@@ -18,6 +18,7 @@ def create_post():
     salary = request.form.get("salary")
     subject_name = request.form.get("subject")
     available_time = request.form.get("available_time")
+    timezone = request.form.get("timezone")
     status = "opening"
 
     student = Student.query.filter_by(username=username).first()
@@ -33,6 +34,7 @@ def create_post():
             salary=salary,
             subject_name=subject_name,
             available_time=available_time,
+            timezone= "UTC " + timezone,
             status=status,
         )
         db.session.add(new_post)
@@ -60,6 +62,7 @@ def getAllOpeningPostsByUsername():
                         "subject_name": post.subject_name,
                         "available_time": post.available_time,
                         "status": post.status,
+                        "timezone": post.timezone,
                     }
                     for post in posts
                     if post.status == "opening"
@@ -88,6 +91,7 @@ def getAllClosedPostsByUsername():
                         "subject_name": post.subject_name,
                         "available_time": post.available_time,
                         "status": post.status,
+                        "timezone": post.timezone,
                     }
                     for post in posts
                     if post.status == "closed"
@@ -212,6 +216,7 @@ def getPostByPostID():
                     "subject_name": post.subject_name,
                     "available_time": post.available_time,
                     "status": post.status,
+                    "timezone": post.timezone,
                 }
             }
         )
@@ -232,6 +237,7 @@ def getAllOpeningPost():
                     "subject_name": post.subject_name,
                     "available_time": post.available_time,
                     "status": post.status,
+                    "timezone": post.timezone,
                 }
                 for post in posts
                 if post.status == "opening"

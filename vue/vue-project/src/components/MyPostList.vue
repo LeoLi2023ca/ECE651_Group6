@@ -14,7 +14,7 @@
     :rowKey="record => record.post_id">
     <template #bodyCell="{ column, text, record }">
       <template v-if="column.key === 'operation'">
-        <a-button @click="editPost(record.post_id)">Edit</a-button>
+        <!-- <a-button @click="editPost(record.post_id)">Edit</a-button> -->
       </template>
     </template>
   </a-table>

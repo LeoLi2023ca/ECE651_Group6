@@ -474,6 +474,7 @@ def getAllTutor():
                     "nickname": tutor.nickname,
                     "edu_level": tutor.edu_level,
                     "subjects": tutor.get_subjects(),
+                    "school_name": tutor.school_name,
                     "msg": tutor.msg,
                     "salary": tutor.salary,
                     "timezone": tutor.timezone,

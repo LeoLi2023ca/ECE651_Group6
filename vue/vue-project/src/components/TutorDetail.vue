@@ -10,8 +10,7 @@
                 <a-descriptions-item label="Salary" :span="2">{{ salary }}</a-descriptions-item>
                 <a-descriptions-item label="Subject" :span="2">{{ subject_name }}</a-descriptions-item>
                 <a-descriptions-item label="Education" :span="2">{{ edu_level }}</a-descriptions-item>
-                <a-descriptions-item label="Time" :span="2">{{ available_time }}</a-descriptions-item>
-                <a-descriptions-item label="Timezone" :span="2">{{ timezone }}</a-descriptions-item>
+                <a-descriptions-item label="Timezone" :span="2">{{ "UTC " + timezone }}</a-descriptions-item>
                 <a-descriptions-item label="message" :span="4">{{ msg }} </a-descriptions-item>
             </a-descriptions>
         </a-modal>
