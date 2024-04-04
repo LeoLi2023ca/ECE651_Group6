@@ -1,6 +1,6 @@
 <template>
   <a-layout>
-    <div :style="{ display: 'flex', margin: '10px' }"><a-input placeholder="Search" v-model:value="searchText"
+    <div :style="{ display: 'flex', margin: '100px' }"><a-input placeholder="Search" v-model:value="searchText"
         style="margin-right: 10px;" />
       <a-select
         v-model:value="selectedSubject"
