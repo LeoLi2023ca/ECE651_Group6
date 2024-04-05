@@ -107,6 +107,16 @@ def test_activate(test_client):
     token = response.get_json()['token']
     assert token == None
 
+def test_activate_wrong(test_client):
+    response = test_client.get('/activate', query_string={
+        'token': None
+    })
+    assert response.status_code == 400
+    response = test_client.get('/activate', query_string={
+        'token': '1234567890'
+    })
+    assert response.status_code == 401
+
 def test_login_wrong(test_client):
     """Test wrong login."""
     response = test_client.post('/login', data={
@@ -212,6 +222,18 @@ def test_update_tutor_profile(test_client):
     assert data['user_info']['username'] == 'testtutor'
     # assert data['user_info']['subjects'] == ["Math", 'Physics']
     assert data['user_info']['salary'] == '20-30'
+    response = test_client.post('/updateTutorProfile', data={
+        'username': 'testtutorabcd',
+        'nickname': 'newnickname',
+        'email': 'newtesttutor@example.com',
+        'password': 'newpassword',
+        'message': 'new message',
+        'timezone': 'UTC -04:00',
+        'subjects': json.dumps(['Math', 'Physics']),
+        'salary': '20-30'
+    })
+    assert response.status_code == 401
+    
 
 def test_update_password(test_client):
     response = test_client.post('/updatePassword', data={

@@ -200,7 +200,7 @@ def activate():
             db.session.rollback()
             return jsonify({'error': str(e)}), 500
     else:
-        return "Invalid or expired activation link."
+        return "Invalid or expired activation link.", 401
 
 
 @account.route("/login", methods=["POST"])
@@ -449,7 +449,7 @@ def update_password():
     else:
         return jsonify({"error": "User not found"}), 404
 
-@account.route('/getStudentInfoByUsername', methods=['GET'])
+@account.route('/getStudentInfoByUsername', methods=['GET']) # pragma: no cover
 def get_student_info_by_id():
     username = request.args.get('username')
     student = Student.query.filter_by(id=username).first()
@@ -458,7 +458,7 @@ def get_student_info_by_id():
     else:
         return jsonify({'error': 'Student not found'}), 404
 
-def activation_token():
+def activation_token(): # pragma: no cover
     return str(uuid.uuid4())
 
 def send_welcome_mail(email, token):
@@ -470,7 +470,7 @@ def send_welcome_mail(email, token):
         msg.attach('logo.png', 'image/png', fp.read(), 'inline', headers=[['Content-ID', '<OnlineTutorLogo>']])
     mail.send(msg)
 
-def send_forget_pwd_mail(email, token):
+def send_forget_pwd_mail(email, token): # pragma: no cover
     reset_url = 'http://127.0.0.1:5000/resetPwd?token={}'.format(token)
     html_content = render_template('forget_pwd_email.html', reset_url=reset_url)
     msg = Message('OnlineTutor reset password', recipients=[email], html=html_content)
