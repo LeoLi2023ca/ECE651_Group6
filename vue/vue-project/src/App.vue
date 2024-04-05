@@ -5,9 +5,9 @@ import TutorHeader from './components/TutorHeader.vue';
 import Footer from './components/Footer.vue';
 import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
+import { provide } from 'vue';
 const store = useStore();
 const role = computed(() => store.getters.userRole);
-import { provide } from 'vue';
 provide('role', role);
 </script>
 
@@ -19,15 +19,16 @@ provide('role', role);
       <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" /> -->
       <!-- <br>
       <br> -->
-      <a-layout-content style="padding: 0 50px">
+      <a-layout-content style="padding: 0 0px">
         <div :style="{ minHeight: '80vh' }">
           <RouterView />
         </div>
       </a-layout-content>
 
-      <Footer />
+      <Footer/>
     </div>
   </a-layout>
+  
 </template>
 
 <style scoped>

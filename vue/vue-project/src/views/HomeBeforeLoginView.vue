@@ -5,7 +5,7 @@
         <h3>Connecting Students and Tutors for Personalized Learning Journeys</h3>
         <div class="sperator-40px"></div>
         <router-link to="/login">
-            <a class="hero_button flex-center" @click="">Register</a>
+            <a class="hero_button flex-center" @click="">Login / Register</a>
         </router-link>
         <!-- <div id="hero_button_holder">
           <a class="hero_button flex-center">Become a Student</a>
@@ -21,19 +21,19 @@
         <div class="sperator-40px"></div>
         <div id="timeline">
           <div class="timeline_container left">
-            <h3 class="bold">STEP 01</h3>
-            <h2 class="bold">Sign Up</h2>
-            <h3>Kickstart your journey to academic excellence by creating your free student account on TutorEase. Our sign-up process is quick and straightforward, requiring only essential information to connect you with the right tutors. Privacy and security are paramount, ensuring your personal details are safe with us.</h3>
+            <h3 class="bold  timeline_fadein_1">STEP 01</h3>
+            <h2 class="bold timeline_fadein_1">Sign Up</h2>
+            <h3 class="timeline_fadein_1">Kickstart your journey to academic excellence by creating your free student account on TutorEase. Our sign-up process is quick and straightforward, requiring only essential information to connect you with the right tutors. Privacy and security are paramount, ensuring your personal details are safe with us.</h3>
           </div>
           <div class="timeline_container right">
-            <h3 class="bold">STEP 02</h3>
-            <h2 class="bold">Post Your Needs</h2>
-            <h3>Once registered, it's time to let tutors know what you're looking for. Create a detailed advertisement including the subject matter you need help with (e.g., Calculus, English Literature), your academic level (e.g., high school, undergraduate), preferred language of instruction, and your budget. This information helps us match you with the ideal tutors who specialize in your area of need.</h3>       
+            <h3 class="bold timeline_fadein_2">STEP 02</h3>
+            <h2 class="bold timeline_fadein_2">Post Your Needs</h2>
+            <h3 class="timeline_fadein_2">Once registered, it's time to let tutors know what you're looking for. Create a detailed advertisement including the subject matter you need help with (e.g., Calculus, English Literature), your academic level (e.g., high school, undergraduate), preferred language of instruction, and your budget. This information helps us match you with the ideal tutors who specialize in your area of need.</h3>       
           </div>
           <div class="timeline_container left">
-            <h3 class="bold">STEP 03</h3>
-            <h2 class="bold">Match and Learn</h2>
-            <h3>With your requirements posted, tutors who match your criteria can reach out to you. Browse through tutor profiles, read reviews from other students, and view introductory videos to make an informed choice. Once you've found your match, schedule sessions at times that suit you both and embark on a personalized learning journey that aims to not just meet, but exceed your academic goals.</h3>
+            <h3 class="bold timeline_fadein_3">STEP 03</h3>
+            <h2 class="bold timeline_fadein_3">Match and Learn</h2>
+            <h3 class="timeline_fadein_3">With your requirements posted, tutors who match your criteria can reach out to you. Browse through tutor profiles, read reviews from other students, and view introductory videos to make an informed choice. Once you've found your match, schedule sessions at times that suit you both and embark on a personalized learning journey that aims to not just meet, but exceed your academic goals.</h3>
           </div>
         </div>
         
@@ -44,53 +44,50 @@
           <div class="sperator-40px"></div>
           <div class="flex-center row" style="gap: 90px;">
             <div class="feature_container flex-center ">
-              <i class="fa-solid fa-calendar-days"></i>
+              <i class="fa-solid fa-people-arrows"></i>
               <div>
-                <h3 class="bold" style="text-align: center; font-size: 1.8em;">Flexibility</h3>
-                <p style="text-align: center; font-size: 1.05em;">Your education, your schedule. TutorEase offers unparalleled flexibility, allowing you to choose tutoring sessions that fit into your life, not the other way around. Whether you’re an early bird or a night owl, our platform enables you to learn on your terms, anytime, anywhere</p>
+                <h3 style="text-align: center">Personalized Matches</h3>
               </div>
             </div>
             <div class="feature_container flex-center ">
               <i class="fa-solid fa-calendar-days"></i>
               <div>
-                <h3 class="bold" style="text-align: center; font-size: 1.8em;">Flexibility</h3>
-                <p style="text-align: center; font-size: 1.05em;">Your education, your schedule. TutorEase offers unparalleled flexibility, allowing you to choose tutoring sessions that fit into your life, not the other way around. Whether you’re an early bird or a night owl, our platform enables you to learn on your terms, anytime, anywhere</p>
+                <h3 style="text-align: center">Flexibility</h3>
               </div>
             </div>
             <div class="feature_container flex-center ">
-              <i class="fa-solid fa-calendar-days"></i>
+                <i class="fa-solid fa-comments"></i>
               <div>
-                <h3 class="bold" style="text-align: center; font-size: 1.8em;">Supportive Community</h3>
-                <p style="text-align: center; font-size: 1.05em;">Join an engaging community of like-minded professionals. TutorEase is not just a platform for teaching but a space to grow, learn, and collaborate. Share resources, exchange teaching strategies, and stay updated with the latest in education technology. Together, we’re not just teaching; we’re making a difference</p>
+                <h3 style="text-align: center">Trusted Reviews</h3>
               </div>
             </div>
           </div>
+          <div class="sperator-40px"></div>
+          <div class="sperator-40px"></div>
+          <div class="flex-center row" style="gap: 90px;">
+            <div class="feature_container flex-center ">
+                <i class="fa-brands fa-bandcamp"></i>
+              <div>
+                <h3 style="text-align: center">Build Your Brand</h3>
+              </div>
+            </div>
+            <div class="feature_container flex-center ">
+                <i class="fa-solid fa-money-bill"></i>
+              <div>
+                <h3 style="text-align: center">Flexible Earnings</h3>
+              </div>
+            </div>
+            <div class="feature_container flex-center ">
+              <i class="fa-regular fa-circle-question"></i>
+              <div>
+                <h3 style="text-align: center">Supportive Community</h3>
+              </div>
+            </div>
+          </div>
+          <div class="sperator-40px"></div>
     </div>
-    <div id="faq" class="flex-center">
-      <h1 class="bold">FAQ</h1>
-      <div>
-        <div class="faq">
-          <h3 class="bold">Q: How do I become a tutor at Tutorease?</h3>
-          <h4>A: To become a tutor, create a profile, submit your qualifications for review, and once approved, you can start offering your courses to students worldwide.</h4>
-        </div>
-        <div class="faq">
-          <h3 class="bold">Q: What qualifications do I need to teach?</h3>
-          <h4>A: You must have certified qualifications or proven experience in the subject you wish to teach, as well as strong communication skills and a passion for teaching.</h4>
-        </div>
-        <div class="faq">
-          <h3 class="bold">Q: How can I manage my lessons?</h3>
-          <h4>A: Tutorease provides a platform for you to set your schedule, manage your lessons, and communicate directly with your students.</h4>
-        </div>
-        <div class="faq">
-          <h3 class="bold">Q: What is the payment process for tutors?</h3>
-          <h4>A: Payment by yourself cash, paypal or bank transfer all fine, Tutorease just a platform.</h4>
-        </div>
-        <div class="faq">
-          <h3 class="bold">Q: How do I handle cancellations?</h3>
-          <h4>A: You can set your own cancellation policy. It's important to clearly communicate your policy to your students before lessons begin.</h4>
-        </div>
-      </div>
-    </div>
+    <div class="sperator-40px"></div>
+    
   </template>
   
   <script setup>
@@ -100,6 +97,22 @@
   import $ from 'jquery';
   
   const role = inject('role');
+
+  window.onscroll = function() {
+    // Set the height to check for
+  if (window.pageYOffset >= 20) {
+    // If more show the element
+    $(".timeline_fadein_1").addClass( "opacity100" );
+  }
+  if (window.pageYOffset >= 500) {
+    // If more show the element
+    $(".timeline_fadein_2").addClass( "opacity100" );
+  }
+  if (window.pageYOffset >= 800) {
+    // If more show the element
+    $(".timeline_fadein_3").addClass( "opacity100" );
+  }
+}
 
   </script>
   
@@ -167,10 +180,38 @@
       right: -14px;
       z-index: 1;
     }
+
+    .timeline_fadein_1{
+        opacity: 0;
+        transition: opacity 0.9s, transform 0.9s;
+        /* transform: translateY(20vh); */
+        /* visibility: visible; */
+    }
+
+    .timeline_fadein_2{
+        opacity: 0;
+        transition: opacity 0.9s, transform 0.9s;
+        /* transform: translateY(20vh); */
+        /* visibility: visible; */
+    }
+
+    .timeline_fadein_3{
+        opacity: 0;
+        transition: opacity 0.9s, transform 0.9s;
+        /* transform: translateY(20vh); */
+        /* visibility: visible; */
+    }
+
+    .opacity100{
+        opacity: 100;
+        transform: translateY(-60px);
+        /* visibility: visible */
+    }
   
     .feature_container{
       padding: 40px;
-      width: 300px;
+      width: 240px;
+      height: 240px;
       background-color: white;
       /* text-align: justify; */
       border-radius: 20px;
@@ -178,7 +219,11 @@
     }
   
     .feature_container i{
-      font-size: 80px
+      font-size: 70px
+    }
+
+    #faqs{
+        width: 60%;
     }
   
     .faq{
@@ -210,6 +255,12 @@
       border-radius: 13px;
       color: white;
       background-color: #001628;
+      transition: 0.4s
+    }
+
+    .hero_button:hover{
+      background-color: #244a6b;
+      transition: 0.4s
     }
   
     h1 {
