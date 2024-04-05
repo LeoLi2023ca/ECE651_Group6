@@ -124,7 +124,7 @@ const wrapperCol = { span: 14 };
 const formState = reactive({
   title: '',
   message: '',
-  timezone: 'UTC -04:00',
+  timezone: '-04:00',
   subject: '',
   salary: {
     min: 0,

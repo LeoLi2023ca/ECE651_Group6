@@ -50,9 +50,9 @@
                             <a-select-option v-for="tz in timezones" :key="tz.value" :value="tz.value" :default="'UTC -04:00'">{{ tz.label }}</a-select-option>
                         </a-select>
                     </a-form-item>
-                    <a-form-item ref="available_time" label="Available" name="available_time">
+                    <!-- <a-form-item ref="available_time" label="Available" name="available_time">
                         <a-input v-model:value="formState.available_time" />
-                    </a-form-item>
+                    </a-form-item> -->
                     <a-form-item ref="msg" label="Message" name="msg">
                         <a-textarea :rows="4" v-model:value="formState.msg" />
                     </a-form-item>

@@ -68,32 +68,32 @@ const onSelectChange = selectedRowKeys => {
 };
 const columns = [
   {
-    title: 'title',
+    title: 'Title',
     // width: 50,
     dataIndex: 'title',
     key: 'title',
     fixed: 'left',
   },
   {
-    title: 'date',
+    title: 'Date',
     // width: 50,
     dataIndex: 'post_date',
     key: 'date',
     fixed: 'left',
   },
   {
-    title: 'subject',
+    title: 'Subject',
     // width: 50,
     dataIndex: 'subject_name',
     key: 'subject',
     fixed: 'left',
   },
-  {
-    title: 'Action',
-    key: 'operation',
-    fixed: 'right',
-    // width: 100,
-  },
+  // {
+  //   title: 'Action',
+  //   key: 'operation',
+  //   fixed: 'right',
+  //   // width: 100,
+  // },
 ];
 const listData = ref([]);
 const open = ref(false);

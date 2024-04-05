@@ -1,5 +1,5 @@
 <template>
-  <div class="content-wrapper">
+  <div class="content-wrapper" :style="{ display: 'flex', marginTop: '30px' }">
     <div class="title margin-20">
       <h1>Welcome to TutorEase!</h1>
       <h4>Before matching with students, please spend some time to fill in some of your information.</h4>

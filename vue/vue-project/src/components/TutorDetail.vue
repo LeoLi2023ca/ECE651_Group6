@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a-modal v-model:open="open" title="Post Detail">
+        <a-modal v-model:open="open" title="Post Detail" width="800px" height="600px">
             <template #footer>
                 <a-button key="back" @click="handleCancel">Return</a-button>
                 <a-button key="submit" type="primary" @click="handleOk">Contact</a-button>
